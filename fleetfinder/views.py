@@ -3,22 +3,20 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required, permission_required
 from django.template.defaulttags import register
 
-from fleetfinder.app_settings import avoid_cdn
+from esi.decorators import token_required
 
+from fleetfinder.app_settings import avoid_cdn
 from fleetfinder.tasks import (
     open_fleet,
     send_fleet_invitation,
     get_fleet_composition,
 )
+from fleetfinder.models import Fleet
 
-from .models import Fleet
-
-from esi.decorators import token_required
+from bravado.exception import HTTPNotFound
 
 from allianceauth.eveonline.models import EveCharacter
 from allianceauth.groupmanagement.models import AuthGroup
-
-from bravado.exception import HTTPNotFound
 
 
 @login_required()

@@ -1,10 +1,15 @@
+import logging
+
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
 from fleetfinder.providers import esi
 from fleetfinder.models import Fleet, FleetInformation
+
 from esi.models import Token
+
 from celery import shared_task
+
 from django.utils import timezone
-from concurrent.futures import ThreadPoolExecutor, as_completed
-import logging
 
 logger = logging.getLogger(__name__)
 

@@ -1,8 +1,9 @@
 from django.conf.urls import url
+
 from fleetfinder import views
 
 
-app_name = "fleetfinder"
+app_name: str = "fleetfinder"
 
 urlpatterns = [
     url(r"^$", views.dashboard, name="dashboard"),

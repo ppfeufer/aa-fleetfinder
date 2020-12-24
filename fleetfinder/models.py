@@ -1,8 +1,8 @@
+from datetime import datetime
+
 from django.db import models
 
 from allianceauth.groupmanagement.models import AuthGroup
-
-from datetime import datetime
 
 
 class General(models.Model):
