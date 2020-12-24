@@ -1,3 +1,7 @@
+"""
+models
+"""
+
 from datetime import datetime
 
 from django.db import models
@@ -11,6 +15,10 @@ class General(models.Model):
     """
 
     class Meta:
+        """
+        meta
+        """
+
         default_permissions = ()
         permissions = (
             ("access_fleetfinder", "Can access the Fleet Finder app"),
@@ -37,6 +45,10 @@ class Fleet(models.Model):
     )
 
     class Meta:
+        """
+        meta
+        """
+
         default_permissions = ()
 
 
@@ -51,4 +63,8 @@ class FleetInformation(models.Model):
     date = models.DateTimeField(default=datetime.now)
 
     class Meta:
+        """
+        meta
+        """
+
         default_permissions = ()

@@ -1,3 +1,7 @@
+"""
+setup
+"""
+
 import os
 
 from setuptools import find_packages, setup
@@ -15,7 +19,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 # dependencies
 install_requires = [
-    "allianceauth>=2.7.3",
+    "allianceauth>=2.8.0",
 ]
 
 setup(

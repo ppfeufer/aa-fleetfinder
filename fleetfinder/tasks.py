@@ -1,3 +1,7 @@
+"""
+tasks
+"""
+
 import logging
 
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -16,6 +20,16 @@ logger = logging.getLogger(__name__)
 
 @shared_task
 def open_fleet(character_id, motd, free_move, name, groups):
+    """
+    open a fleet
+    :param character_id:
+    :param motd:
+    :param free_move:
+    :param name:
+    :param groups:
+    :return:
+    """
+
     required_scopes = ["esi-fleets.read_fleet.v1", "esi-fleets.write_fleet.v1"]
 
     esi_client = esi.client
@@ -41,14 +55,20 @@ def open_fleet(character_id, motd, free_move, name, groups):
     fleet.save()
     fleet.groups.set(groups)
 
-    esiFleet = {"is_free_move": free_move, "motd": motd}
+    esi_fleet = {"is_free_move": free_move, "motd": motd}
     esi_client.Fleets.put_fleets_fleet_id(
-        fleet_id=fleet_id, token=token.valid_access_token(), new_settings=esiFleet
+        fleet_id=fleet_id, token=token.valid_access_token(), new_settings=esi_fleet
     ).result()
 
 
 @shared_task
 def send_fleet_invitation(character_ids, fleet_id):
+    """
+    send a fleet invitation through the eve client
+    :param character_ids:
+    :param fleet_id:
+    """
+
     required_scopes = ["esi-fleets.write_fleet.v1"]
     fleet = Fleet.objects.get(fleet_id=fleet_id)
     fleet_commander_token = Token.get_token(fleet.fleet_commander_id, required_scopes)
@@ -71,6 +91,13 @@ def send_fleet_invitation(character_ids, fleet_id):
 
 @shared_task
 def send_invitation(character_id, fleet_commander_token, fleet_id):
+    """
+    open the fleet invite window in the eve client
+    :param character_id:
+    :param fleet_commander_token:
+    :param fleet_id:
+    """
+
     esi_client = esi.client
     invitation = {"character_id": character_id, "role": "squad_member"}
 
@@ -83,6 +110,11 @@ def send_invitation(character_id, fleet_commander_token, fleet_id):
 
 @shared_task
 def check_fleet_adverts():
+    """
+    scheduled task
+    check for fleets adverts
+    """
+
     required_scopes = ["esi-fleets.read_fleet.v1", "esi-fleets.write_fleet.v1"]
 
     esi_client = esi.client
@@ -95,6 +127,7 @@ def check_fleet_adverts():
             fleet_result = esi_client.Fleets.get_characters_character_id_fleet(
                 character_id=token.character_id, token=token.valid_access_token()
             ).result()
+
             fleet_id = fleet_result["fleet_id"]
 
             if fleet_id != fleet.fleet_id:
@@ -107,6 +140,12 @@ def check_fleet_adverts():
 
 @shared_task
 def get_fleet_composition(fleet_id):
+    """
+    getting the fleet composition
+    :param fleet_id:
+    :return:
+    """
+
     required_scopes = ["esi-fleets.read_fleet.v1", "esi-fleets.write_fleet.v1"]
 
     esi_client = esi.client
@@ -166,6 +205,12 @@ def get_fleet_composition(fleet_id):
 
 @shared_task
 def get_fleet_aggregate(fleet_infos):
+    """
+    getting aggregate numbers for fleet composition
+    :param fleet_infos:
+    :return:
+    """
+
     counts = dict()
 
     for member in fleet_infos:
@@ -180,6 +225,10 @@ def get_fleet_aggregate(fleet_infos):
 
 
 class FleetViewAggregate(object):
+    """
+    helper class
+    """
+
     def __init__(self, fleet, aggregate, differential):
         self.fleet = fleet
         self.aggregate = aggregate

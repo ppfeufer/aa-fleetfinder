@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 our app setting
 """
@@ -18,4 +16,5 @@ def avoid_cdn() -> bool:
     Grab the AVOID_CDN setting and return its value
     :return: bool
     """
+
     return AVOID_CDN

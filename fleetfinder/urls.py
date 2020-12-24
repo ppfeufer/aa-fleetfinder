@@ -1,3 +1,7 @@
+"""
+url config
+"""
+
 from django.conf.urls import url
 
 from fleetfinder import views
