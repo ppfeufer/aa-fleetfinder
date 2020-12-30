@@ -20,6 +20,8 @@ class General(models.Model):
         meta
         """
 
+        verbose_name = "Fleet Finder"
+        managed = False
         default_permissions = ()
         permissions = (
             ("access_fleetfinder", "Can access the Fleet Finder app"),
