@@ -4,13 +4,6 @@
 {% load humanize %}
 {% load static %}
 
-{% block extra_css %}
-    {% include 'fleetfinder/bundles/multi-select-css.html' %}
-    {% include 'fleetfinder/bundles/slim-select-css.html' %}
-
-    <link rel="stylesheet" href="{% static 'fleetfinder/css/fleetfinder.css' %}" type="text/css">
-{% endblock %}
-
 {% block page_title %}{% translate "Create fleet" %}{% endblock %}
 
 {% block fleetfinder_block %}
@@ -87,6 +80,13 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block extra_css %}
+    {% include 'fleetfinder/bundles/multi-select-css.html' %}
+    {% include 'fleetfinder/bundles/slim-select-css.html' %}
+
+    <link rel="stylesheet" href="{% static 'fleetfinder/css/fleetfinder.css' %}" type="text/css">
 {% endblock %}
 
 {% block extra_javascript %}
