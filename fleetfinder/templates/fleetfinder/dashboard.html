@@ -80,6 +80,19 @@
     <script type="application/javascript">
         $(document).ready(function(){
             $('#table_available-fleets').DataTable({
+                columnDefs: [
+                    {
+                        orderable: false,
+                        targets: [3]
+                    },
+                    {% if perms.fleetfinder.manage_fleets %}
+                        {
+                            orderable: false,
+                            targets: [4, 5]
+                        },
+                    {% endif %}
+                ],
+                order: [[0, 'asc']],
                 paging: false,
             });
         })
