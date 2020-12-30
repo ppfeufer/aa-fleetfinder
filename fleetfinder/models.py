@@ -6,6 +6,7 @@ from datetime import datetime
 
 from django.db import models
 
+from allianceauth.eveonline.models import EveCharacter
 from allianceauth.groupmanagement.models import AuthGroup
 
 
@@ -33,7 +34,14 @@ class Fleet(models.Model):
 
     fleet_id = models.BigIntegerField(primary_key=True)
     name = models.CharField(max_length=50, default="")
-    fleet_commander_id = models.BigIntegerField()
+    fleet_commander = models.ForeignKey(
+        EveCharacter,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        default=None,
+        null=True,
+        blank=True,
+    )
     created_at = models.DateTimeField()
     motd = models.CharField(max_length=4000)
     is_free_move = models.BooleanField()
@@ -57,7 +65,14 @@ class FleetInformation(models.Model):
     Fleet Information
     """
 
-    fleet = models.ForeignKey(Fleet, on_delete=models.CASCADE)
+    fleet = models.ForeignKey(
+        Fleet,
+        on_delete=models.CASCADE,
+        default=None,
+        null=True,
+        blank=True,
+        related_name="+",
+    )
     ship_type_name = models.CharField(max_length=100)
     count = models.IntegerField()
     date = models.DateTimeField(default=datetime.now)

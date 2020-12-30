@@ -106,7 +106,7 @@ def edit_fleet(request, fleet_id):
     auth_groups = AuthGroup.objects.filter(internal=False)
 
     context = {
-        "character_id": fleet.fleet_commander_id,
+        "character_id": fleet.fleet_commander.character_id,
         "auth_groups": auth_groups,
         "fleet": fleet,
         "avoid_cdn": avoid_cdn(),  # AVOID_CDN setting

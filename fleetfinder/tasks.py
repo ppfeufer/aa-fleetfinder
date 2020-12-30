@@ -6,6 +6,7 @@ import logging
 
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
+from allianceauth.eveonline.models import EveCharacter
 from fleetfinder.providers import esi
 from fleetfinder.models import Fleet, FleetInformation
 
@@ -14,6 +15,7 @@ from esi.models import Token
 from celery import shared_task
 
 from django.utils import timezone
+
 
 logger = logging.getLogger(__name__)
 
@@ -44,12 +46,14 @@ def open_fleet(character_id, motd, free_move, name, groups):
     if fleet_id is None or fleet_role is None or fleet_role != "fleet_commander":
         return
 
+    fleet_commander = EveCharacter.objects.get(character_id=token.character_id)
+
     fleet = Fleet(
         fleet_id=fleet_id,
         created_at=timezone.now(),
         motd=motd,
         is_free_move=free_move,
-        fleet_commander_id=token.character_id,
+        fleet_commander=fleet_commander,
         name=name,
     )
     fleet.save()
@@ -71,7 +75,9 @@ def send_fleet_invitation(character_ids, fleet_id):
 
     required_scopes = ["esi-fleets.write_fleet.v1"]
     fleet = Fleet.objects.get(fleet_id=fleet_id)
-    fleet_commander_token = Token.get_token(fleet.fleet_commander_id, required_scopes)
+    fleet_commander_token = Token.get_token(
+        fleet.fleet_commander.character_id, required_scopes
+    )
     _processes = []
 
     with ThreadPoolExecutor(max_workers=50) as ex:
@@ -121,7 +127,7 @@ def check_fleet_adverts():
 
     fleets = Fleet.objects.all()
     for fleet in fleets:
-        token = Token.get_token(fleet.fleet_commander_id, required_scopes)
+        token = Token.get_token(fleet.fleet_commander.character_id, required_scopes)
 
         try:
             fleet_result = esi_client.Fleets.get_characters_character_id_fleet(
@@ -151,7 +157,7 @@ def get_fleet_composition(fleet_id):
     esi_client = esi.client
 
     fleet = Fleet.objects.get(fleet_id=fleet_id)
-    token = Token.get_token(fleet.fleet_commander_id, required_scopes)
+    token = Token.get_token(fleet.fleet_commander.character_id, required_scopes)
     fleet_infos = esi_client.Fleets.get_fleets_fleet_id_members(
         fleet_id=fleet_id, token=token.valid_access_token()
     ).result()
