@@ -8,7 +8,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from allianceauth.eveonline.models import EveCharacter
 from fleetfinder.providers import esi
-from fleetfinder.models import Fleet, FleetInformation
+from fleetfinder.models import Fleet
 
 from esi.models import Token
 
@@ -179,34 +179,38 @@ def get_fleet_composition(fleet_id):
     ids_to_name = esi_client.Universe.post_universe_names(ids=ids).result()
 
     for member in fleet_infos:
-        index = [x["id"] for x in ids_to_name].index(member["character_id"])
-        member["character_name"] = ids_to_name[index]["name"]
+        index_character = [x["id"] for x in ids_to_name].index(member["character_id"])
+        member["character_name"] = ids_to_name[index_character]["name"]
 
-    for member in fleet_infos:
-        index = [x["id"] for x in ids_to_name].index(member["solar_system_id"])
-        member["solar_system_name"] = ids_to_name[index]["name"]
+        index_solar_system = [x["id"] for x in ids_to_name].index(
+            member["solar_system_id"]
+        )
+        member["solar_system_name"] = ids_to_name[index_solar_system]["name"]
 
-    for member in fleet_infos:
-        index = [x["id"] for x in ids_to_name].index(member["ship_type_id"])
-        member["ship_type_name"] = ids_to_name[index]["name"]
+        index_ship_type = [x["id"] for x in ids_to_name].index(member["ship_type_id"])
+        member["ship_type_name"] = ids_to_name[index_ship_type]["name"]
 
     aggregate = get_fleet_aggregate(fleet_infos)
 
-    differential = dict()
+    # differential = dict()
+    #
+    # for key, value in aggregate.items():
+    #     fleet_info_agg = FleetInformation.objects.filter(
+    #         fleet__fleet_id=fleet_id, ship_type_name=key
+    #     )
+    #
+    #     if fleet_info_agg.count() > 0:
+    #         differential[key] = value - fleet_info_agg.latest("date").count
+    #     else:
+    #         differential[key] = value
+    #
+    #     FleetInformation.objects.create(fleet=fleet, ship_type_name=key, count=value)
 
-    for key, value in aggregate.items():
-        fleet_info_agg = FleetInformation.objects.filter(
-            fleet__fleet_id=fleet_id, ship_type_name=key
-        )
-
-        if fleet_info_agg.count() > 0:
-            differential[key] = value - fleet_info_agg.latest("date").count
-        else:
-            differential[key] = value
-
-        FleetInformation.objects.create(fleet=fleet, ship_type_name=key, count=value)
-
-    return FleetViewAggregate(fleet_infos, aggregate, differential)
+    return FleetViewAggregate(
+        fleet_infos,
+        aggregate,
+        # differential,
+    )
 
 
 @shared_task
@@ -235,7 +239,12 @@ class FleetViewAggregate(object):
     helper class
     """
 
-    def __init__(self, fleet, aggregate, differential):
+    def __init__(
+        self,
+        fleet,
+        aggregate,
+        # differential,
+    ):
         self.fleet = fleet
         self.aggregate = aggregate
-        self.differential = differential
+        # self.differential = differential

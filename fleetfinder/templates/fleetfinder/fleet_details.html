@@ -5,78 +5,52 @@
 {% load evelinks %}
 {% load static %}
 
-{% block page_title %}{% translate "Create Fleet" %}{% endblock %}
+{% block page_title %}{% translate "Fleet Details" %}{% endblock %}
 
 {% block fleetfinder_block %}
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <div class="panel-title">
-                {% translate "Fleet View" %}
+    <div class="row">
+        <div class="col-lg-6 col-lg-push-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        {% translate "Fleet Composition" %}
+                    </div>
+                </div>
+
+                <div class="panel-body">
+                    <table class="table table-striped table-hover table-vertical-middle" id="table_fleet_composition" style="width: 100%;">
+                        <thead>
+                            <th>{% translate "Ship Name" %}</th>
+                            <th>{% translate "Quantity" %}</th>
+{#                            <th style="width: 200px;">{% translate "Since Last Update" %}</th>#}
+                        </thead>
+
+                        <tbody></tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
-        <div class="panel-body">
-            <table class="table table-striped table-hover">
-                <thead>
-                    <th>{% translate "Ship Name" %}</th>
-                    <th>{% translate "Quantity" %}</th>
-                    <th style="width: 200px;">{% translate "Since Last Update" %}</th>
-                </thead>
+        <div class="col-lg-6 col-lg-pull-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        {% translate "Fleet Members" %}
+                    </div>
+                </div>
 
-                <tbody>
-                    {% for key, value in fleet.aggregate.items %}
-                        <tr>
-                            <td>
-                               {{ key }}
-                            </td>
-                            <td>
-                                {{ value }}
-                            </td>
-                            <td>
-                                {{ fleet.differential|get_item:key }}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
+                <div class="panel-body">
+                    <table class="table table-striped table-hover table-vertical-middle" id="table_fleet_members" style="width: 100%;">
+                        <thead>
+                            <th>{% translate "Name" %}</th>
+                            <th>{% translate "Ship type" %}</th>
+                            <th>{% translate "System" %}</th>
+                        </thead>
 
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <div class="panel-title">
-                {% translate "Fleet Members" %}
+                        <tbody></tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-
-        <div class="panel-body">
-            <table class="table table-striped table-hover table-vertical-middle" id="table_fleet_members">
-                <thead>
-                    <th>{% translate "Name" %}</th>
-                    <th>{% translate "Ship type" %}</th>
-                    <th>{% translate "System" %}</th>
-                </thead>
-
-                <tbody>
-                    {% for member in fleet.fleet %}
-                        <tr>
-                            <td>
-                                <img class="img-circle eve-character-portrait" src="{{ member.character_id|character_portrait_url:32 }}">
-                                {{ member.character_name }}
-                            </td>
-
-                            <td>
-                                <img class="img-circle eve-type-icon" src="{{ member.ship_type_id|type_icon_url:32 }}">
-                                {{ member.ship_type_name }}
-                            </td>
-
-                            <td>
-                                {{ member.solar_system_name }}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
         </div>
     </div>
 {% endblock %}
@@ -92,14 +66,52 @@
 
     <script type="application/javascript">
         $(document).ready(function(){
-            $('#table_fleet_members').DataTable({
-                paging: false,
-            });
-        })
+            var populateDatatable = function() {
+                $.get('{% url "fleetfinder:ajax_fleet_details" fleet_id %}', function(data) {
+                    console.log(data);
 
-//        setTimeout(function() {
-//            location.reload();
-//        }, 60000);
+                    $('#table_fleet_members').DataTable({
+                        destroy: true,
+                        paging: false,
+                        data: data.fleet_member,
+                        columns: [
+                            {data: 'character_name'},
+                            {data: 'ship_type_name'},
+                            {data: 'solar_system_name'}
+                        ]
+                    });
+
+                    $('#table_fleet_composition').DataTable({
+                        destroy: true,
+                        paging: false,
+                        data: data.fleet_composition,
+                        columns: [
+                            {data: 'ship_type_name'},
+                            {data: 'number', className: 'text-right', width: '100px'}
+                        ],
+                        order: [[1, 'desc']],
+                    });
+                });
+            };
+
+            $('#table_fleet_members').DataTable({
+                language: {
+                    emptyTable: 'No data / loading ...'
+                }
+            });
+
+            $('#table_fleet_composition').DataTable({
+                language: {
+                    emptyTable: 'No data / loading ...'
+                }
+            });
+
+            populateDatatable();
+
+            setInterval(function() {
+                populateDatatable();
+            }, 15000);
+        });
     </script>
 {% endblock %}
 

@@ -1,7 +1,7 @@
 """
 views
 """
-
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required, permission_required
@@ -209,14 +209,44 @@ def fleet_details(request, fleet_id):
     :return:
     """
 
-    fleet = get_fleet_composition(fleet_id)
+    # fleet = get_fleet_composition(fleet_id)
 
     context = {
-        "fleet": fleet,
+        # "fleet": fleet,
+        # "fleet_details": fleet.fleet,
+        # "aggregate": fleet.aggregate,
+        # "differential": fleet.differential,
         "avoid_cdn": avoid_cdn(),  # AVOID_CDN setting
+        "fleet_id": fleet_id,
     }
 
     return render(request, "fleetfinder/fleet_details.html", context=context)
+
+
+@login_required()
+@permission_required("fleetfinder.manage_fleets")
+def ajax_fleet_details(request, fleet_id) -> JsonResponse:
+    """
+
+    :param request:
+    :param fleet_id:
+    """
+
+    fleet = get_fleet_composition(fleet_id)
+
+    data = {
+        "fleet_member": [],
+        # "differential": fleet.differential,
+        "fleet_composition": [],
+    }
+    # data = {"differential": [fleet.differential]}
+    for member in fleet.fleet:
+        data["fleet_member"].append(member)
+
+    for ship, number in fleet.aggregate.items():
+        data["fleet_composition"].append({"ship_type_name": ship, "number": number})
+
+    return JsonResponse(data, safe=False)
 
 
 @register.filter
