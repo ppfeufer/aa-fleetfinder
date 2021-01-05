@@ -21,7 +21,7 @@
                 </div>
 
                 <ul class="nav navbar-nav">
-                    {% if perms.fleet.manage %}
+                    {% if perms.fleetfinder.manage_fleets %}
                         <li> <a href="{% url 'fleetfinder:create_fleet' %}">{% translate "Create Fleet" %}</a></li>
                     {% endif %}
                 </ul>
