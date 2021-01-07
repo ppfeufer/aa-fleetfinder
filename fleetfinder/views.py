@@ -124,7 +124,7 @@ def edit_fleet(request, fleet_id):
     }
 
     logger.info(
-        "Fleet {fleet_id} modified by {user}".format(
+        "Fleet {fleet_id} edit view by {user}".format(
             fleet_id=fleet_id, user=request.user
         )
     )
@@ -236,6 +236,12 @@ def fleet_details(request, fleet_id):
         "avoid_cdn": avoid_cdn(),  # AVOID_CDN setting
         "fleet_id": fleet_id,
     }
+
+    logger.info(
+        "Fleet {fleet_id} details view called by {user}".format(
+            fleet_id=fleet_id, user=request.user
+        )
+    )
 
     return render(request, "fleetfinder/fleet_details.html", context=context)
 
