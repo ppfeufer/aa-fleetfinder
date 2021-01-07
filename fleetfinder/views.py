@@ -1,6 +1,7 @@
 """
 views
 """
+
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.db.models import Q
@@ -9,6 +10,7 @@ from django.template.defaulttags import register
 
 from esi.decorators import token_required
 
+from fleetfinder import __title__
 from fleetfinder.app_settings import avoid_cdn
 from fleetfinder.tasks import (
     open_fleet,
@@ -16,11 +18,16 @@ from fleetfinder.tasks import (
     get_fleet_composition,
 )
 from fleetfinder.models import Fleet
+from fleetfinder.utils import LoggerAddTag
 
 from bravado.exception import HTTPNotFound
 
 from allianceauth.eveonline.models import EveCharacter
 from allianceauth.groupmanagement.models import AuthGroup
+from allianceauth.services.hooks import get_extension_logger
+
+
+logger = LoggerAddTag(get_extension_logger(__name__), __title__)
 
 
 @login_required()
@@ -44,6 +51,8 @@ def dashboard(request):
         context["error"] = request.session["error_edit_fleet"].get("error", "")
 
         del request.session["error_edit_fleet"]
+
+    logger.info("Module called by {user}".format(user=request.user))
 
     return render(request, "fleetfinder/dashboard.html", context)
 
@@ -87,6 +96,8 @@ def create_fleet(request, token):
         # AVOID_CDN setting
         context["avoid_cdn"] = avoid_cdn()
 
+        logger.info("Fleet created by {user}".format(user=request.user))
+
         return render(request, "fleetfinder/create_fleet.html", context=context)
 
     return redirect("fleetfinder:dashboard")
@@ -111,6 +122,12 @@ def edit_fleet(request, fleet_id):
         "fleet": fleet,
         "avoid_cdn": avoid_cdn(),  # AVOID_CDN setting
     }
+
+    logger.info(
+        "Fleet {fleet_id} modified by {user}".format(
+            fleet_id=fleet_id, user=request.user
+        )
+    )
 
     return render(request, "fleetfinder/edit_fleet.html", context=context)
 

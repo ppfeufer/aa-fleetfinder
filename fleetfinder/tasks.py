@@ -2,13 +2,12 @@
 tasks
 """
 
-import logging
-
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-from allianceauth.eveonline.models import EveCharacter
-from fleetfinder.providers import esi
+from fleetfinder import __title__
 from fleetfinder.models import Fleet
+from fleetfinder.providers import esi
+from fleetfinder.utils import LoggerAddTag
 
 from esi.models import Token
 
@@ -16,8 +15,10 @@ from celery import shared_task
 
 from django.utils import timezone
 
+from allianceauth.eveonline.models import EveCharacter
+from allianceauth.services.hooks import get_extension_logger
 
-logger = logging.getLogger(__name__)
+logger = LoggerAddTag(get_extension_logger(__name__), __title__)
 
 
 @shared_task
