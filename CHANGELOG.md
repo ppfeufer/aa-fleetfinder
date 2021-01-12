@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [0.1.0-alpha.4] - 2021-01-12
+
+### Removed
+
+- Django 2 support
+
+
 ## [0.1.0-alpha.3] - 2021-01-05
 
 ### Fixed
