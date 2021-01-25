@@ -2,7 +2,16 @@
 tasks
 """
 
+from bravado.exception import (
+    HTTPBadGateway,
+    HTTPGatewayTimeout,
+    HTTPNotFound,
+    HTTPServiceUnavailable,
+)
+
 from concurrent.futures import ThreadPoolExecutor, as_completed
+
+from django.core.cache import cache
 
 from fleetfinder import __title__
 from fleetfinder.models import Fleet
@@ -17,8 +26,48 @@ from django.utils import timezone
 
 from allianceauth.eveonline.models import EveCharacter
 from allianceauth.services.hooks import get_extension_logger
+from allianceauth.services.tasks import QueueOnce
+
 
 logger = LoggerAddTag(get_extension_logger(__name__), __title__)
+
+
+ESI_ERROR_LIMIT = 50
+ESI_TIMEOUT_ONCE_ERROR_LIMIT_REACHED = 60
+ESI_MAX_RETRIES = 3
+
+
+CACHE_KEY_NOT_IN_FLEET_ERROR = (
+    "fleetfinder_task_check_fleet_adverts_error_counter_not_in_fleet_"
+)
+CACHE_KEY_NO_FLEET_ERROR = (
+    "fleetfinder_task_check_fleet_adverts_error_counter_no_fleet_"
+)
+CACHE_KEY_FLEET_CHANGED_ERROR = (
+    "fleetfinder_task_check_fleet_adverts_error_counter_fleet_changed_"
+)
+CACHE_MAX_ERROR_COUNT = 3
+
+
+# params for all tasks
+TASK_DEFAULT_KWARGS = {
+    "time_limit": 120,  # stop after 2 minutes
+}
+
+# params for tasks that make ESI calls
+TASK_ESI_KWARGS = {
+    **TASK_DEFAULT_KWARGS,
+    **{
+        "autoretry_for": (
+            OSError,
+            HTTPBadGateway,
+            HTTPGatewayTimeout,
+            HTTPServiceUnavailable,
+        ),
+        "retry_kwargs": {"max_retries": ESI_MAX_RETRIES},
+        "retry_backoff": True,
+    },
+}
 
 
 @shared_task
@@ -115,7 +164,69 @@ def send_invitation(character_id, fleet_commander_token, fleet_id):
     ).result()
 
 
-@shared_task
+def close_esi_fleet(fleet: Fleet, reason: str) -> None:
+    """
+    closing registered fleet
+    :param fleet:
+    :param reason:
+    """
+
+    logger.info(
+        "Closing fleet with ID {fleet_id}. Reason: {reason}".format(
+            fleet_id=fleet.fleet_id, reason=reason
+        )
+    )
+
+    fleet.delete()
+
+
+def esi_fleetadvert_error_handling(
+    cache_key: str, fleet: Fleet, logger_message: str
+) -> None:
+    """
+    ESI error handling
+    :param cache_key:
+    :param fleet:
+    :param logger_message:
+    """
+
+    if int(cache.get(cache_key + str(fleet.fleet_id))) < CACHE_MAX_ERROR_COUNT:
+        error_count = int(cache.get(cache_key + str(fleet.fleet_id)))
+
+        error_count += 1
+
+        logger.info(
+            '"{logger_message}" Error Count: {error_count}.'.format(
+                logger_message=logger_message, error_count=error_count
+            )
+        )
+
+        cache.set(
+            cache_key + str(fleet.fleet_id),
+            str(error_count),
+            75,
+        )
+    else:
+        close_esi_fleet(fleet=fleet, reason=logger_message)
+
+
+def init_error_caches(fleet: Fleet) -> None:
+    """
+    initialize error caches
+    :param fleet:
+    """
+
+    if cache.get(CACHE_KEY_FLEET_CHANGED_ERROR + str(fleet.fleet_id)) is None:
+        cache.set(CACHE_KEY_FLEET_CHANGED_ERROR + str(fleet.fleet_id), "0", 75)
+
+    if cache.get(CACHE_KEY_NO_FLEET_ERROR + str(fleet.fleet_id)) is None:
+        cache.set(CACHE_KEY_NO_FLEET_ERROR + str(fleet.fleet_id), "0", 75)
+
+    if cache.get(CACHE_KEY_NOT_IN_FLEET_ERROR + str(fleet.fleet_id)) is None:
+        cache.set(CACHE_KEY_NOT_IN_FLEET_ERROR + str(fleet.fleet_id), "0", 75)
+
+
+@shared_task(**{**TASK_ESI_KWARGS}, **{"base": QueueOnce})
 def check_fleet_adverts():
     """
     scheduled task
@@ -127,22 +238,60 @@ def check_fleet_adverts():
     esi_client = esi.client
 
     fleets = Fleet.objects.all()
-    for fleet in fleets:
-        token = Token.get_token(fleet.fleet_commander.character_id, required_scopes)
 
-        try:
-            fleet_result = esi_client.Fleets.get_characters_character_id_fleet(
-                character_id=token.character_id, token=token.valid_access_token()
-            ).result()
+    fleet_count = fleets.count()
 
-            fleet_id = fleet_result["fleet_id"]
+    logger.info(
+        "{fleet_count} registered fleets found. {processing_text}".format(
+            fleet_count=fleet_count,
+            processing_text="Processing ..."
+            if fleet_count > 0
+            else "Nothing to do ...",
+        )
+    )
 
-            if fleet_id != fleet.fleet_id:
-                fleet.delete()
-        except Exception as e:
-            if e.status_code == 404:  # 404 means the character is not in a fleet
-                fleet.delete()
-                logger.info("Character is not in a fleet - fleet advert removed")
+    if fleet_count > 0:
+        for fleet in fleets:
+            init_error_caches(fleet=fleet)
+
+            logger.info(
+                "Processing information for fleet with ID {fleet_id}".format(
+                    fleet_id=fleet.fleet_id
+                )
+            )
+
+            token = Token.get_token(fleet.fleet_commander.character_id, required_scopes)
+
+            try:
+                fleet_result = esi_client.Fleets.get_characters_character_id_fleet(
+                    character_id=token.character_id, token=token.valid_access_token()
+                ).result()
+
+                fleet_id = fleet_result["fleet_id"]
+
+                if fleet_id != fleet.fleet_id:
+                    esi_fleetadvert_error_handling(
+                        cache_key=CACHE_KEY_FLEET_CHANGED_ERROR,
+                        fleet=fleet,
+                        logger_message="FC switched to another fleet",
+                    )
+
+            except HTTPNotFound:
+                esi_fleetadvert_error_handling(
+                    cache_key=CACHE_KEY_NOT_IN_FLEET_ERROR,
+                    fleet=fleet,
+                    logger_message=(
+                        "FC is not in the registered fleet anymore or "
+                        "fleet is no longer available."
+                    ),
+                )
+
+            except Exception:
+                esi_fleetadvert_error_handling(
+                    cache_key=CACHE_KEY_NO_FLEET_ERROR,
+                    fleet=fleet,
+                    logger_message="Registered fleet is no longer available.",
+                )
 
 
 @shared_task
