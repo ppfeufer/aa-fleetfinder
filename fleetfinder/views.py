@@ -7,6 +7,8 @@ from django.shortcuts import render, redirect
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required, permission_required
 from django.template.defaulttags import register
+from django.utils.translation import gettext_lazy as _
+from django.urls import reverse
 
 from esi.decorators import token_required
 
@@ -22,6 +24,7 @@ from fleetfinder.utils import LoggerAddTag
 
 from bravado.exception import HTTPNotFound
 
+from allianceauth.eveonline.evelinks.eveimageserver import character_portrait_url
 from allianceauth.eveonline.models import EveCharacter
 from allianceauth.groupmanagement.models import AuthGroup
 from allianceauth.services.hooks import get_extension_logger
@@ -39,11 +42,11 @@ def dashboard(request):
     :return:
     """
 
-    groups = request.user.groups.all()
-    fleets = Fleet.objects.filter(Q(groups__group__in=groups) | Q(groups=None)).all()
+    # groups = request.user.groups.all()
+    # fleets = Fleet.objects.filter(Q(groups__group__in=groups) | Q(groups=None)).all()
 
     context = {
-        "fleets": fleets,
+        # "fleets": fleets,
         "avoid_cdn": avoid_cdn(),  # AVOID_CDN setting
     }
 
@@ -55,6 +58,80 @@ def dashboard(request):
     logger.info("Module called by {user}".format(user=request.user))
 
     return render(request, "fleetfinder/dashboard.html", context)
+
+
+@login_required()
+@permission_required("fleetfinder.access_fleetfinder")
+def ajax_dashboard(request) -> JsonResponse:
+    """
+    dashboard view
+    :param request:
+    :return:
+    """
+
+    data = list()
+    groups = request.user.groups.all()
+    fleets = Fleet.objects.filter(Q(groups__group__in=groups) | Q(groups=None)).all()
+
+    for fleet in fleets:
+        fleet_commander_name = fleet.fleet_commander.character_name
+        fleet_commander_portrait = (
+            '<img class="img-rounded eve-character-portrait" '
+            'src="{portrait_url}" '
+            'alt="{character_name}">'.format(
+                portrait_url=character_portrait_url(
+                    character_id=fleet.fleet_commander.character_id, size=32
+                ),
+                character_name=fleet_commander_name,
+            )
+        )
+        fleet_commander_html = fleet_commander_portrait + fleet_commander_name
+
+        button_join_url = reverse("fleetfinder:join_fleet", args=[fleet.fleet_id])
+        button_join = (
+            '<a href="{button_url}" '
+            'class="btn btn-sm btn-default">{button_text}</a>'.format(
+                button_url=button_join_url, button_text=_("Join Fleet")
+            )
+        )
+
+        button_details = ""
+        button_edit = ""
+
+        if request.user.has_perm("fleetfinder.manage_fleets"):
+            button_details_url = reverse(
+                "fleetfinder:fleet_details", args=[fleet.fleet_id]
+            )
+            button_details = (
+                '<a href="{button_url}" '
+                'class="btn btn-sm btn-default">{button_text}</a>'.format(
+                    button_url=button_details_url, button_text=_("View fleet details")
+                )
+            )
+
+            button_edit_url = reverse("fleetfinder:edit_fleet", args=[fleet.fleet_id])
+            button_edit = (
+                '<a href="{button_url}" '
+                'class="btn btn-sm btn-default">{button_text}</a>'.format(
+                    button_url=button_edit_url, button_text=_("Edit Fleet advert")
+                )
+            )
+
+        data.append(
+            {
+                "fleet_commander": {
+                    "html": fleet_commander_html,
+                    "sort": fleet_commander_name,
+                },
+                "fleet_name": fleet.name,
+                "created_at": fleet.created_at,
+                "join": button_join,
+                "details": button_details,
+                "edit": button_edit,
+            }
+        )
+
+    return JsonResponse(data, safe=False)
 
 
 @login_required()
@@ -262,6 +339,7 @@ def ajax_fleet_details(request, fleet_id) -> JsonResponse:
         # "differential": fleet.differential,
         "fleet_composition": [],
     }
+
     # data = {"differential": [fleet.differential]}
     for member in fleet.fleet:
         data["fleet_member"].append(member)
