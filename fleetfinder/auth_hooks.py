@@ -4,8 +4,8 @@ auth hooks
 
 from django.utils.translation import ugettext_lazy as _
 
-from allianceauth.services.hooks import MenuItemHook, UrlHook
 from allianceauth import hooks
+from allianceauth.services.hooks import MenuItemHook, UrlHook
 
 from . import urls
 

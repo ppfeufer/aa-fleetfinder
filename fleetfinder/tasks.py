@@ -2,32 +2,28 @@
 tasks
 """
 
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
 from bravado.exception import (
     HTTPBadGateway,
     HTTPGatewayTimeout,
     HTTPNotFound,
     HTTPServiceUnavailable,
 )
-
-from concurrent.futures import ThreadPoolExecutor, as_completed
-
-from django.core.cache import cache
-
-from fleetfinder import __title__
-from fleetfinder.models import Fleet
-from fleetfinder.providers import esi
-from fleetfinder.utils import LoggerAddTag
-
-from esi.models import Token
-
 from celery import shared_task
 
+from django.core.cache import cache
 from django.utils import timezone
 
 from allianceauth.eveonline.models import EveCharacter
 from allianceauth.services.hooks import get_extension_logger
 from allianceauth.services.tasks import QueueOnce
+from esi.models import Token
 
+from fleetfinder import __title__
+from fleetfinder.models import Fleet
+from fleetfinder.providers import esi
+from fleetfinder.utils import LoggerAddTag
 
 logger = LoggerAddTag(get_extension_logger(__name__), __title__)
 

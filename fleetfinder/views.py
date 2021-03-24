@@ -2,33 +2,27 @@
 views
 """
 
-from django.http import JsonResponse
-from django.shortcuts import render, redirect
-from django.db.models import Q
-from django.contrib.auth.decorators import login_required, permission_required
-from django.template.defaulttags import register
-from django.utils.translation import gettext_lazy as _
-from django.urls import reverse
-
-from esi.decorators import token_required
-
-from fleetfinder import __title__
-from fleetfinder.app_settings import avoid_cdn
-from fleetfinder.tasks import (
-    open_fleet,
-    send_fleet_invitation,
-    get_fleet_composition,
-)
-from fleetfinder.models import Fleet
-from fleetfinder.utils import LoggerAddTag
-
 from bravado.exception import HTTPNotFound
+
+from django.contrib.auth.decorators import login_required, permission_required
+from django.db.models import Q
+from django.http import JsonResponse
+from django.shortcuts import redirect, render
+from django.template.defaulttags import register
+from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 from allianceauth.eveonline.evelinks.eveimageserver import character_portrait_url
 from allianceauth.eveonline.models import EveCharacter
 from allianceauth.groupmanagement.models import AuthGroup
 from allianceauth.services.hooks import get_extension_logger
+from esi.decorators import token_required
 
+from fleetfinder import __title__
+from fleetfinder.app_settings import avoid_cdn
+from fleetfinder.models import Fleet
+from fleetfinder.tasks import get_fleet_composition, open_fleet, send_fleet_invitation
+from fleetfinder.utils import LoggerAddTag
 
 logger = LoggerAddTag(get_extension_logger(__name__), __title__)
 
