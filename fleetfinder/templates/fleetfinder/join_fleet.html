@@ -24,9 +24,9 @@
                         <label for="character_ids">{% translate "Select the characters to invite" %}</label>
 
                         <select class="multiselect-ui" multiple="multiple" name="character_ids" id="character_ids">
-                             {% for character in characters %}
+                            {% for character in characters %}
                                 <option value="{{ character.character_id }}" >{{ character.character_name }}</option>
-                             {% endfor %}
+                            {% endfor %}
                         </select>
                         </br>
 
