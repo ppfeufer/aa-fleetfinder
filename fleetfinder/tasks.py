@@ -380,7 +380,7 @@ def get_fleet_aggregate(fleet_infos):
     return counts
 
 
-class FleetViewAggregate(object):
+class FleetViewAggregate:
     """
     helper class
     """

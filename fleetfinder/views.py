@@ -49,7 +49,7 @@ def dashboard(request):
 
         del request.session["error_edit_fleet"]
 
-    logger.info("Module called by {user}".format(user=request.user))
+    logger.info(f"Module called by {request.user}")
 
     return render(request, "fleetfinder/dashboard.html", context)
 
@@ -167,7 +167,7 @@ def create_fleet(request, token):
         # AVOID_CDN setting
         context["avoid_cdn"] = avoid_cdn()
 
-        logger.info("Fleet created by {user}".format(user=request.user))
+        logger.info(f"Fleet created by {request.user}")
 
         return render(request, "fleetfinder/create_fleet.html", context=context)
 
