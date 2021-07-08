@@ -1,7 +1,14 @@
-name: Automated Checks
+name: Checks
 
 on:
   push:
+    branches:
+      - '**'
+
+    tags-ignore:
+      - '**'
+
+  pull_request:
     branches:
       - '**'
 
