@@ -8,3 +8,7 @@
 *.bak
 *.old
 __pycache__
+/htmlcov/
+/.tox/
+/coverage.xml
+/.coverage
