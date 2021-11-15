@@ -45,7 +45,7 @@ class Fleet(models.Model):
         blank=True,
     )
     created_at = models.DateTimeField()
-    motd = models.CharField(max_length=4000)
+    motd = models.TextField(blank=True, default="")
     is_free_move = models.BooleanField()
 
     groups = models.ManyToManyField(
