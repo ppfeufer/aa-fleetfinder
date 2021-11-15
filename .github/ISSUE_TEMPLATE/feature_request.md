@@ -1,7 +1,7 @@
 ---
 name: Feature Request
-about: Suggest an idea for AA Forum
-title: ''
+about: Suggest an idea
+title: "[Feature Request] "
 labels: ''
 assignees: ''
 ---
