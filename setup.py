@@ -26,8 +26,8 @@ project_git_url = "https://github.com/ppfeufer/aa-fleetfinder"
 project_issues_url = f"{project_git_url}/issues"
 project_changelog_url = f"{project_git_url}/blob/master/CHANGELOG.md"
 project_homepage_url = project_git_url
-project_install_requirements = ["allianceauth>=2.9.0"]
-project_python_requires = "~=3.7"
+project_install_requirements = ["allianceauth>=2.8.8"]
+project_python_requires = "~=3.6"
 project_classifiers = [
     "Environment :: Web Environment",
     "Framework :: Django",
@@ -37,6 +37,7 @@ project_classifiers = [
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
