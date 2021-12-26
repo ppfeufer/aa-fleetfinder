@@ -2,8 +2,10 @@
 url config
 """
 
+# Django
 from django.conf.urls import url
 
+# AA Fleet Finder
 from fleetfinder import views
 
 app_name: str = "fleetfinder"

@@ -2,8 +2,10 @@
 views
 """
 
+# Third Party
 from bravado.exception import HTTPNotFound
 
+# Django
 from django.contrib.auth.decorators import login_required, permission_required
 from django.db.models import Q
 from django.http import JsonResponse
@@ -12,12 +14,14 @@ from django.template.defaulttags import register
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
+# Alliance Auth
 from allianceauth.eveonline.evelinks.eveimageserver import character_portrait_url
 from allianceauth.eveonline.models import EveCharacter
 from allianceauth.groupmanagement.models import AuthGroup
 from allianceauth.services.hooks import get_extension_logger
 from esi.decorators import token_required
 
+# AA Fleet Finder
 from fleetfinder import __title__
 from fleetfinder.app_settings import avoid_cdn
 from fleetfinder.models import Fleet

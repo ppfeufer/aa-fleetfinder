@@ -2,10 +2,13 @@
 models
 """
 
+# Standard Library
 from datetime import datetime
 
+# Django
 from django.db import models
 
+# Alliance Auth
 from allianceauth.eveonline.models import EveCharacter
 from allianceauth.groupmanagement.models import AuthGroup
 

@@ -2,10 +2,13 @@
 setup
 """
 
+# Standard Library
 import os
 
+# Third Party
 from setuptools import find_packages, setup
 
+# AA Fleet Finder
 from fleetfinder import __version__
 
 # Read the contents of your README file

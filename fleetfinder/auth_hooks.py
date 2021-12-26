@@ -2,12 +2,15 @@
 auth hooks
 """
 
+# Django
 from django.utils.translation import ugettext_lazy as _
 
+# Alliance Auth
 from allianceauth import hooks
 from allianceauth.services.hooks import MenuItemHook, UrlHook
 
-from . import urls
+# AA Fleet Finder
+from fleetfinder import urls
 
 
 class FleetFinderMenuItem(MenuItemHook):

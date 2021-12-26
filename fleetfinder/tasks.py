@@ -2,8 +2,10 @@
 tasks
 """
 
+# Standard Library
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
+# Third Party
 from bravado.exception import (
     HTTPBadGateway,
     HTTPGatewayTimeout,
@@ -12,14 +14,17 @@ from bravado.exception import (
 )
 from celery import shared_task
 
+# Django
 from django.core.cache import cache
 from django.utils import timezone
 
+# Alliance Auth
 from allianceauth.eveonline.models import EveCharacter
 from allianceauth.services.hooks import get_extension_logger
 from allianceauth.services.tasks import QueueOnce
 from esi.models import Token
 
+# AA Fleet Finder
 from fleetfinder import __title__
 from fleetfinder.models import Fleet
 from fleetfinder.providers import esi
