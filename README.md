@@ -10,3 +10,5 @@
 [![Checks](https://github.com/ppfeufer/aa-fleetfinder/actions/workflows/automated-checks.yml/badge.svg)](https://github.com/ppfeufer/aa-fleetfinder/actions/workflows/automated-checks.yml)
 [![codecov](https://codecov.io/gh/ppfeufer/aa-fleetfinder/branch/master/graph/badge.svg?token=GFOR9GWRNQ)](https://codecov.io/gh/ppfeufer/aa-fleetfinder)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](https://github.com/ppfeufer/aa-fleetfinder/blob/master/CODE_OF_CONDUCT.md)
+
+## Not yet publicly available

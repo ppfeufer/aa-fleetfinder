@@ -2,6 +2,7 @@
 our app setting
 """
 
+# AA Fleet Finder
 from fleetfinder.utils import clean_setting
 
 # AA-GDPR / Avoid CDN setting
