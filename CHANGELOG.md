@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+- Using `path` in URL config instead of soon-to-be removed `url`
 - Minimum requirements
   - Alliance Auth v2.9.4
 
