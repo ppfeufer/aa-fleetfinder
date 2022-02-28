@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In Development] - Unreleased
 
+
+## [0.1.0-alpha.10] - 2022-02-28
+
 ### Fixed
 
 - [Compatibility] AA 3.x / Django 4 :: ImportError: cannot import name
