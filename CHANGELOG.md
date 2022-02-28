@@ -8,12 +8,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In Development] - Unreleased
 
+### Fixed
+
+- [Compatibility] AA 3.x / Django 4 :: ImportError: cannot import name
+  'ugettext_lazy' from 'django.utils.translation'
+
+
+## [0.1.0-alpha.9] - 2022-02-02
+
 ### Added
 
 - Tests for Python 3.11
 
 ### Changed
 
+- Using `path` in URL config instead of soon-to-be removed `url`
 - Minimum requirements
   - Alliance Auth v2.9.4
 
