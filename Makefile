@@ -31,7 +31,6 @@ coverage:
 
 build_test:
 	rm -rfv dist && \
-	rm -rfv build && \
 	python3 -m build
 
 tox_tests:
