@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [In Development] - Unreleased
 
 
+## [0.1.0-alpha.11] - 2022-03-01
+
+### Changed
+
+- Switched to `setup.cfg` instead of `setup.py`
+
+
 ## [0.1.0-alpha.10] - 2022-02-28
 
 ### Fixed
