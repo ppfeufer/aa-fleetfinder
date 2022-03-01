@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [In Development] - Unreleased
 
 
+## [0.1.0-alpha.12] - 2022-03-01
+
+### Fixed
+
+- Classifiers in `setup.cfg`
+
+
 ## [0.1.0-alpha.11] - 2022-03-01
 
 ### Changed
