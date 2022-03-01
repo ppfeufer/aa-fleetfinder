@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - `setup.py` as it is no longer required
 
+### Changed
+
+- Makefile updated
+
 
 ## [0.1.0-alpha.13] - 2022-03-01
 
