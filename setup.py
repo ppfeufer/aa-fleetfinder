@@ -1,6 +1,6 @@
-# """
-# setup
-# """
+"""
+setup
+"""
 
 # Third Party
 import pkg_resources
