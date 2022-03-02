@@ -13,4 +13,4 @@ class FleetFinderConfig(AppConfig):
 
     name = "fleetfinder"
     label = "fleetfinder"
-    verbose_name = "fleetfinder"
+    verbose_name = "Fleet Finder"

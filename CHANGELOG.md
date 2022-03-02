@@ -9,6 +9,62 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [In Development] - Unreleased
 
 
+## [0.1.0-alpha.15] - 2022-03-02
+
+### Added
+
+- Test suite for AA 3.x and Django 4
+
+### Removed
+
+- Deprecated settings
+
+### Changed
+
+- Minimum dependencies:
+  - Alliance Auth>=2.11.0 (as last stable of the 2.x branch for now)
+
+
+## [0.1.0-alpha.14] - 2022-03-01
+
+### Removed
+
+- `setup.py` as it is no longer required
+
+### Changed
+
+- Makefile updated
+
+
+## [0.1.0-alpha.13] - 2022-03-01
+
+### Added
+
+- Package discovery to `setup.cfg` (hopefully)
+
+
+## [0.1.0-alpha.12] - 2022-03-01
+
+### Fixed
+
+- Classifiers in `setup.cfg`
+
+
+## [0.1.0-alpha.11] - 2022-03-01
+
+### Changed
+
+- Switched to `setup.cfg` instead of `setup.py`
+
+
+## [0.1.0-alpha.10] - 2022-02-28
+
+### Fixed
+
+- [Compatibility] AA 3.x / Django 4 :: ImportError: cannot import name
+  'ugettext_lazy' from 'django.utils.translation'
+
+
 ## [0.1.0-alpha.9] - 2022-02-02
 
 ### Added
