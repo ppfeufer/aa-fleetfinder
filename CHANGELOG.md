@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In Development] - Unreleased
 
+### Removed
+
+- Deprecated settings
+
 
 ## [0.1.0-alpha.14] - 2022-03-01
 
