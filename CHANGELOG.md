@@ -16,6 +16,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Deprecated settings
 
+### Changed
+
+- Minimum dependencies:
+  - Alliance Auth>=2.11.0 (as last stable of the 2.x branch for now)
+
 
 ## [0.1.0-alpha.14] - 2022-03-01
 
