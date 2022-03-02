@@ -2,8 +2,6 @@
 init
 """
 
-default_app_config: str = "fleetfinder.apps.FleetFinderConfig"
-
 github_url: str = "https://github.com/ppfeufer/aa-fleetfinder"
 
 __title__ = "Fleet Finder"

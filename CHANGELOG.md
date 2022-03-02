@@ -8,6 +8,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In Development] - Unreleased
 
+### Added
+
+- Test suite for AA 3.x and Django 4
+
+### Removed
+
+- Deprecated settings
+
+### Changed
+
+- Minimum dependencies:
+  - Alliance Auth>=2.11.0 (as last stable of the 2.x branch for now)
+
 
 ## [0.1.0-alpha.14] - 2022-03-01
 
