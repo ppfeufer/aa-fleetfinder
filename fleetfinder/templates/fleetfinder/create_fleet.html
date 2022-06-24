@@ -2,7 +2,7 @@
 
 {% load i18n %}
 {% load humanize %}
-{% load static %}
+{% load fleetfinder_versioned_static %}
 
 {% block page_title %}{% translate "Create fleet" %}{% endblock %}
 
@@ -86,7 +86,7 @@
     {% include 'fleetfinder/bundles/multi-select-css.html' %}
     {% include 'fleetfinder/bundles/slim-select-css.html' %}
 
-    <link rel="stylesheet" href="{% static 'fleetfinder/css/fleetfinder.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% fleetfinder_static 'fleetfinder/css/fleetfinder.css' %}" type="text/css">
 {% endblock %}
 
 {% block extra_javascript %}
@@ -98,8 +98,4 @@
             hideSelectedOption: true
         });
     </script>
-{% endblock %}
-
-{% block extra_script %}
-
 {% endblock %}

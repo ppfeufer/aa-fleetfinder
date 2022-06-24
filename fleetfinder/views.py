@@ -23,7 +23,6 @@ from esi.decorators import token_required
 
 # AA Fleet Finder
 from fleetfinder import __title__
-from fleetfinder.app_settings import avoid_cdn
 from fleetfinder.models import Fleet
 from fleetfinder.tasks import get_fleet_composition, open_fleet, send_fleet_invitation
 from fleetfinder.utils import LoggerAddTag
@@ -44,8 +43,7 @@ def dashboard(request):
     # fleets = Fleet.objects.filter(Q(groups__group__in=groups) | Q(groups=None)).all()
 
     context = {
-        # "fleets": fleets,
-        "avoid_cdn": avoid_cdn(),  # AVOID_CDN setting
+        # "fleets": fleets
     }
 
     if "error_edit_fleet" in request.session:
@@ -168,9 +166,6 @@ def create_fleet(request, token):
         else:
             context = {"character_id": token.character_id, "auth_groups": auth_groups}
 
-        # AVOID_CDN setting
-        context["avoid_cdn"] = avoid_cdn()
-
         logger.info(f"Fleet created by {request.user}")
 
         return render(request, "fleetfinder/create_fleet.html", context=context)
@@ -195,7 +190,6 @@ def edit_fleet(request, fleet_id):
         "character_id": fleet.fleet_commander.character_id,
         "auth_groups": auth_groups,
         "fleet": fleet,
-        "avoid_cdn": avoid_cdn(),  # AVOID_CDN setting
     }
 
     logger.info(
@@ -239,9 +233,6 @@ def join_fleet(request, fleet_id):
     )
 
     context["characters"] = characters
-
-    # AVOID_CDN setting
-    context["avoid_cdn"] = avoid_cdn()
 
     return render(request, "fleetfinder/join_fleet.html", context=context)
 
@@ -308,7 +299,6 @@ def fleet_details(request, fleet_id):
         # "fleet_details": fleet.fleet,
         # "aggregate": fleet.aggregate,
         # "differential": fleet.differential,
-        "avoid_cdn": avoid_cdn(),  # AVOID_CDN setting
         "fleet_id": fleet_id,
     }
 

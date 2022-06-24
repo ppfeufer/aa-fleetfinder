@@ -3,7 +3,7 @@
 {% load i18n %}
 {% load humanize %}
 {% load evelinks %}
-{% load static %}
+{% load fleetfinder_versioned_static %}
 
 {% block page_title %}{% translate "Fleet Details" %}{% endblock %}
 
@@ -58,7 +58,7 @@
 {% block extra_css %}
     {% include 'bundles/datatables-css.html' %}
 
-    <link rel="stylesheet" href="{% static 'fleetfinder/css/fleetfinder.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% fleetfinder_static 'fleetfinder/css/fleetfinder.css' %}" type="text/css">
 {% endblock %}
 
 {% block extra_javascript %}
@@ -113,8 +113,4 @@
             }, 15000);
         });
     </script>
-{% endblock %}
-
-{% block extra_script %}
-
 {% endblock %}
