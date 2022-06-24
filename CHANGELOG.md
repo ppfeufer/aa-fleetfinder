@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Versioned static template tag
 
+### Removed
+
+- AVOID_CDN setting, we serve always locally (GDPR)
+
 
 ## [0.1.0-alpha.15] - 2022-03-02
 
