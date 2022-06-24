@@ -4,6 +4,7 @@
 {% load humanize %}
 {% load evelinks %}
 {% load static %}
+{% load fleetfinder_versioned_static %}
 
 {% block fleetfinder_block %}
     {% if error %}
@@ -40,7 +41,7 @@
 {% block extra_css %}
     {% include 'bundles/datatables-css.html' %}
 
-    <link rel="stylesheet" href="{% static 'fleetfinder/css/fleetfinder.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% fleetfinder_static 'fleetfinder/css/fleetfinder.css' %}" type="text/css">
 {% endblock %}
 
 {% block extra_javascript %}
