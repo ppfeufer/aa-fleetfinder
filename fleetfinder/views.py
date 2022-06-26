@@ -65,30 +65,27 @@ def ajax_dashboard(request) -> JsonResponse:
     :return:
     """
 
-    data = list()
+    data = []
     groups = request.user.groups.all()
     fleets = Fleet.objects.filter(Q(groups__group__in=groups) | Q(groups=None)).all()
 
     for fleet in fleets:
         fleet_commander_name = fleet.fleet_commander.character_name
+        fleet_commander_portrait_url = character_portrait_url(
+            character_id=fleet.fleet_commander.character_id, size=32
+        )
         fleet_commander_portrait = (
             '<img class="img-rounded eve-character-portrait" '
-            'src="{portrait_url}" '
-            'alt="{character_name}">'.format(
-                portrait_url=character_portrait_url(
-                    character_id=fleet.fleet_commander.character_id, size=32
-                ),
-                character_name=fleet_commander_name,
-            )
+            f'src="{fleet_commander_portrait_url}" '
+            f'alt="{fleet_commander_name}">'
         )
         fleet_commander_html = fleet_commander_portrait + fleet_commander_name
 
         button_join_url = reverse("fleetfinder:join_fleet", args=[fleet.fleet_id])
+        button_join_text = _("Join Fleet")
         button_join = (
-            '<a href="{button_url}" '
-            'class="btn btn-sm btn-default">{button_text}</a>'.format(
-                button_url=button_join_url, button_text=_("Join Fleet")
-            )
+            f'<a href="{button_join_url}" '
+            f'class="btn btn-sm btn-default">{button_join_text}</a>'
         )
 
         button_details = ""
@@ -98,19 +95,17 @@ def ajax_dashboard(request) -> JsonResponse:
             button_details_url = reverse(
                 "fleetfinder:fleet_details", args=[fleet.fleet_id]
             )
+            button_details_text = _("View fleet details")
             button_details = (
-                '<a href="{button_url}" '
-                'class="btn btn-sm btn-default">{button_text}</a>'.format(
-                    button_url=button_details_url, button_text=_("View fleet details")
-                )
+                f'<a href="{button_details_url}" '
+                f'class="btn btn-sm btn-default">{button_details_text}</a>'
             )
 
             button_edit_url = reverse("fleetfinder:edit_fleet", args=[fleet.fleet_id])
+            button_edit_text = _("Edit Fleet advert")
             button_edit = (
-                '<a href="{button_url}" '
-                'class="btn btn-sm btn-default">{button_text}</a>'.format(
-                    button_url=button_edit_url, button_text=_("Edit Fleet advert")
-                )
+                f'<a href="{button_edit_url}" '
+                f'class="btn btn-sm btn-default">{button_edit_text}</a>'
             )
 
         data.append(
@@ -192,11 +187,7 @@ def edit_fleet(request, fleet_id):
         "fleet": fleet,
     }
 
-    logger.info(
-        "Fleet {fleet_id} edit view by {user}".format(
-            fleet_id=fleet_id, user=request.user
-        )
-    )
+    logger.info(f"Fleet {fleet_id} edit view by {request.user}")
 
     return render(request, "fleetfinder/edit_fleet.html", context=context)
 
@@ -302,11 +293,7 @@ def fleet_details(request, fleet_id):
         "fleet_id": fleet_id,
     }
 
-    logger.info(
-        "Fleet {fleet_id} details view called by {user}".format(
-            fleet_id=fleet_id, user=request.user
-        )
-    )
+    logger.info(f"Fleet {fleet_id} details view called by {request.user}")
 
     return render(request, "fleetfinder/fleet_details.html", context=context)
 
