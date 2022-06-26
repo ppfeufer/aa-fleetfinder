@@ -95,14 +95,14 @@ def ajax_dashboard(request) -> JsonResponse:
             button_details_url = reverse(
                 "fleetfinder:fleet_details", args=[fleet.fleet_id]
             )
-            button_details_text = _("View fleet details")
+            button_details_text = _("View Fleet Details")
             button_details = (
                 f'<a href="{button_details_url}" '
                 f'class="btn btn-sm btn-default">{button_details_text}</a>'
             )
 
             button_edit_url = reverse("fleetfinder:edit_fleet", args=[fleet.fleet_id])
-            button_edit_text = _("Edit Fleet advert")
+            button_edit_text = _("Edit Fleet Advert")
             button_edit = (
                 f'<a href="{button_edit_url}" '
                 f'class="btn btn-sm btn-default">{button_edit_text}</a>'
@@ -163,7 +163,7 @@ def create_fleet(request, token):
 
         logger.info(f"Fleet created by {request.user}")
 
-        return render(request, "fleetfinder/create_fleet.html", context=context)
+        return render(request, "fleetfinder/create-fleet.html", context=context)
 
     return redirect("fleetfinder:dashboard")
 
@@ -189,7 +189,7 @@ def edit_fleet(request, fleet_id):
 
     logger.info(f"Fleet {fleet_id} edit view by {request.user}")
 
-    return render(request, "fleetfinder/edit_fleet.html", context=context)
+    return render(request, "fleetfinder/edit-fleet.html", context=context)
 
 
 @login_required()
@@ -225,7 +225,7 @@ def join_fleet(request, fleet_id):
 
     context["characters"] = characters
 
-    return render(request, "fleetfinder/join_fleet.html", context=context)
+    return render(request, "fleetfinder/join-fleet.html", context=context)
 
 
 @login_required()
@@ -295,7 +295,7 @@ def fleet_details(request, fleet_id):
 
     logger.info(f"Fleet {fleet_id} details view called by {request.user}")
 
-    return render(request, "fleetfinder/fleet_details.html", context=context)
+    return render(request, "fleetfinder/fleet-details.html", context=context)
 
 
 @login_required()

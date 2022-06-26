@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 - Switch to f-strings for formatted strings
+- Templates cleaned up
 
 
 ## [0.1.0-alpha.16] - 2022-06-24

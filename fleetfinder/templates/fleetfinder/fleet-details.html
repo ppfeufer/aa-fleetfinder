@@ -1,8 +1,6 @@
 {% extends 'fleetfinder/base.html' %}
 
 {% load i18n %}
-{% load humanize %}
-{% load evelinks %}
 {% load fleetfinder_versioned_static %}
 
 {% block page_title %}{% translate "Fleet Details" %}{% endblock %}
@@ -68,8 +66,6 @@
         $(document).ready(function(){
             var populateDatatable = function() {
                 $.get('{% url "fleetfinder:ajax_fleet_details" fleet_id %}', function(data) {
-                    console.log(data);
-
                     $('#table_fleet_members').DataTable({
                         destroy: true,
                         paging: false,
