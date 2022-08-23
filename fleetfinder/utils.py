@@ -1,5 +1,5 @@
 """
-utilities
+Utilities
 """
 
 # Standard Library
@@ -8,7 +8,7 @@ import logging
 
 class LoggerAddTag(logging.LoggerAdapter):
     """
-    add custom tag to a logger
+    Add custom tag to a logger
     """
 
     def __init__(self, my_logger, prefix):

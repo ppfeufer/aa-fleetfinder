@@ -20,7 +20,7 @@ class General(models.Model):
 
     class Meta:
         """
-        meta
+        Meta Definitions
         """
 
         verbose_name = "Fleet Finder"
@@ -34,7 +34,7 @@ class General(models.Model):
 
 class Fleet(models.Model):
     """
-    Fleet
+    Fleet Model
     """
 
     fleet_id = models.BigIntegerField(primary_key=True)
@@ -59,7 +59,7 @@ class Fleet(models.Model):
 
     class Meta:
         """
-        meta
+        Meta Definitions
         """
 
         default_permissions = ()

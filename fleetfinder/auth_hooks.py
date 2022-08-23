@@ -1,5 +1,5 @@
 """
-auth hooks
+Auth hooks
 """
 
 # Django
@@ -30,7 +30,7 @@ class FleetFinderMenuItem(MenuItemHook):
 
     def render(self, request):
         """
-        render
+        Render app pages
         :param request:
         :return:
         """
@@ -44,7 +44,7 @@ class FleetFinderMenuItem(MenuItemHook):
 @hooks.register("menu_item_hook")
 def register_menu():
     """
-    register our menu
+    Register our menu
     :return:
     """
 
@@ -54,7 +54,7 @@ def register_menu():
 @hooks.register("url_hook")
 def register_urls():
     """
-    register our urls
+    Register our urls
     :return:
     """
 

@@ -1,5 +1,5 @@
 """
-views
+Views
 """
 
 # Third Party
@@ -34,7 +34,7 @@ logger = LoggerAddTag(get_extension_logger(__name__), __title__)
 @permission_required("fleetfinder.access_fleetfinder")
 def dashboard(request):
     """
-    dashboard view
+    Dashboard view
     :param request:
     :return:
     """
@@ -135,7 +135,7 @@ def ajax_dashboard(request) -> JsonResponse:
 )
 def create_fleet(request, token):
     """
-    create fleet view
+    Create fleet view
     :param request:
     :param token:
     :return:
@@ -172,7 +172,7 @@ def create_fleet(request, token):
 @permission_required("fleetfinder.manage_fleets")
 def edit_fleet(request, fleet_id):
     """
-    fleet edit view
+    Fleet edit view
     :param request:
     :param fleet_id:
     :return:
@@ -196,7 +196,7 @@ def edit_fleet(request, fleet_id):
 @permission_required("fleetfinder.access_fleetfinder")
 def join_fleet(request, fleet_id):
     """
-    join fleet view
+    Join fleet view
     :param request:
     :param fleet_id:
     :return:
@@ -232,7 +232,7 @@ def join_fleet(request, fleet_id):
 @permission_required("fleetfinder.manage_fleets")
 def save_fleet(request):
     """
-    save fleet
+    Save fleet
     :param request:
     :return:
     """
@@ -251,8 +251,8 @@ def save_fleet(request):
             open_fleet(request.POST["character_id"], motd, free_move, name, groups)
         except HTTPNotFound as ex:
             if request.POST.get("origin", "") == "edit":
-                # Here ccp return "character not in fleet".
-                # Instead push our own message to be clearer
+                # Here ccp returns "character not in fleet".
+                # Instead, push our own message to be clearer
                 request.session["error_edit_fleet"] = {
                     "error": "Fleet advert is no longer valid"
                 }
@@ -277,7 +277,7 @@ def save_fleet(request):
 @permission_required("fleetfinder.manage_fleets")
 def fleet_details(request, fleet_id):
     """
-    fleet details view
+    Fleet details view
     :param request:
     :param fleet_id:
     :return:
@@ -302,7 +302,7 @@ def fleet_details(request, fleet_id):
 @permission_required("fleetfinder.manage_fleets")
 def ajax_fleet_details(request, fleet_id) -> JsonResponse:
     """
-
+    Ajax :: Fleet Details
     :param request:
     :param fleet_id:
     """
@@ -328,7 +328,7 @@ def ajax_fleet_details(request, fleet_id) -> JsonResponse:
 @register.filter
 def get_item(dictionary, key):
     """
-    little helper: get a key from a dictionary
+    Little helper: get a key from a dictionary
     :param dictionary:
     :param key:
     :return:

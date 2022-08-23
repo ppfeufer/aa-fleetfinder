@@ -1,5 +1,5 @@
 """
-init
+Initialize the app
 """
 
 github_url: str = "https://github.com/ppfeufer/aa-fleetfinder"

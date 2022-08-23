@@ -1,5 +1,5 @@
 """
-apps
+App config
 """
 
 # Django
@@ -8,7 +8,7 @@ from django.apps import AppConfig
 
 class FleetFinderConfig(AppConfig):
     """
-    application config
+    Application config
     """
 
     name = "fleetfinder"

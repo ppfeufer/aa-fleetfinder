@@ -1,5 +1,5 @@
 """
-tasks
+Tasks
 """
 
 # Standard Library
@@ -50,12 +50,12 @@ CACHE_KEY_FLEET_CHANGED_ERROR = (
 CACHE_MAX_ERROR_COUNT = 3
 
 
-# params for all tasks
+# Params for all tasks
 TASK_DEFAULT_KWARGS = {
     "time_limit": 120,  # stop after 2 minutes
 }
 
-# params for tasks that make ESI calls
+# Params for tasks that make ESI calls
 TASK_ESI_KWARGS = {
     **TASK_DEFAULT_KWARGS,
     **{
@@ -74,7 +74,7 @@ TASK_ESI_KWARGS = {
 @shared_task
 def open_fleet(character_id, motd, free_move, name, groups):
     """
-    open a fleet
+    Open a fleet
     :param character_id:
     :param motd:
     :param free_move:
@@ -119,7 +119,7 @@ def open_fleet(character_id, motd, free_move, name, groups):
 @shared_task
 def send_fleet_invitation(character_ids, fleet_id):
     """
-    send a fleet invitation through the eve client
+    Send a fleet invitation through the eve client
     :param character_ids:
     :param fleet_id:
     """
@@ -149,7 +149,7 @@ def send_fleet_invitation(character_ids, fleet_id):
 @shared_task
 def send_invitation(character_id, fleet_commander_token, fleet_id):
     """
-    open the fleet invite window in the eve client
+    Open the fleet invite window in the eve client
     :param character_id:
     :param fleet_commander_token:
     :param fleet_id:
@@ -167,16 +167,14 @@ def send_invitation(character_id, fleet_commander_token, fleet_id):
 
 def close_esi_fleet(fleet: Fleet, reason: str) -> None:
     """
-    closing registered fleet
+    Closing registered fleet
     :param fleet:
     :param reason:
     """
 
-    logger.info(
-        "Closing fleet with ID {fleet_id}. Reason: {reason}".format(
-            fleet_id=fleet.fleet_id, reason=reason
-        )
-    )
+    fleet_id = fleet.fleet_id
+
+    logger.info(f"Closing fleet with ID {fleet_id}. Reason: {reason}")
 
     fleet.delete()
 
@@ -196,11 +194,7 @@ def esi_fleetadvert_error_handling(
 
         error_count += 1
 
-        logger.info(
-            '"{logger_message}" Error Count: {error_count}.'.format(
-                logger_message=logger_message, error_count=error_count
-            )
-        )
+        logger.info(f'"{logger_message}" Error Count: {error_count}.')
 
         cache.set(
             cache_key + str(fleet.fleet_id),
@@ -213,7 +207,7 @@ def esi_fleetadvert_error_handling(
 
 def init_error_caches(fleet: Fleet) -> None:
     """
-    initialize error caches
+    Initialize error caches
     :param fleet:
     """
 
@@ -230,36 +224,25 @@ def init_error_caches(fleet: Fleet) -> None:
 @shared_task(**{**TASK_ESI_KWARGS}, **{"base": QueueOnce})
 def check_fleet_adverts():
     """
-    scheduled task
+    Scheduled task
     check for fleets adverts
     """
 
     required_scopes = ["esi-fleets.read_fleet.v1", "esi-fleets.write_fleet.v1"]
-
     esi_client = esi.client
-
     fleets = Fleet.objects.all()
-
     fleet_count = fleets.count()
 
-    logger.info(
-        "{fleet_count} registered fleets found. {processing_text}".format(
-            fleet_count=fleet_count,
-            processing_text="Processing ..."
-            if fleet_count > 0
-            else "Nothing to do ...",
-        )
-    )
+    processing_text = "Processing ..." if fleet_count > 0 else "Nothing to do ..."
+
+    logger.info(f"{fleet_count} registered fleets found. {processing_text}")
 
     if fleet_count > 0:
         for fleet in fleets:
+            fleet_id = fleet.fleet_id
             init_error_caches(fleet=fleet)
 
-            logger.info(
-                "Processing information for fleet with ID {fleet_id}".format(
-                    fleet_id=fleet.fleet_id
-                )
-            )
+            logger.info(f"Processing information for fleet with ID {fleet_id}")
 
             token = Token.get_token(fleet.fleet_commander.character_id, required_scopes)
 
@@ -298,7 +281,7 @@ def check_fleet_adverts():
 @shared_task
 def get_fleet_composition(fleet_id):
     """
-    getting the fleet composition
+    Getting the fleet composition
     :param fleet_id:
     :return:
     """
@@ -367,12 +350,12 @@ def get_fleet_composition(fleet_id):
 @shared_task
 def get_fleet_aggregate(fleet_infos):
     """
-    getting aggregate numbers for fleet composition
+    Getting aggregate numbers for fleet composition
     :param fleet_infos:
     :return:
     """
 
-    counts = dict()
+    counts = {}
 
     for member in fleet_infos:
         type_ = member.get("ship_type_name")
@@ -387,7 +370,7 @@ def get_fleet_aggregate(fleet_infos):
 
 class FleetViewAggregate:
     """
-    helper class
+    Helper class
     """
 
     def __init__(
