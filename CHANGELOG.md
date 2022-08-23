@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In Development] - Unreleased
 
+### Changed
+
+- CSS moved to bundled HTML template
+
 
 ## [0.1.0-alpha.17] - 2022-07-11
 
