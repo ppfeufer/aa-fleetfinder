@@ -49,6 +49,9 @@ CACHE_KEY_NO_FLEET_ERROR = (
 CACHE_KEY_FLEET_CHANGED_ERROR = (
     "fleetfinder_task_check_fleet_adverts_error_counter_fleet_changed_"
 )
+CACHE_KEY_NO_FLEETBOSS_ERROR = (
+    "fleetfinder_task_check_fleet_adverts_error_counter_no_fleetboss_"
+)
 CACHE_MAX_ERROR_COUNT = 3
 
 
@@ -86,11 +89,9 @@ def open_fleet(character_id, motd, free_move, name, groups):
     """
 
     required_scopes = ["esi-fleets.read_fleet.v1", "esi-fleets.write_fleet.v1"]
-
-    esi_client = esi.client
     token = Token.get_token(character_id, required_scopes)
 
-    fleet_result = esi_client.Fleets.get_characters_character_id_fleet(
+    fleet_result = esi.client.Fleets.get_characters_character_id_fleet(
         character_id=token.character_id, token=token.valid_access_token()
     ).result()
     fleet_id = fleet_result.pop("fleet_id")
@@ -113,7 +114,7 @@ def open_fleet(character_id, motd, free_move, name, groups):
     fleet.groups.set(groups)
 
     esi_fleet = {"is_free_move": free_move, "motd": motd}
-    esi_client.Fleets.put_fleets_fleet_id(
+    esi.client.Fleets.put_fleets_fleet_id(
         fleet_id=fleet_id, token=token.valid_access_token(), new_settings=esi_fleet
     ).result()
 
@@ -157,10 +158,9 @@ def send_invitation(character_id, fleet_commander_token, fleet_id):
     :param fleet_id:
     """
 
-    esi_client = esi.client
     invitation = {"character_id": character_id, "role": "squad_member"}
 
-    esi_client.Fleets.post_fleets_fleet_id_members(
+    esi.client.Fleets.post_fleets_fleet_id_members(
         fleet_id=fleet_id,
         token=fleet_commander_token.valid_access_token(),
         invitation=invitation,
@@ -222,16 +222,17 @@ def init_error_caches(fleet: Fleet) -> None:
     if cache.get(CACHE_KEY_NOT_IN_FLEET_ERROR + str(fleet.fleet_id)) is None:
         cache.set(CACHE_KEY_NOT_IN_FLEET_ERROR + str(fleet.fleet_id), "0", 75)
 
+    if cache.get(CACHE_KEY_NO_FLEETBOSS_ERROR + str(fleet.fleet_id)) is None:
+        cache.set(CACHE_KEY_NO_FLEETBOSS_ERROR + str(fleet.fleet_id), "0", 75)
+
 
 @shared_task(**{**TASK_ESI_KWARGS}, **{"base": QueueOnce})
 def check_fleet_adverts():
     """
-    Scheduled task
-    check for fleets adverts
+    Scheduled task :: Check for fleets adverts
     """
 
     required_scopes = ["esi-fleets.read_fleet.v1", "esi-fleets.write_fleet.v1"]
-    esi_client = esi.client
     fleets = Fleet.objects.all()
     fleet_count = fleets.count()
 
@@ -246,29 +247,22 @@ def check_fleet_adverts():
 
             logger.info(f"Processing information for fleet with ID {fleet_id}")
 
-            token = Token.get_token(fleet.fleet_commander.character_id, required_scopes)
-
             try:
-                fleet_result = esi_client.Fleets.get_characters_character_id_fleet(
-                    character_id=token.character_id, token=token.valid_access_token()
+                esi_token = Token.get_token(
+                    fleet.fleet_commander.character_id, required_scopes
+                )
+                fleet_from_esi = esi.client.Fleets.get_characters_character_id_fleet(
+                    character_id=esi_token.character_id,
+                    token=esi_token.valid_access_token(),
                 ).result()
-
-                fleet_id = fleet_result["fleet_id"]
-
-                if fleet_id != fleet.fleet_id:
-                    esi_fleetadvert_error_handling(
-                        cache_key=CACHE_KEY_FLEET_CHANGED_ERROR,
-                        fleet=fleet,
-                        logger_message="FC switched to another fleet",
-                    )
 
             except HTTPNotFound:
                 esi_fleetadvert_error_handling(
                     cache_key=CACHE_KEY_NOT_IN_FLEET_ERROR,
                     fleet=fleet,
                     logger_message=(
-                        "FC is not in the registered fleet anymore or "
-                        "fleet is no longer available."
+                        "FC is not in the registered fleet anymore or fleet is no "
+                        "longer available."
                     ),
                 )
 
@@ -278,6 +272,28 @@ def check_fleet_adverts():
                     fleet=fleet,
                     logger_message="Registered fleet is no longer available.",
                 )
+
+            # We have a valid fleet result from ESI
+            else:
+                if fleet_id == fleet_from_esi["fleet_id"]:
+                    # Check if we deal with the fleet boss here
+                    try:
+                        _ = esi.client.Fleets.get_fleets_fleet_id_members(
+                            fleet_id=fleet_from_esi["fleet_id"],
+                            token=esi_token.valid_access_token(),
+                        ).result()
+                    except Exception:
+                        esi_fleetadvert_error_handling(
+                            cache_key=CACHE_KEY_NO_FLEETBOSS_ERROR,
+                            fleet=fleet,
+                            logger_message="FC is no longer the fleet boss.",
+                        )
+                else:
+                    esi_fleetadvert_error_handling(
+                        cache_key=CACHE_KEY_FLEET_CHANGED_ERROR,
+                        fleet=fleet,
+                        logger_message="FC switched to another fleet",
+                    )
 
 
 @shared_task
@@ -289,12 +305,9 @@ def get_fleet_composition(fleet_id):
     """
 
     required_scopes = ["esi-fleets.read_fleet.v1", "esi-fleets.write_fleet.v1"]
-
-    esi_client = esi.client
-
     fleet = Fleet.objects.get(fleet_id=fleet_id)
     token = Token.get_token(fleet.fleet_commander.character_id, required_scopes)
-    fleet_infos = esi_client.Fleets.get_fleets_fleet_id_members(
+    fleet_infos = esi.client.Fleets.get_fleets_fleet_id_members(
         fleet_id=fleet_id, token=token.valid_access_token()
     ).result()
 
@@ -312,7 +325,7 @@ def get_fleet_composition(fleet_id):
     ids.extend(list(systems.keys()))
     ids.extend(list(ship_type.keys()))
 
-    ids_to_name = esi_client.Universe.post_universe_names(ids=ids).result()
+    ids_to_name = esi.client.Universe.post_universe_names(ids=ids).result()
 
     for member in fleet_infos:
         index_character = [x["id"] for x in ids_to_name].index(member["character_id"])
