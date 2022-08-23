@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In Development] - Unreleased
 
+### Changed
+
+- Dashboard error message replaced with Django message API
+
 
 ## [0.1.0-alpha.18] - 2022-08-23
 
