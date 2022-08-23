@@ -6,12 +6,7 @@ Tasks
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # Third Party
-from bravado.exception import (
-    HTTPBadGateway,
-    HTTPGatewayTimeout,
-    HTTPNotFound,
-    HTTPServiceUnavailable,
-)
+from bravado.exception import HTTPNotFound
 from celery import shared_task
 
 # Django
@@ -29,51 +24,18 @@ from app_utils.logging import LoggerAddTag
 
 # AA Fleet Finder
 from fleetfinder import __title__
+from fleetfinder.constants import (
+    CACHE_KEY_FLEET_CHANGED_ERROR,
+    CACHE_KEY_NO_FLEET_ERROR,
+    CACHE_KEY_NO_FLEETBOSS_ERROR,
+    CACHE_KEY_NOT_IN_FLEET_ERROR,
+    CACHE_MAX_ERROR_COUNT,
+    TASK_ESI_KWARGS,
+)
 from fleetfinder.models import Fleet
 from fleetfinder.providers import esi
 
 logger = LoggerAddTag(get_extension_logger(__name__), __title__)
-
-
-ESI_ERROR_LIMIT = 50
-ESI_TIMEOUT_ONCE_ERROR_LIMIT_REACHED = 60
-ESI_MAX_RETRIES = 3
-
-
-CACHE_KEY_NOT_IN_FLEET_ERROR = (
-    "fleetfinder_task_check_fleet_adverts_error_counter_not_in_fleet_"
-)
-CACHE_KEY_NO_FLEET_ERROR = (
-    "fleetfinder_task_check_fleet_adverts_error_counter_no_fleet_"
-)
-CACHE_KEY_FLEET_CHANGED_ERROR = (
-    "fleetfinder_task_check_fleet_adverts_error_counter_fleet_changed_"
-)
-CACHE_KEY_NO_FLEETBOSS_ERROR = (
-    "fleetfinder_task_check_fleet_adverts_error_counter_no_fleetboss_"
-)
-CACHE_MAX_ERROR_COUNT = 3
-
-
-# Params for all tasks
-TASK_DEFAULT_KWARGS = {
-    "time_limit": 120,  # stop after 2 minutes
-}
-
-# Params for tasks that make ESI calls
-TASK_ESI_KWARGS = {
-    **TASK_DEFAULT_KWARGS,
-    **{
-        "autoretry_for": (
-            OSError,
-            HTTPBadGateway,
-            HTTPGatewayTimeout,
-            HTTPServiceUnavailable,
-        ),
-        "retry_kwargs": {"max_retries": ESI_MAX_RETRIES},
-        "retry_backoff": True,
-    },
-}
 
 
 @shared_task

@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Logger messages changed to f-strings
 - Using `allianceauth-app-utils` for logging
 - Task ESI error handling improved
+- Moved constants to their own file
 - Minimum Requirements
   - Alliance Auth >= 3.0.0
   - Python >= 3.8
