@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - CSS moved to bundled HTML template
 - Logger messages changed to f-strings
+- Using `allianceauth-app-utils` for logging
 - Minimum Requirements
   - Alliance Auth >= 3.0.0
   - Python >= 3.8

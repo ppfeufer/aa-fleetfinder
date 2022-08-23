@@ -24,11 +24,13 @@ from allianceauth.services.hooks import get_extension_logger
 from allianceauth.services.tasks import QueueOnce
 from esi.models import Token
 
+# Alliance Auth (External Libs)
+from app_utils.logging import LoggerAddTag
+
 # AA Fleet Finder
 from fleetfinder import __title__
 from fleetfinder.models import Fleet
 from fleetfinder.providers import esi
-from fleetfinder.utils import LoggerAddTag
 
 logger = LoggerAddTag(get_extension_logger(__name__), __title__)
 

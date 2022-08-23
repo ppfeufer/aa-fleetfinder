@@ -21,11 +21,13 @@ from allianceauth.groupmanagement.models import AuthGroup
 from allianceauth.services.hooks import get_extension_logger
 from esi.decorators import token_required
 
+# Alliance Auth (External Libs)
+from app_utils.logging import LoggerAddTag
+
 # AA Fleet Finder
 from fleetfinder import __title__
 from fleetfinder.models import Fleet
 from fleetfinder.tasks import get_fleet_composition, open_fleet, send_fleet_invitation
-from fleetfinder.utils import LoggerAddTag
 
 logger = LoggerAddTag(get_extension_logger(__name__), __title__)
 
