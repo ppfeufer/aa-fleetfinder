@@ -205,9 +205,14 @@ def check_fleet_adverts():
     if fleet_count > 0:
         for fleet in fleets:
             fleet_id = fleet.fleet_id
+            fleet_name = fleet.name
+            fleet_commander = fleet.fleet_commander
             init_error_caches(fleet=fleet)
 
-            logger.info(f"Processing information for fleet with ID {fleet_id}")
+            logger.info(
+                f'Processing information for fleet "{fleet_name}" '
+                f"of {fleet_commander} (ESI ID: {fleet_id})"
+            )
 
             try:
                 esi_token = Token.get_token(
