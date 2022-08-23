@@ -160,11 +160,7 @@ def esi_fleetadvert_error_handling(
 
         logger.info(f'"{logger_message}" Error Count: {error_count}.')
 
-        cache.set(
-            cache_key + str(fleet.fleet_id),
-            str(error_count),
-            75,
-        )
+        cache.set(cache_key + str(fleet.fleet_id), str(error_count), 75)
     else:
         close_esi_fleet(fleet=fleet, reason=logger_message)
 

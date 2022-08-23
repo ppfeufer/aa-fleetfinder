@@ -50,8 +50,8 @@ class Fleet(models.Model):
 
     groups = models.ManyToManyField(
         AuthGroup,
-        related_name="restricted_groups",
-        help_text="Group listed here will be able to join the fleet",
+        related_name="fleetfinder_restricted_groups",
+        help_text="Groups listed here will be able to join the fleet",
     )
 
     class Meta:

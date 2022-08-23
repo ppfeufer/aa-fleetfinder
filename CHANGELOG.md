@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Using `allianceauth-app-utils` for logging
 - Task ESI error handling improved
 - Moved constants to their own file
+- `related_name` for group restrictions in model to prevent conflicts with other
+  modules. The name was too generic.
 - Minimum Requirements
   - Alliance Auth >= 3.0.0
   - Python >= 3.8
