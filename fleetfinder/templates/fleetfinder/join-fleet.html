@@ -1,7 +1,6 @@
 {% extends 'fleetfinder/base.html' %}
 
 {% load i18n %}
-{% load fleetfinder_versioned_static %}
 
 {% block page_title %}{% translate "Join Fleet" %}{% endblock %}
 
@@ -19,7 +18,6 @@
                     <form class="form-signin" role="form" action="" method="POST">
                         {% csrf_token %}
 
-                        </br>
                         <label for="character_ids">{% translate "Select the characters to invite" %}</label>
 
                         <select class="multiselect-ui" multiple="multiple" name="character_ids" id="character_ids">
@@ -27,9 +25,8 @@
                                 <option value="{{ character.character_id }}" >{{ character.character_name }}</option>
                             {% endfor %}
                         </select>
-                        </br>
 
-                        <button class="btn btn-primary btn-block" style="margin-top: 10px;"type="submit">{% translate "Send fleet invite(s)" %}</button>
+                        <button class="btn btn-primary btn-block" style="margin-top: 10px;" type="submit">{% translate "Send fleet invite(s)" %}</button>
                     </form>
                 </div>
             </div>
@@ -40,14 +37,13 @@
 {% block extra_css %}
     {% include 'fleetfinder/bundles/css/multi-select-css.html' %}
     {% include 'fleetfinder/bundles/css/slim-select-css.html' %}
-
-    <link rel="stylesheet" href="{% fleetfinder_static 'fleetfinder/css/fleetfinder.css' %}" type="text/css">
+    {% include 'fleetfinder/bundles/css/fleetfinder-css.html' %}
 {% endblock %}
 
 {% block extra_javascript %}
     {% include 'fleetfinder/bundles/js/slim-select-js.html' %}
 
-    <script type="application/javascript">
+    <script>
         new SlimSelect({
             select: "#character_ids",
             hideSelectedOption: true

@@ -42,13 +42,13 @@ repos:
       - id: text-unicode-replacement-char
 
   - repo: https://github.com/adamchainz/django-upgrade
-    rev: 1.7.0
+    rev: 1.8.0
     hooks:
       - id: django-upgrade
         args: [ --target-version=3.2 ]
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.37.0
+    rev: v2.37.3
     hooks:
       - id: pyupgrade
         args: [ --py37-plus ]
@@ -59,7 +59,7 @@ repos:
       - id: flake8
 
   - repo: https://github.com/asottile/yesqa
-    rev: v1.3.0
+    rev: v1.4.0
     hooks:
       - id: yesqa
 
@@ -82,6 +82,6 @@ repos:
         args: [ --target-version=py37 ]
 
   - repo: https://github.com/asottile/setup-cfg-fmt
-    rev: v1.20.1
+    rev: v2.0.0
     hooks:
       - id: setup-cfg-fmt

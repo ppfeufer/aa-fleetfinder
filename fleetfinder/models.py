@@ -1,9 +1,6 @@
 """
-models
+Models
 """
-
-# Standard Library
-from datetime import datetime
 
 # Django
 from django.db import models
@@ -20,7 +17,7 @@ class General(models.Model):
 
     class Meta:
         """
-        meta
+        Meta Definitions
         """
 
         verbose_name = "Fleet Finder"
@@ -34,7 +31,7 @@ class General(models.Model):
 
 class Fleet(models.Model):
     """
-    Fleet
+    Fleet Model
     """
 
     fleet_id = models.BigIntegerField(primary_key=True)
@@ -42,7 +39,7 @@ class Fleet(models.Model):
     fleet_commander = models.ForeignKey(
         EveCharacter,
         on_delete=models.SET_NULL,
-        related_name="+",
+        related_name="fleetfinder_fleet_commander",
         default=None,
         null=True,
         blank=True,
@@ -53,38 +50,13 @@ class Fleet(models.Model):
 
     groups = models.ManyToManyField(
         AuthGroup,
-        related_name="restricted_groups",
-        help_text="Group listed here will be able to join the fleet",
+        related_name="fleetfinder_restricted_groups",
+        help_text="Groups listed here will be able to join the fleet",
     )
 
     class Meta:
         """
-        meta
-        """
-
-        default_permissions = ()
-
-
-class FleetInformation(models.Model):
-    """
-    Fleet Information
-    """
-
-    fleet = models.ForeignKey(
-        Fleet,
-        on_delete=models.CASCADE,
-        default=None,
-        null=True,
-        blank=True,
-        related_name="+",
-    )
-    ship_type_name = models.CharField(max_length=100)
-    count = models.IntegerField()
-    date = models.DateTimeField(default=datetime.now)
-
-    class Meta:
-        """
-        meta
+        Meta Definitions
         """
 
         default_permissions = ()

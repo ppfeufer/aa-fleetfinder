@@ -1,5 +1,5 @@
 """
-views
+Views
 """
 
 # Third Party
@@ -21,11 +21,13 @@ from allianceauth.groupmanagement.models import AuthGroup
 from allianceauth.services.hooks import get_extension_logger
 from esi.decorators import token_required
 
+# Alliance Auth (External Libs)
+from app_utils.logging import LoggerAddTag
+
 # AA Fleet Finder
 from fleetfinder import __title__
 from fleetfinder.models import Fleet
 from fleetfinder.tasks import get_fleet_composition, open_fleet, send_fleet_invitation
-from fleetfinder.utils import LoggerAddTag
 
 logger = LoggerAddTag(get_extension_logger(__name__), __title__)
 
@@ -34,17 +36,12 @@ logger = LoggerAddTag(get_extension_logger(__name__), __title__)
 @permission_required("fleetfinder.access_fleetfinder")
 def dashboard(request):
     """
-    dashboard view
+    Dashboard view
     :param request:
     :return:
     """
 
-    # groups = request.user.groups.all()
-    # fleets = Fleet.objects.filter(Q(groups__group__in=groups) | Q(groups=None)).all()
-
-    context = {
-        # "fleets": fleets
-    }
+    context = {}
 
     if "error_edit_fleet" in request.session:
         context["error"] = request.session["error_edit_fleet"].get("error", "")
@@ -60,7 +57,7 @@ def dashboard(request):
 @permission_required("fleetfinder.access_fleetfinder")
 def ajax_dashboard(request) -> JsonResponse:
     """
-    dashboard view
+    Ajax :: Dashboard information
     :param request:
     :return:
     """
@@ -135,7 +132,7 @@ def ajax_dashboard(request) -> JsonResponse:
 )
 def create_fleet(request, token):
     """
-    create fleet view
+    Create fleet view
     :param request:
     :param token:
     :return:
@@ -172,7 +169,7 @@ def create_fleet(request, token):
 @permission_required("fleetfinder.manage_fleets")
 def edit_fleet(request, fleet_id):
     """
-    fleet edit view
+    Fleet edit view
     :param request:
     :param fleet_id:
     :return:
@@ -196,7 +193,7 @@ def edit_fleet(request, fleet_id):
 @permission_required("fleetfinder.access_fleetfinder")
 def join_fleet(request, fleet_id):
     """
-    join fleet view
+    Join fleet view
     :param request:
     :param fleet_id:
     :return:
@@ -232,7 +229,7 @@ def join_fleet(request, fleet_id):
 @permission_required("fleetfinder.manage_fleets")
 def save_fleet(request):
     """
-    save fleet
+    Save fleet
     :param request:
     :return:
     """
@@ -251,8 +248,8 @@ def save_fleet(request):
             open_fleet(request.POST["character_id"], motd, free_move, name, groups)
         except HTTPNotFound as ex:
             if request.POST.get("origin", "") == "edit":
-                # Here ccp return "character not in fleet".
-                # Instead push our own message to be clearer
+                # Here ccp returns "character not in fleet".
+                # Instead, push our own message to be clearer
                 request.session["error_edit_fleet"] = {
                     "error": "Fleet advert is no longer valid"
                 }
@@ -277,21 +274,13 @@ def save_fleet(request):
 @permission_required("fleetfinder.manage_fleets")
 def fleet_details(request, fleet_id):
     """
-    fleet details view
+    Fleet details view
     :param request:
     :param fleet_id:
     :return:
     """
 
-    # fleet = get_fleet_composition(fleet_id)
-
-    context = {
-        # "fleet": fleet,
-        # "fleet_details": fleet.fleet,
-        # "aggregate": fleet.aggregate,
-        # "differential": fleet.differential,
-        "fleet_id": fleet_id,
-    }
+    context = {"fleet_id": fleet_id}
 
     logger.info(f"Fleet {fleet_id} details view called by {request.user}")
 
@@ -302,20 +291,15 @@ def fleet_details(request, fleet_id):
 @permission_required("fleetfinder.manage_fleets")
 def ajax_fleet_details(request, fleet_id) -> JsonResponse:
     """
-
+    Ajax :: Fleet Details
     :param request:
     :param fleet_id:
     """
 
     fleet = get_fleet_composition(fleet_id)
 
-    data = {
-        "fleet_member": [],
-        # "differential": fleet.differential,
-        "fleet_composition": [],
-    }
+    data = {"fleet_member": [], "fleet_composition": []}
 
-    # data = {"differential": [fleet.differential]}
     for member in fleet.fleet:
         data["fleet_member"].append(member)
 
@@ -328,7 +312,7 @@ def ajax_fleet_details(request, fleet_id) -> JsonResponse:
 @register.filter
 def get_item(dictionary, key):
     """
-    little helper: get a key from a dictionary
+    Little helper: get a key from a dictionary
     :param dictionary:
     :param key:
     :return:

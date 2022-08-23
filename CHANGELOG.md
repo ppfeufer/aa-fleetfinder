@@ -9,6 +9,30 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [In Development] - Unreleased
 
 
+## [0.1.0-alpha.18] - 2022-08-23
+
+### Added
+
+- `related_name` to `fleet_commander` in model
+
+### Changed
+
+- CSS moved to bundled HTML template
+- Logger messages changed to f-strings
+- Using `allianceauth-app-utils` for logging
+- Task ESI error handling improved
+- Moved constants to their own file
+- `related_name` for group restrictions in model to prevent conflicts with other
+  modules. The name was too generic.
+- Minimum Requirements
+  - Alliance Auth >= 3.0.0
+  - Python >= 3.8
+
+### Removed
+
+- Unused code
+
+
 ## [0.1.0-alpha.17] - 2022-07-11
 
 ### Changed
