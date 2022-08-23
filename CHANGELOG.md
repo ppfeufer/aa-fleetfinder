@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 - CSS moved to bundled HTML template
+- Minimum Requirements
+  - Alliance Auth >= 3.0.0
+  - Python >= 3.8
 
 
 ## [0.1.0-alpha.17] - 2022-07-11
