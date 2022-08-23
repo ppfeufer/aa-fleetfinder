@@ -80,13 +80,13 @@
     {% include 'fleetfinder/bundles/css/multi-select-css.html' %}
     {% include 'fleetfinder/bundles/css/slim-select-css.html' %}
 
-    <link rel="stylesheet" href="{% fleetfinder_static 'fleetfinder/css/fleetfinder.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% fleetfinder_static 'fleetfinder/css/fleetfinder.css' %}">
 {% endblock %}
 
 {% block extra_javascript %}
     {% include 'fleetfinder/bundles/js/slim-select-js.html' %}
 
-    <script type="application/javascript">
+    <script>
         new SlimSelect({
             select: "#groups",
             hideSelectedOption: true

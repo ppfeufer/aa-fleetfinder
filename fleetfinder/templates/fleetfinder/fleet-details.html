@@ -18,9 +18,11 @@
                 <div class="panel-body">
                     <table class="table table-striped table-hover table-vertical-middle" id="table_fleet_composition" style="width: 100%;">
                         <thead>
-                            <th>{% translate "Ship Name" %}</th>
-                            <th>{% translate "Quantity" %}</th>
-{#                            <th style="width: 200px;">{% translate "Since Last Update" %}</th>#}
+                            <tr>
+                                <th>{% translate "Ship Name" %}</th>
+                                <th>{% translate "Quantity" %}</th>
+{#                                <th style="width: 200px;">{% translate "Since Last Update" %}</th>#}
+                            </tr>
                         </thead>
 
                         <tbody></tbody>
@@ -40,9 +42,11 @@
                 <div class="panel-body">
                     <table class="table table-striped table-hover table-vertical-middle" id="table_fleet_members" style="width: 100%;">
                         <thead>
-                            <th>{% translate "Name" %}</th>
-                            <th>{% translate "Ship type" %}</th>
-                            <th>{% translate "System" %}</th>
+                            <tr>
+                                <th>{% translate "Name" %}</th>
+                                <th>{% translate "Ship type" %}</th>
+                                <th>{% translate "System" %}</th>
+                            </tr>
                         </thead>
 
                         <tbody></tbody>
@@ -56,16 +60,16 @@
 {% block extra_css %}
     {% include 'bundles/datatables-css.html' %}
 
-    <link rel="stylesheet" href="{% fleetfinder_static 'fleetfinder/css/fleetfinder.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% fleetfinder_static 'fleetfinder/css/fleetfinder.css' %}">
 {% endblock %}
 
 {% block extra_javascript %}
     {% include 'bundles/datatables-js.html' %}
 
-    <script type="application/javascript">
+    <script>
         $(document).ready(function(){
-            var populateDatatable = function() {
-                $.get('{% url "fleetfinder:ajax_fleet_details" fleet_id %}', function(data) {
+            const populateDatatable = function () {
+                $.get('{% url "fleetfinder:ajax_fleet_details" fleet_id %}', function (data) {
                     $('#table_fleet_members').DataTable({
                         destroy: true,
                         paging: false,
@@ -85,7 +89,7 @@
                             {data: 'ship_type_name'},
                             {data: 'number', className: 'text-right', width: '100px'}
                         ],
-                        order: [[1, 'desc']],
+                        order: [[1, 'desc']]
                     });
                 });
             };
