@@ -39,7 +39,7 @@ class Fleet(models.Model):
     fleet_commander = models.ForeignKey(
         EveCharacter,
         on_delete=models.SET_NULL,
-        related_name="+",
+        related_name="fleetfinder_fleet_commander",
         default=None,
         null=True,
         blank=True,

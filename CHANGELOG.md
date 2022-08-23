@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In Development] - Unreleased
 
+### Added
+
+- `related_name` to `fleet_commander` in model
+
 ### Changed
 
 - CSS moved to bundled HTML template
