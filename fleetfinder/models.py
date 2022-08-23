@@ -1,9 +1,6 @@
 """
-models
+Models
 """
-
-# Standard Library
-from datetime import datetime
 
 # Django
 from django.db import models
@@ -60,31 +57,6 @@ class Fleet(models.Model):
     class Meta:
         """
         Meta Definitions
-        """
-
-        default_permissions = ()
-
-
-class FleetInformation(models.Model):
-    """
-    Fleet Information
-    """
-
-    fleet = models.ForeignKey(
-        Fleet,
-        on_delete=models.CASCADE,
-        default=None,
-        null=True,
-        blank=True,
-        related_name="+",
-    )
-    ship_type_name = models.CharField(max_length=100)
-    count = models.IntegerField()
-    date = models.DateTimeField(default=datetime.now)
-
-    class Meta:
-        """
-        meta
         """
 
         default_permissions = ()

@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Alliance Auth >= 3.0.0
   - Python >= 3.8
 
+### Removed
+
+- Unused code
+
 
 ## [0.1.0-alpha.17] - 2022-07-11
 

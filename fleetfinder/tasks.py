@@ -328,31 +328,13 @@ def get_fleet_composition(fleet_id):
 
     aggregate = get_fleet_aggregate(fleet_infos)
 
-    # differential = dict()
-    #
-    # for key, value in aggregate.items():
-    #     fleet_info_agg = FleetInformation.objects.filter(
-    #         fleet__fleet_id=fleet_id, ship_type_name=key
-    #     )
-    #
-    #     if fleet_info_agg.count() > 0:
-    #         differential[key] = value - fleet_info_agg.latest("date").count
-    #     else:
-    #         differential[key] = value
-    #
-    #     FleetInformation.objects.create(fleet=fleet, ship_type_name=key, count=value)
-
-    return FleetViewAggregate(
-        fleet_infos,
-        aggregate,
-        # differential,
-    )
+    return FleetViewAggregate(fleet_infos, aggregate)
 
 
 @shared_task
 def get_fleet_aggregate(fleet_infos):
     """
-    Getting aggregate numbers for fleet composition
+    Getting numbers for fleet composition
     :param fleet_infos:
     :return:
     """
@@ -375,12 +357,6 @@ class FleetViewAggregate:
     Helper class
     """
 
-    def __init__(
-        self,
-        fleet,
-        aggregate,
-        # differential,
-    ):
+    def __init__(self, fleet, aggregate):
         self.fleet = fleet
         self.aggregate = aggregate
-        # self.differential = differential

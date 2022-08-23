@@ -41,12 +41,7 @@ def dashboard(request):
     :return:
     """
 
-    # groups = request.user.groups.all()
-    # fleets = Fleet.objects.filter(Q(groups__group__in=groups) | Q(groups=None)).all()
-
-    context = {
-        # "fleets": fleets
-    }
+    context = {}
 
     if "error_edit_fleet" in request.session:
         context["error"] = request.session["error_edit_fleet"].get("error", "")
@@ -62,7 +57,7 @@ def dashboard(request):
 @permission_required("fleetfinder.access_fleetfinder")
 def ajax_dashboard(request) -> JsonResponse:
     """
-    dashboard view
+    Ajax :: Dashboard information
     :param request:
     :return:
     """
@@ -285,15 +280,7 @@ def fleet_details(request, fleet_id):
     :return:
     """
 
-    # fleet = get_fleet_composition(fleet_id)
-
-    context = {
-        # "fleet": fleet,
-        # "fleet_details": fleet.fleet,
-        # "aggregate": fleet.aggregate,
-        # "differential": fleet.differential,
-        "fleet_id": fleet_id,
-    }
+    context = {"fleet_id": fleet_id}
 
     logger.info(f"Fleet {fleet_id} details view called by {request.user}")
 
@@ -311,13 +298,8 @@ def ajax_fleet_details(request, fleet_id) -> JsonResponse:
 
     fleet = get_fleet_composition(fleet_id)
 
-    data = {
-        "fleet_member": [],
-        # "differential": fleet.differential,
-        "fleet_composition": [],
-    }
+    data = {"fleet_member": [], "fleet_composition": []}
 
-    # data = {"differential": [fleet.differential]}
     for member in fleet.fleet:
         data["fleet_member"].append(member)
 
