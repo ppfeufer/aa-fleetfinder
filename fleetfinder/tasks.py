@@ -194,7 +194,7 @@ def check_fleet_adverts():
     fleets = Fleet.objects.all()
     fleet_count = fleets.count()
 
-    processing_text = "Processing ..." if fleet_count > 0 else "Nothing to do ..."
+    processing_text = "Processing…" if fleet_count > 0 else "Nothing to do…"
 
     logger.info(f"{fleet_count} registered fleets found. {processing_text}")
 
