@@ -49,7 +49,7 @@
     <script src="{% static 'fleetfinder/libs/datatables/plugins/datetime/datetime.min.js' %}"></script>
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             const DATETIME_FORMAT = 'YYYY-MM-DD, HH:mm';
 
             const fleetfinderFleetsTable = $('#table_available-fleets').DataTable({
@@ -133,6 +133,6 @@
                 reloadDataTable,
                 intervalReloadDatatable
             );
-        })
+        });
     </script>
 {% endblock %}
