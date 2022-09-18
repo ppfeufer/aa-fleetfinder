@@ -1,4 +1,4 @@
-{% extends 'fleetfinder/base.html' %}
+{% extends "fleetfinder/base.html" %}
 
 {% load i18n %}
 
@@ -56,12 +56,12 @@
 {% endblock %}
 
 {% block extra_css %}
-    {% include 'bundles/datatables-css.html' %}
-    {% include 'fleetfinder/bundles/css/fleetfinder-css.html' %}
+    {% include "bundles/datatables-css.html" %}
+    {% include "fleetfinder/bundles/css/fleetfinder-css.html" %}
 {% endblock %}
 
 {% block extra_javascript %}
-    {% include 'bundles/datatables-js.html' %}
+    {% include "bundles/datatables-js.html" %}
 
     <script>
         $(document).ready(function () {

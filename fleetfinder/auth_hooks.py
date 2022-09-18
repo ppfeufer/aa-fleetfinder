@@ -13,13 +13,13 @@ from allianceauth.services.hooks import MenuItemHook, UrlHook
 from fleetfinder import urls
 
 
-class FleetFinderMenuItem(MenuItemHook):
+class FleetFinderMenuItem(MenuItemHook):  # pylint: disable=too-few-public-methods
     """
     This class ensures only authorized users will see the menu entry
     """
 
     def __init__(self):
-        # setup menu entry for sidebar
+        # Setup menu entry for sidebar
         MenuItemHook.__init__(
             self,
             _("Fleet Finder"),

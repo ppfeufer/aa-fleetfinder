@@ -1,7 +1,6 @@
-{% extends 'fleetfinder/base.html' %}
+{% extends "fleetfinder/base.html" %}
 
 {% load i18n %}
-{% load static %}
 
 {% block fleetfinder_block %}
     <div class="panel panel-default">
@@ -34,15 +33,14 @@
 {% endblock %}
 
 {% block extra_css %}
-    {% include 'bundles/datatables-css.html' %}
-    {% include 'fleetfinder/bundles/css/fleetfinder-css.html' %}
+    {% include "bundles/datatables-css.html" %}
+    {% include "fleetfinder/bundles/css/fleetfinder-css.html" %}
 {% endblock %}
 
 {% block extra_javascript %}
-    {% include 'bundles/datatables-js.html' %}
-    {% include 'bundles/moment-js.html' with locale=True %}
-
-    <script src="{% static 'fleetfinder/libs/datatables/plugins/datetime/datetime.min.js' %}"></script>
+    {% include "bundles/datatables-js.html" %}
+    {% include "bundles/moment-js.html" with locale=True %}
+    {% include "fleetfinder/bundles/js/datetime-js.html" %}
 
     <script>
         $(document).ready(function () {
@@ -93,7 +91,7 @@
             });
 
             /**
-             * refresh the datatable information every 30 seconds
+             * Refresh the datatable information every 30 seconds
              */
             const intervalReloadDatatable = 30000; // ms
             let expectedReloadDatatable = Date.now() + intervalReloadDatatable;
@@ -102,11 +100,11 @@
              * reload datatable "fleetfinderFleetsTable"
              */
             const reloadDataTable = function () {
-                let dt = Date.now() - expectedReloadDatatable; // the drift (positive for overshooting)
+                let dt = Date.now() - expectedReloadDatatable; // The drift (positive for overshooting)
 
                 if (dt > intervalReloadDatatable) {
-                    // something really bad happened. Maybe the browser (tab) was inactive?
-                    // possibly special handling to avoid futile "catch up" run
+                    // Something awful happened. Maybe the browser (tab) was inactive?
+                    // Possibly special handling to avoid futile "catch up" run
                     console.log('Something went wrong, reloading page ...');
 
                     window.location.replace(
@@ -118,7 +116,7 @@
 
                 expectedReloadDatatable += intervalReloadDatatable;
 
-                // take drift into account
+                // Take drift into account
                 setTimeout(
                     reloadDataTable,
                     Math.max(0, intervalReloadDatatable - dt)

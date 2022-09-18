@@ -1,4 +1,4 @@
-{% extends 'fleetfinder/base.html' %}
+{% extends "fleetfinder/base.html" %}
 
 {% load i18n %}
 
@@ -36,7 +36,7 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label for="groups" style="margin-bottom: 0;">{% translate "Select Groups" %}</label>
-                                    <span class="help-block" style="margin-top: 0; margin-bottom: 0; font-size: 10pt; font-style: italic;">
+                                    <span class="help-block text-small">
                                         {% translate "Only selected groups will have access to the fleet. If no groups are selected the fleet will be available to all of the authed groups." %}
                                     </span>
 
@@ -81,17 +81,17 @@
 {% endblock %}
 
 {% block extra_css %}
-    {% include 'fleetfinder/bundles/css/multi-select-css.html' %}
-    {% include 'fleetfinder/bundles/css/slim-select-css.html' %}
-    {% include 'fleetfinder/bundles/css/fleetfinder-css.html' %}
+    {% include "fleetfinder/bundles/css/multi-select-css.html" %}
+    {% include "fleetfinder/bundles/css/slim-select-css.html" %}
+    {% include "fleetfinder/bundles/css/fleetfinder-css.html" %}
 {% endblock %}
 
 {% block extra_javascript %}
-    {% include 'fleetfinder/bundles/js/slim-select-js.html' %}
+    {% include "fleetfinder/bundles/js/slim-select-js.html" %}
 
     <script>
         new SlimSelect({
-            select: "#groups",
+            select: '#groups',
             hideSelectedOption: true
         });
     </script>

@@ -121,12 +121,7 @@ def ajax_dashboard(request) -> JsonResponse:
 
 @login_required()
 @permission_required("fleetfinder.manage_fleets")
-@token_required(
-    scopes=(
-        "esi-fleets.read_fleet.v1",
-        "esi-fleets.write_fleet.v1",
-    )
-)
+@token_required(scopes=("esi-fleets.read_fleet.v1", "esi-fleets.write_fleet.v1"))
 def create_fleet(request, token):
     """
     Create fleet view

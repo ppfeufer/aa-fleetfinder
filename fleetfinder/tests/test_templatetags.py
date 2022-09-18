@@ -11,7 +11,17 @@ from fleetfinder import __version__
 
 
 class TestVersionedStatic(TestCase):
+    """
+    Test the fleetfinder_versioned_static template tag
+    """
+
     def test_versioned_static(self):
+        """
+        Test should return a versioned static
+        :return:
+        :rtype:
+        """
+
         context = Context({"version": __version__})
         template_to_render = Template(
             "{% load fleetfinder_versioned_static %}"

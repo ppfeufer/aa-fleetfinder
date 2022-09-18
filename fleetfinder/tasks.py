@@ -218,7 +218,6 @@ def check_fleet_adverts():
                     character_id=esi_token.character_id,
                     token=esi_token.valid_access_token(),
                 ).result()
-
             except HTTPNotFound:
                 esi_fleetadvert_error_handling(
                     cache_key=CACHE_KEY_NOT_IN_FLEET_ERROR,
@@ -228,7 +227,6 @@ def check_fleet_adverts():
                         "longer available."
                     ),
                 )
-
             except Exception:
                 esi_fleetadvert_error_handling(
                     cache_key=CACHE_KEY_NO_FLEET_ERROR,

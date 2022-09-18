@@ -15,7 +15,7 @@ class General(models.Model):
     General module permissions
     """
 
-    class Meta:
+    class Meta:  # pylint: disable=too-few-public-methods
         """
         Meta Definitions
         """
@@ -54,7 +54,7 @@ class Fleet(models.Model):
         help_text="Groups listed here will be able to join the fleet",
     )
 
-    class Meta:
+    class Meta:  # pylint: disable=too-few-public-methods
         """
         Meta Definitions
         """

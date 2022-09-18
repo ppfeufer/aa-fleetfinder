@@ -1,6 +1,9 @@
 """
-Test checks for access to fleetpings
+Test checks for access to fleetfinder
 """
+
+# Standard Library
+from http import HTTPStatus
 
 # Django
 from django.contrib.auth.models import Group
@@ -22,10 +25,10 @@ class TestAccess(TestCase):
 
         cls.group = Group.objects.create(name="Superhero")
 
-        # User cannot access fleetpings
+        # User cannot access fleetfinder
         cls.user_1001 = create_fake_user(1001, "Peter Parker")
 
-        # User can access fleetpings
+        # User can access fleetfinder
         cls.user_1002 = create_fake_user(
             1002, "Bruce Wayne", permissions=["fleetfinder.access_fleetfinder"]
         )
@@ -43,7 +46,7 @@ class TestAccess(TestCase):
         res = self.client.get(reverse("fleetfinder:dashboard"))
 
         # then
-        self.assertEqual(res.status_code, 302)
+        self.assertEqual(res.status_code, HTTPStatus.FOUND)
 
     def test_has_access(self):
         """
@@ -58,4 +61,4 @@ class TestAccess(TestCase):
         res = self.client.get(reverse("fleetfinder:dashboard"))
 
         # then
-        self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.status_code, HTTPStatus.OK)
