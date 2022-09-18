@@ -35,9 +35,7 @@ CACHE_KEY_NO_FLEETBOSS_ERROR = (
 CACHE_MAX_ERROR_COUNT = 3
 
 # Params for all tasks
-TASK_DEFAULT_KWARGS = {
-    "time_limit": 120,  # stop after 2 minutes
-}
+TASK_DEFAULT_KWARGS = {"time_limit": 120}  # stop after 2 minutes
 
 # Params for tasks that make ESI calls
 TASK_ESI_KWARGS = {

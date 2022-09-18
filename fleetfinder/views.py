@@ -6,12 +6,14 @@ Views
 from bravado.exception import HTTPNotFound
 
 # Django
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.template.defaulttags import register
 from django.urls import reverse
+from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 # Alliance Auth
@@ -42,11 +44,6 @@ def dashboard(request):
     """
 
     context = {}
-
-    if "error_edit_fleet" in request.session:
-        context["error"] = request.session["error_edit_fleet"].get("error", "")
-
-        del request.session["error_edit_fleet"]
 
     logger.info(f"Module called by {request.user}")
 
@@ -124,12 +121,7 @@ def ajax_dashboard(request) -> JsonResponse:
 
 @login_required()
 @permission_required("fleetfinder.manage_fleets")
-@token_required(
-    scopes=(
-        "esi-fleets.read_fleet.v1",
-        "esi-fleets.write_fleet.v1",
-    )
-)
+@token_required(scopes=("esi-fleets.read_fleet.v1", "esi-fleets.write_fleet.v1"))
 def create_fleet(request, token):
     """
     Create fleet view
@@ -250,9 +242,12 @@ def save_fleet(request):
             if request.POST.get("origin", "") == "edit":
                 # Here ccp returns "character not in fleet".
                 # Instead, push our own message to be clearer
-                request.session["error_edit_fleet"] = {
-                    "error": "Fleet advert is no longer valid"
-                }
+                messages.error(
+                    request,
+                    mark_safe(
+                        _("<h4>Error!</h4><p>Fleet advert is no longer valid</p>")
+                    ),
+                )
 
                 return redirect("fleetfinder:dashboard")
 

@@ -3,7 +3,7 @@ URL config
 """
 
 # Django
-from django.urls import path
+from django.urls import include, path
 
 # AA Fleet Finder
 from fleetfinder import views
@@ -11,17 +11,28 @@ from fleetfinder import views
 app_name: str = "fleetfinder"
 
 urlpatterns = [
-    path("", views.dashboard, name="dashboard"),
-    path("create/", views.create_fleet, name="create_fleet"),
-    path("save/", views.save_fleet, name="save_fleet"),
-    path("join/<int:fleet_id>/", views.join_fleet, name="join_fleet"),
-    path("details/<int:fleet_id>/", views.fleet_details, name="fleet_details"),
-    path("edit/<int:fleet_id>/", views.edit_fleet, name="edit_fleet"),
-    # Ajax calls
-    path("call/dashboard/", views.ajax_dashboard, name="ajax_dashboard"),
+    path(route="", view=views.dashboard, name="dashboard"),
+    path(route="create/", view=views.create_fleet, name="create_fleet"),
+    path(route="save/", view=views.save_fleet, name="save_fleet"),
+    path(route="join/<int:fleet_id>/", view=views.join_fleet, name="join_fleet"),
     path(
-        "call/details/<int:fleet_id>/",
-        views.ajax_fleet_details,
-        name="ajax_fleet_details",
+        route="details/<int:fleet_id>/", view=views.fleet_details, name="fleet_details"
+    ),
+    path(route="edit/<int:fleet_id>/", view=views.edit_fleet, name="edit_fleet"),
+    # Ajax calls
+    path(
+        route="ajax/",
+        view=include(
+            [
+                path(
+                    route="dashboard/", view=views.ajax_dashboard, name="ajax_dashboard"
+                ),
+                path(
+                    route="details/<int:fleet_id>/",
+                    view=views.ajax_fleet_details,
+                    name="ajax_fleet_details",
+                ),
+            ]
+        ),
     ),
 ]
