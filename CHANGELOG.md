@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In Development] - Unreleased
 
+### Removed
+
+- Auto retry for ESI and OS errors in tasks, since django-esi already retries all
+  relevant errors
+
 
 ## [0.1.0-alpha.19] - 2022-09-18
 
