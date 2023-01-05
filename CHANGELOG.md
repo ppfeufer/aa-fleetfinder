@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In Development] - Unreleased
 
+### Fixed
+
+- UTF-8 characters in log message
+
 ### Removed
 
 - Auto retry for ESI and OS errors in tasks, since django-esi already retries all
