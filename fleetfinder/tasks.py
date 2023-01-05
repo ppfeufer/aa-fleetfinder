@@ -30,7 +30,7 @@ from fleetfinder.constants import (
     CACHE_KEY_NO_FLEETBOSS_ERROR,
     CACHE_KEY_NOT_IN_FLEET_ERROR,
     CACHE_MAX_ERROR_COUNT,
-    TASK_ESI_KWARGS,
+    TASK_DEFAULT_KWARGS,
 )
 from fleetfinder.models import Fleet
 from fleetfinder.providers import esi
@@ -184,7 +184,7 @@ def init_error_caches(fleet: Fleet) -> None:
         cache.set(CACHE_KEY_NO_FLEETBOSS_ERROR + str(fleet.fleet_id), "0", 75)
 
 
-@shared_task(**{**TASK_ESI_KWARGS}, **{"base": QueueOnce})
+@shared_task(**{**TASK_DEFAULT_KWARGS, **{"base": QueueOnce}})
 def check_fleet_adverts():
     """
     Scheduled task :: Check for fleets adverts
@@ -194,7 +194,7 @@ def check_fleet_adverts():
     fleets = Fleet.objects.all()
     fleet_count = fleets.count()
 
-    processing_text = "Processing…" if fleet_count > 0 else "Nothing to do…"
+    processing_text = "Processing..." if fleet_count > 0 else "Nothing to do..."
 
     logger.info(f"{fleet_count} registered fleets found. {processing_text}")
 
