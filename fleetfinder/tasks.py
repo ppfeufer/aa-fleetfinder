@@ -97,11 +97,11 @@ def send_fleet_invitation(character_ids, fleet_id):
     _processes = []
 
     with ThreadPoolExecutor(max_workers=50) as ex:
-        for _chracter_id in character_ids:
+        for _character_id in character_ids:
             _processes.append(
                 ex.submit(
                     send_invitation,
-                    character_id=_chracter_id,
+                    character_id=_character_id,
                     fleet_commander_token=fleet_commander_token,
                     fleet_id=fleet_id,
                 )
@@ -326,7 +326,7 @@ def get_fleet_aggregate(fleet_infos):
     return counts
 
 
-class FleetViewAggregate:
+class FleetViewAggregate:  # pylint: disable=too-few-public-methods
     """
     Helper class
     """
