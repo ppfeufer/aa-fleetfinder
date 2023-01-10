@@ -326,7 +326,7 @@ def get_fleet_aggregate(fleet_infos):
     return counts
 
 
-class FleetViewAggregate:
+class FleetViewAggregate:  # pylint: disable=too-few-public-methods
     """
     Helper class
     """
