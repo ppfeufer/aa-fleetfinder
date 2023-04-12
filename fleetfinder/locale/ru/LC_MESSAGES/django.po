@@ -24,10 +24,6 @@ msgstr ""
 msgid "Fleet Finder"
 msgstr ""
 
-#: templates/fleetfinder/create-fleet.html:5
-msgid "Create fleet"
-msgstr ""
-
 #: templates/fleetfinder/create-fleet.html:14
 #: templates/fleetfinder/partials/header/header-navigation.html:18
 #: templates/fleetfinder/create-fleet.html:5
