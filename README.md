@@ -18,19 +18,14 @@ Control access to your fleets through Alliance Auth.
 
 <!-- TOC -->
 * [AA Fleet Finder](#aa-fleet-finder)
-  * [Contents](#contents)
   * [Installation](#installation)
     * [Step 1: Install the Package](#step-1-install-the-package)
     * [Step 2: Configure Alliance Auth](#step-2-configure-alliance-auth)
     * [Step 3: Finalize the Installation](#step-3-finalize-the-installation)
     * [Step 4: Setup Permissions](#step-4-setup-permissions)
-  * [Permissions](#permissions)
   * [Changelog](#changelog)
   * [Contributing](#contributing)
 <!-- TOC -->
-
-
-## Contents
 
 
 ## Installation
