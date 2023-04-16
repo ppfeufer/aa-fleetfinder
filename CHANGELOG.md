@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [In Development] - Unreleased
 
 
+## [1.1.0] - 2023-04-16
+
+### Added
+
+- Russian translation
+
+
 ## [1.0.0] - 2023-04-13
 
 ### Added
@@ -56,7 +63,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Using `allianceauth-app-utils` for logging
 - Task ESI error handling improved
 - Moved constants to their own file
-- `related_name` for group restrictions in model to prevent conflicts with other
+- `related_name` for group restrictions in the model to prevent conflicts with other
   modules. The name was too generic.
 - Minimum Requirements
   - Alliance Auth >= 3.0.0
@@ -209,7 +216,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Datatables in fleet details view set up properly
 - UI in fleet details view re-done
-- Fleet details are nor refreshed every 15 seconds via Datatables reload
+- Fleet details are now refreshed every 15 seconds via Datatables reload
 
 
 ## [0.1.0-alpha.1] - 2020-12-30
@@ -219,7 +226,7 @@ App forked from [Dreadbomb/aa-fleet](https://github.com/Dreadbomb/aa-fleet)
 ### Fixed
 
 - HTML errors
-- Datatable erors
+- Datatable errors
 - Import order
 - Code issues cleaned up
 - General model and permissions
