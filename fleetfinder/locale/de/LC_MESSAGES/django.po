@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-12 08:35+0200\n"
-"PO-Revision-Date: 2023-05-15 13:52+0000\n"
+"PO-Revision-Date: 2023-05-19 23:43+0000\n"
 "Last-Translator: \"H. Peter Pfeufer\" <info@ppfeufer.de>\n"
 "Language-Team: German <https://weblate.ppfeufer.de/projects/"
 "alliance-auth-apps/aa-fleetfinder/de/>\n"
@@ -44,7 +44,7 @@ msgid ""
 "Only selected groups will have access to the fleet. If no groups are "
 "selected the fleet will be available to all of the authed groups."
 msgstr ""
-"Nur die ausgewählten Gruppen haben Zugriff zu dieser Flotte, Wenn keine "
+"Nur die ausgewählten Gruppen haben Zugriff zu dieser Flotte. Wenn keine "
 "Gruppen ausgewählt sind ist die Flotte für alle verfügbar."
 
 #: templates/fleetfinder/create-fleet.html:63
@@ -55,7 +55,7 @@ msgstr "Flotten MOTD"
 #: templates/fleetfinder/create-fleet.html:73
 #: templates/fleetfinder/edit-fleet.html:68
 msgid "Enable Free Move"
-msgstr "Freie Bewegung aktiv"
+msgstr "Freie Bewegung aktivieren"
 
 #: templates/fleetfinder/create-fleet.html:75
 #: templates/fleetfinder/edit-fleet.html:70
