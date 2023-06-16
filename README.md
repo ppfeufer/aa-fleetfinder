@@ -15,6 +15,7 @@
 
 Control access to your fleets through Alliance Auth.
 
+---
 
 <!-- TOC -->
 * [AA Fleet Finder](#aa-fleet-finder)
@@ -26,6 +27,8 @@ Control access to your fleets through Alliance Auth.
   * [Changelog](#changelog)
   * [Contributing](#contributing)
 <!-- TOC -->
+
+---
 
 
 ## Installation
