@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-12 08:35+0200\n"
-"PO-Revision-Date: 2023-04-21 14:50+0000\n"
+"PO-Revision-Date: 2023-06-19 18:18+0000\n"
 "Last-Translator: Nikolay <nick.postnikov@gmail.com>\n"
 "Language-Team: Russian <https://weblate.ppfeufer.de/projects/"
 "alliance-auth-apps/aa-fleetfinder/ru/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : (n%10==1 && n%100!=11 ? 0 : "
 "n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 4.16.4\n"
+"X-Generator: Weblate 4.18\n"
 
 #: auth_hooks.py:25 templates/fleetfinder/base.html:5
 msgid "Fleet Finder"
@@ -129,11 +129,11 @@ msgstr "Система"
 
 #: templates/fleetfinder/join-fleet.html:5 views.py:79
 msgid "Join Fleet"
-msgstr "Присоединиться"
+msgstr "Присоединиться к флоту"
 
 #: templates/fleetfinder/join-fleet.html:11
 msgid "Fleet Invitation"
-msgstr "Приглашение"
+msgstr "Приглашение во флот"
 
 #: templates/fleetfinder/join-fleet.html:21
 msgid "Select the characters to invite"
