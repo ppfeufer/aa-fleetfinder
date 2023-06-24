@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In Development] - Unreleased
 
+### Changed
+
+- Use Django's native message system instead of forcing our own
+- Translations improved
+
 
 ## [1.2.0] - 2023-04-25
 

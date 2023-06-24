@@ -15,6 +15,10 @@ from fleetfinder.tests.utils import create_fake_user
 
 
 class TestAccess(TestCase):
+    """
+    Testing module access
+    """
+
     @classmethod
     def setUpClass(cls) -> None:
         """
@@ -35,7 +39,7 @@ class TestAccess(TestCase):
 
     def test_has_no_access(self):
         """
-        Test that a user without access get a 302
+        Test that a user without access gets a 302
         :return:
         """
 
@@ -50,7 +54,7 @@ class TestAccess(TestCase):
 
     def test_has_access(self):
         """
-        Test that a user with access get to see it
+        Test that a user with access gets to see it
         :return:
         """
 

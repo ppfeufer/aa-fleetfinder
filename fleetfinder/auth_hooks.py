@@ -2,15 +2,12 @@
 Auth hooks
 """
 
-# Django
-from django.utils.translation import gettext_lazy as _
-
 # Alliance Auth
 from allianceauth import hooks
 from allianceauth.services.hooks import MenuItemHook, UrlHook
 
 # AA Fleet Finder
-from fleetfinder import urls
+from fleetfinder import __title__, urls
 
 
 class FleetFinderMenuItem(MenuItemHook):  # pylint: disable=too-few-public-methods
@@ -22,7 +19,7 @@ class FleetFinderMenuItem(MenuItemHook):  # pylint: disable=too-few-public-metho
         # Setup menu entry for sidebar
         MenuItemHook.__init__(
             self,
-            _("Fleet Finder"),
+            __title__,
             "fas fa-users fa-fw",
             "fleetfinder:dashboard",
             navactive=["fleetfinder:"],
