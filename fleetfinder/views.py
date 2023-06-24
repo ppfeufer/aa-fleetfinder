@@ -239,10 +239,8 @@ def save_fleet(request):
             open_fleet(request.POST["character_id"], motd, free_move, name, groups)
         except HTTPNotFound as ex:
             esi_error_message = ex.swagger_result["error"]
-            error_message = str(
-                _(
-                    f"<h4>Error!</h4><p>ESI returned the following error: {esi_error_message}</p>"
-                )
+            error_message = _(
+                f"<h4>Error!</h4><p>ESI returned the following error: {esi_error_message}</p>"
             )
 
             messages.error(request, mark_safe(error_message))
