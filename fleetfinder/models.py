@@ -35,6 +35,18 @@ class Fleet(models.Model):
     Fleet Model
     """
 
+    class EsiError(models.TextChoices):
+        """
+        Choices for SRP Status
+        """
+
+        NOT_IN_FLEET = "NOT_IN_FLEET", _(
+            "FC is not in the registered fleet anymore or fleet is no longer available."
+        )
+        NO_FLEET = "NO_FLEET", _("Registered fleet seems to be no longer available.")
+        NOT_FLEETBOSS = "NOT_FLEETBOSS", _("FC is no longer the fleet boss.")
+        FC_CHANGED_FLEET = "FC_CHANGED_FLEET", _("FC switched to another fleet.")
+
     fleet_id = models.BigIntegerField(primary_key=True)
     name = models.CharField(max_length=50, default="", verbose_name=_("Fleet Name"))
     fleet_commander = models.ForeignKey(
@@ -56,6 +68,20 @@ class Fleet(models.Model):
         help_text="Groups listed here will be able to join the fleet",
         verbose_name=_("Group restrictions"),
     )
+
+    last_esi_error = models.CharField(
+        max_length=16,
+        blank=True,
+        default="",
+        choices=EsiError.choices,
+        verbose_name=_("Last ESI error"),
+    )
+
+    last_esi_error_time = models.DateTimeField(
+        null=True, blank=True, default=None, verbose_name=_("Last ESI error time")
+    )
+
+    esi_error_count = models.IntegerField(default=0, verbose_name=_("ESI error count"))
 
     class Meta:  # pylint: disable=too-few-public-methods
         """
