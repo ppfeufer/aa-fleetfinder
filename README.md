@@ -9,12 +9,14 @@
 [![Discord](https://img.shields.io/discord/790364535294132234?label=discord)](https://discord.gg/zmh52wnfvM)
 [![Checks](https://github.com/ppfeufer/aa-fleetfinder/actions/workflows/automated-checks.yml/badge.svg)](https://github.com/ppfeufer/aa-fleetfinder/actions/workflows/automated-checks.yml)
 [![codecov](https://codecov.io/gh/ppfeufer/aa-fleetfinder/branch/master/graph/badge.svg?token=GFOR9GWRNQ)](https://codecov.io/gh/ppfeufer/aa-fleetfinder)
+[![Translation Status](https://weblate.ppfeufer.de/widgets/alliance-auth-apps/-/aa-fleetfinder/svg-badge.svg)](https://weblate.ppfeufer.de/engage/alliance-auth-apps/)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](https://github.com/ppfeufer/aa-fleetfinder/blob/master/CODE_OF_CONDUCT.md)
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/N4N8CL1BY)
 
 Control access to your fleets through Alliance Auth.
 
+---
 
 <!-- TOC -->
 * [AA Fleet Finder](#aa-fleet-finder)
@@ -26,6 +28,8 @@ Control access to your fleets through Alliance Auth.
   * [Changelog](#changelog)
   * [Contributing](#contributing)
 <!-- TOC -->
+
+---
 
 
 ## Installation

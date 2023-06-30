@@ -136,7 +136,6 @@ def create_fleet(request, token):
         context = {}
 
         if "modified_fleet_data" in request.session:
-            context["error"] = request.session["modified_fleet_data"].get("error", "")
             context["motd"] = request.session["modified_fleet_data"].get("motd", "")
             context["name"] = request.session["modified_fleet_data"].get("name", "")
             context["groups"] = request.session["modified_fleet_data"].get("groups", "")
@@ -239,21 +238,18 @@ def save_fleet(request):
         try:
             open_fleet(request.POST["character_id"], motd, free_move, name, groups)
         except HTTPNotFound as ex:
-            if request.POST.get("origin", "") == "edit":
-                # Here ccp returns "character not in fleet".
-                # Instead, push our own message to be clearer
-                messages.error(
-                    request,
-                    mark_safe(
-                        _("<h4>Error!</h4><p>Fleet advert is no longer valid</p>")
-                    ),
-                )
+            esi_error_message = ex.swagger_result["error"]
+            error_message = _(
+                f"<h4>Error!</h4><p>ESI returned the following error: {esi_error_message}</p>"
+            )
 
+            messages.error(request, mark_safe(error_message))
+
+            if request.POST.get("origin", "") == "edit":
                 return redirect("fleetfinder:dashboard")
 
             if request.POST.get("origin", "") == "create":
                 request.session["modified_fleet_data"] = {
-                    "error": ex.swagger_result["error"],
                     "motd": motd,
                     "name": name,
                     "free_move": free_move,

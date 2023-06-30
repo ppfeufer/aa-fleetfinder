@@ -4,6 +4,10 @@ App config
 
 # Django
 from django.apps import AppConfig
+from django.utils.translation import gettext_lazy as _
+
+# AA Fleet Finder
+from fleetfinder import __version__
 
 
 class FleetFinderConfig(AppConfig):
@@ -13,4 +17,5 @@ class FleetFinderConfig(AppConfig):
 
     name = "fleetfinder"
     label = "fleetfinder"
-    verbose_name = "Fleet Finder"
+    # Translators: This is the app name and version, which will appear in the Django Backend
+    verbose_name = _(f"Fleet Finder v{__version__}")

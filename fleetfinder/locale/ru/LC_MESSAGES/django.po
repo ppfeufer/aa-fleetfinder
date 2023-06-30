@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-12 08:35+0200\n"
-"PO-Revision-Date: 2023-04-21 14:50+0000\n"
+"POT-Creation-Date: 2023-06-28 15:41+0200\n"
+"PO-Revision-Date: 2023-06-29 14:19+0000\n"
 "Last-Translator: Nikolay <nick.postnikov@gmail.com>\n"
 "Language-Team: Russian <https://weblate.ppfeufer.de/projects/"
 "alliance-auth-apps/aa-fleetfinder/ru/>\n"
@@ -18,29 +18,85 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : (n%10==1 && n%100!=11 ? 0 : "
 "n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 4.16.4\n"
+"X-Generator: Weblate 4.18.1\n"
 
-#: auth_hooks.py:25 templates/fleetfinder/base.html:5
+#: __init__.py:12 templates/fleetfinder/base.html:5
 msgid "Fleet Finder"
 msgstr "Поиск флота"
 
-#: templates/fleetfinder/create-fleet.html:14
-#: templates/fleetfinder/partials/header/header-navigation.html:18
-#: templates/fleetfinder/create-fleet.html:5
-msgid "Create Fleet"
-msgstr "Создание флота"
+#. Translators: This is the app name and version, which will appear in the Django Backend
+#: apps.py:21
+#, python-brace-format
+msgid "Fleet Finder v{__version__}"
+msgstr "Поиск флота v{__version__}"
 
-#: templates/fleetfinder/create-fleet.html:29
+#: models.py:44
+msgid ""
+"FC is not in the registered fleet anymore or fleet is no longer available."
+msgstr "ФК больше не состоит в зарегистрированном флоте или флот недоступен."
+
+#: models.py:46
+msgid "Registered fleet seems to be no longer available."
+msgstr "Похоже, зарегистрированный флот больше недоступен."
+
+#: models.py:47
+msgid "FC is no longer the fleet boss."
+msgstr "ФК больше не руководитель флота."
+
+#: models.py:48
+msgid "FC switched to another fleet."
+msgstr "ФК перешел в другой флот."
+
+#: models.py:51 templates/fleetfinder/create-fleet.html:25
 #: templates/fleetfinder/edit-fleet.html:27
 msgid "Fleet Name"
 msgstr "Название флота"
 
-#: templates/fleetfinder/create-fleet.html:38
+#: models.py:59 templates/fleetfinder/dashboard.html:17
+msgid "Fleet Commander"
+msgstr "Командир флота"
+
+#: models.py:61
+msgid "Creation date and time"
+msgstr "Дата и время создания"
+
+#: models.py:62 templates/fleetfinder/create-fleet.html:59
+#: templates/fleetfinder/edit-fleet.html:58
+msgid "Fleet MOTD"
+msgstr "MOTD флота"
+
+#: models.py:63
+msgid "Free move"
+msgstr "Свободное перемещение"
+
+#: models.py:69
+msgid "Group restrictions"
+msgstr "Ограничения групп"
+
+#: models.py:77
+msgid "Last ESI error"
+msgstr "Последняя ESI ошибка"
+
+#: models.py:81
+msgid "Last ESI error time"
+msgstr "Время последней ESI ошибки"
+
+#: models.py:84
+msgid "ESI error count"
+msgstr "Счетчик ESI ошибок"
+
+#: templates/fleetfinder/create-fleet.html:5
+#: templates/fleetfinder/create-fleet.html:10
+#: templates/fleetfinder/partials/header/header-navigation.html:18
+msgid "Create Fleet"
+msgstr "Создание флота"
+
+#: templates/fleetfinder/create-fleet.html:34
 #: templates/fleetfinder/edit-fleet.html:36
 msgid "Select Groups"
 msgstr "Выбор групп"
 
-#: templates/fleetfinder/create-fleet.html:40
+#: templates/fleetfinder/create-fleet.html:36
 #: templates/fleetfinder/edit-fleet.html:39
 msgid ""
 "Only selected groups will have access to the fleet. If no groups are "
@@ -49,17 +105,12 @@ msgstr ""
 "Только выбранные группы будут иметь доступ к флоту. Если группы не выбраны, "
 "флот будет доступен всем авторизованным группам."
 
-#: templates/fleetfinder/create-fleet.html:63
-#: templates/fleetfinder/edit-fleet.html:58
-msgid "Fleet MOTD"
-msgstr "MOTD флота"
-
-#: templates/fleetfinder/create-fleet.html:73
+#: templates/fleetfinder/create-fleet.html:69
 #: templates/fleetfinder/edit-fleet.html:68
 msgid "Enable Free Move"
 msgstr "Разрешить Free Move"
 
-#: templates/fleetfinder/create-fleet.html:75
+#: templates/fleetfinder/create-fleet.html:71
 #: templates/fleetfinder/edit-fleet.html:70
 msgid "Submit"
 msgstr "Отправить"
@@ -68,10 +119,6 @@ msgstr "Отправить"
 #: templates/fleetfinder/partials/header/header-navigation.html:13
 msgid "Available Fleets"
 msgstr "Доступные флота"
-
-#: templates/fleetfinder/dashboard.html:17
-msgid "Fleet Commander"
-msgstr "Командир флота"
 
 #: templates/fleetfinder/dashboard.html:18
 #: templates/fleetfinder/fleet-details.html:44
@@ -129,11 +176,11 @@ msgstr "Система"
 
 #: templates/fleetfinder/join-fleet.html:5 views.py:79
 msgid "Join Fleet"
-msgstr "Присоединиться"
+msgstr "Присоединиться к флоту"
 
 #: templates/fleetfinder/join-fleet.html:11
 msgid "Fleet Invitation"
-msgstr "Приглашение"
+msgstr "Приглашение во флот"
 
 #: templates/fleetfinder/join-fleet.html:21
 msgid "Select the characters to invite"
@@ -155,6 +202,8 @@ msgstr "Показать подробности"
 msgid "Edit Fleet Advert"
 msgstr "Редактировать оповещение"
 
-#: views.py:248
-msgid "<h4>Error!</h4><p>Fleet advert is no longer valid</p>"
-msgstr "<h4>Ошибка!</h4><p>Оповещение некорректно</p>"
+#: views.py:243
+#, python-brace-format
+msgid ""
+"<h4>Error!</h4><p>ESI returned the following error: {esi_error_message}</p>"
+msgstr "<h4>Ошибка!</h4><p>ESI вернул следующую ошибку: {esi_error_message}</p>"

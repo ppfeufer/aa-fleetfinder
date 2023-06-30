@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [In Development] - Unreleased
 
 
+## [1.3.0] - 2023-06-30
+
+### Changed
+
+- Use Django's native message system instead of forcing our own
+- Translations improved
+- Task code cleaned up
+- Error tracking for ESI fleets moved to the DB instead of being cached by Redis, as
+  Redis was too unreliable and there was a good chance the task stopped working
+  properly.
+
+
 ## [1.2.0] - 2023-04-25
 
 ### Changed
