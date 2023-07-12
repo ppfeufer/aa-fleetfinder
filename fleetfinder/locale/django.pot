@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-28 15:41+0200\n"
+"POT-Creation-Date: 2023-07-12 04:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,7 +44,7 @@ msgstr ""
 msgid "FC switched to another fleet."
 msgstr ""
 
-#: models.py:51 templates/fleetfinder/create-fleet.html:25
+#: models.py:51 templates/fleetfinder/create-fleet.html:27
 #: templates/fleetfinder/edit-fleet.html:27
 msgid "Fleet Name"
 msgstr ""
@@ -57,7 +57,7 @@ msgstr ""
 msgid "Creation date and time"
 msgstr ""
 
-#: models.py:62 templates/fleetfinder/create-fleet.html:59
+#: models.py:62 templates/fleetfinder/create-fleet.html:62
 #: templates/fleetfinder/edit-fleet.html:58
 msgid "Fleet MOTD"
 msgstr ""
@@ -83,29 +83,29 @@ msgid "ESI error count"
 msgstr ""
 
 #: templates/fleetfinder/create-fleet.html:5
-#: templates/fleetfinder/create-fleet.html:10
+#: templates/fleetfinder/create-fleet.html:11
 #: templates/fleetfinder/partials/header/header-navigation.html:18
 msgid "Create Fleet"
 msgstr ""
 
-#: templates/fleetfinder/create-fleet.html:34
+#: templates/fleetfinder/create-fleet.html:36
 #: templates/fleetfinder/edit-fleet.html:36
 msgid "Select Groups"
 msgstr ""
 
-#: templates/fleetfinder/create-fleet.html:36
+#: templates/fleetfinder/create-fleet.html:39
 #: templates/fleetfinder/edit-fleet.html:39
 msgid ""
 "Only selected groups will have access to the fleet. If no groups are "
-"selected the fleet will be available to all of the authed groups."
+"selected the fleet will be available to all who have access to this module."
 msgstr ""
 
-#: templates/fleetfinder/create-fleet.html:69
+#: templates/fleetfinder/create-fleet.html:72
 #: templates/fleetfinder/edit-fleet.html:68
 msgid "Enable Free Move"
 msgstr ""
 
-#: templates/fleetfinder/create-fleet.html:71
+#: templates/fleetfinder/create-fleet.html:74
 #: templates/fleetfinder/edit-fleet.html:70
 msgid "Submit"
 msgstr ""
@@ -182,7 +182,7 @@ msgid "Select the characters to invite"
 msgstr ""
 
 #: templates/fleetfinder/join-fleet.html:29
-msgid "Send fleet invite(s)"
+msgid "Send fleet invites"
 msgstr ""
 
 #: templates/fleetfinder/partials/header/header-navigation.html:7

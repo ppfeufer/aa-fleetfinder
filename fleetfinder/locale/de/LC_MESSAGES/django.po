@@ -6,11 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-28 15:41+0200\n"
+"POT-Creation-Date: 2023-07-12 04:47+0200\n"
 "PO-Revision-Date: 2023-06-29 14:19+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
-"Language-Team: German <https://weblate.ppfeufer.de/projects/"
-"alliance-auth-apps/aa-fleetfinder/de/>\n"
+"Language-Team: German <https://weblate.ppfeufer.de/projects/alliance-auth-"
+"apps/aa-fleetfinder/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,7 +47,7 @@ msgstr "Der FC ist nicht länger Flottenchef."
 msgid "FC switched to another fleet."
 msgstr "Der FC wechselte zu einer anderen Flotte."
 
-#: models.py:51 templates/fleetfinder/create-fleet.html:25
+#: models.py:51 templates/fleetfinder/create-fleet.html:27
 #: templates/fleetfinder/edit-fleet.html:27
 msgid "Fleet Name"
 msgstr "Flottenname"
@@ -60,7 +60,7 @@ msgstr "Flottenkommandant"
 msgid "Creation date and time"
 msgstr "Erstellungsdatum und -uhrzeit"
 
-#: models.py:62 templates/fleetfinder/create-fleet.html:59
+#: models.py:62 templates/fleetfinder/create-fleet.html:62
 #: templates/fleetfinder/edit-fleet.html:58
 msgid "Fleet MOTD"
 msgstr "Flotten MOTD"
@@ -86,31 +86,35 @@ msgid "ESI error count"
 msgstr "Anzahl der ESI Fehler"
 
 #: templates/fleetfinder/create-fleet.html:5
-#: templates/fleetfinder/create-fleet.html:10
+#: templates/fleetfinder/create-fleet.html:11
 #: templates/fleetfinder/partials/header/header-navigation.html:18
 msgid "Create Fleet"
 msgstr "Flotte erstellen"
 
-#: templates/fleetfinder/create-fleet.html:34
+#: templates/fleetfinder/create-fleet.html:36
 #: templates/fleetfinder/edit-fleet.html:36
 msgid "Select Groups"
 msgstr "Gruppenauswahl"
 
-#: templates/fleetfinder/create-fleet.html:36
+#: templates/fleetfinder/create-fleet.html:39
 #: templates/fleetfinder/edit-fleet.html:39
+#, fuzzy
+#| msgid ""
+#| "Only selected groups will have access to the fleet. If no groups are "
+#| "selected the fleet will be available to all of the authed groups."
 msgid ""
 "Only selected groups will have access to the fleet. If no groups are "
-"selected the fleet will be available to all of the authed groups."
+"selected the fleet will be available to all who have access to this module."
 msgstr ""
 "Nur die ausgewählten Gruppen haben Zugriff zu dieser Flotte. Wenn keine "
 "Gruppen ausgewählt sind ist die Flotte für alle verfügbar."
 
-#: templates/fleetfinder/create-fleet.html:69
+#: templates/fleetfinder/create-fleet.html:72
 #: templates/fleetfinder/edit-fleet.html:68
 msgid "Enable Free Move"
 msgstr "Freie Bewegung aktivieren"
 
-#: templates/fleetfinder/create-fleet.html:71
+#: templates/fleetfinder/create-fleet.html:74
 #: templates/fleetfinder/edit-fleet.html:70
 msgid "Submit"
 msgstr "Absenden"
@@ -187,7 +191,9 @@ msgid "Select the characters to invite"
 msgstr "Wähle einzuladende Charaktere"
 
 #: templates/fleetfinder/join-fleet.html:29
-msgid "Send fleet invite(s)"
+#, fuzzy
+#| msgid "Send fleet invite(s)"
+msgid "Send fleet invites"
 msgstr "Flotteneinladung(en) senden"
 
 #: templates/fleetfinder/partials/header/header-navigation.html:7

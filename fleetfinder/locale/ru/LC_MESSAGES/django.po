@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-28 15:41+0200\n"
+"POT-Creation-Date: 2023-07-12 04:47+0200\n"
 "PO-Revision-Date: 2023-06-29 14:19+0000\n"
 "Last-Translator: Nikolay <nick.postnikov@gmail.com>\n"
-"Language-Team: Russian <https://weblate.ppfeufer.de/projects/"
-"alliance-auth-apps/aa-fleetfinder/ru/>\n"
+"Language-Team: Russian <https://weblate.ppfeufer.de/projects/alliance-auth-"
+"apps/aa-fleetfinder/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,7 +47,7 @@ msgstr "ФК больше не руководитель флота."
 msgid "FC switched to another fleet."
 msgstr "ФК перешел в другой флот."
 
-#: models.py:51 templates/fleetfinder/create-fleet.html:25
+#: models.py:51 templates/fleetfinder/create-fleet.html:27
 #: templates/fleetfinder/edit-fleet.html:27
 msgid "Fleet Name"
 msgstr "Название флота"
@@ -60,7 +60,7 @@ msgstr "Командир флота"
 msgid "Creation date and time"
 msgstr "Дата и время создания"
 
-#: models.py:62 templates/fleetfinder/create-fleet.html:59
+#: models.py:62 templates/fleetfinder/create-fleet.html:62
 #: templates/fleetfinder/edit-fleet.html:58
 msgid "Fleet MOTD"
 msgstr "MOTD флота"
@@ -86,31 +86,35 @@ msgid "ESI error count"
 msgstr "Счетчик ESI ошибок"
 
 #: templates/fleetfinder/create-fleet.html:5
-#: templates/fleetfinder/create-fleet.html:10
+#: templates/fleetfinder/create-fleet.html:11
 #: templates/fleetfinder/partials/header/header-navigation.html:18
 msgid "Create Fleet"
 msgstr "Создание флота"
 
-#: templates/fleetfinder/create-fleet.html:34
+#: templates/fleetfinder/create-fleet.html:36
 #: templates/fleetfinder/edit-fleet.html:36
 msgid "Select Groups"
 msgstr "Выбор групп"
 
-#: templates/fleetfinder/create-fleet.html:36
+#: templates/fleetfinder/create-fleet.html:39
 #: templates/fleetfinder/edit-fleet.html:39
+#, fuzzy
+#| msgid ""
+#| "Only selected groups will have access to the fleet. If no groups are "
+#| "selected the fleet will be available to all of the authed groups."
 msgid ""
 "Only selected groups will have access to the fleet. If no groups are "
-"selected the fleet will be available to all of the authed groups."
+"selected the fleet will be available to all who have access to this module."
 msgstr ""
 "Только выбранные группы будут иметь доступ к флоту. Если группы не выбраны, "
 "флот будет доступен всем авторизованным группам."
 
-#: templates/fleetfinder/create-fleet.html:69
+#: templates/fleetfinder/create-fleet.html:72
 #: templates/fleetfinder/edit-fleet.html:68
 msgid "Enable Free Move"
 msgstr "Разрешить Free Move"
 
-#: templates/fleetfinder/create-fleet.html:71
+#: templates/fleetfinder/create-fleet.html:74
 #: templates/fleetfinder/edit-fleet.html:70
 msgid "Submit"
 msgstr "Отправить"
@@ -187,7 +191,9 @@ msgid "Select the characters to invite"
 msgstr "Выберите пилота для приглашения"
 
 #: templates/fleetfinder/join-fleet.html:29
-msgid "Send fleet invite(s)"
+#, fuzzy
+#| msgid "Send fleet invite(s)"
+msgid "Send fleet invites"
 msgstr "Отправить приглашение(я)"
 
 #: templates/fleetfinder/partials/header/header-navigation.html:7
@@ -206,4 +212,5 @@ msgstr "Редактировать оповещение"
 #, python-brace-format
 msgid ""
 "<h4>Error!</h4><p>ESI returned the following error: {esi_error_message}</p>"
-msgstr "<h4>Ошибка!</h4><p>ESI вернул следующую ошибку: {esi_error_message}</p>"
+msgstr ""
+"<h4>Ошибка!</h4><p>ESI вернул следующую ошибку: {esi_error_message}</p>"
