@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-12 04:47+0200\n"
-"PO-Revision-Date: 2023-06-29 14:19+0000\n"
+"PO-Revision-Date: 2023-07-13 09:38+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
-"Language-Team: German <https://weblate.ppfeufer.de/projects/alliance-auth-"
-"apps/aa-fleetfinder/de/>\n"
+"Language-Team: German <https://weblate.ppfeufer.de/projects/"
+"alliance-auth-apps/aa-fleetfinder/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.18.1\n"
+"X-Generator: Weblate 4.18.2\n"
 
 #: __init__.py:12 templates/fleetfinder/base.html:5
 msgid "Fleet Finder"
@@ -98,16 +98,13 @@ msgstr "Gruppenauswahl"
 
 #: templates/fleetfinder/create-fleet.html:39
 #: templates/fleetfinder/edit-fleet.html:39
-#, fuzzy
-#| msgid ""
-#| "Only selected groups will have access to the fleet. If no groups are "
-#| "selected the fleet will be available to all of the authed groups."
 msgid ""
 "Only selected groups will have access to the fleet. If no groups are "
 "selected the fleet will be available to all who have access to this module."
 msgstr ""
 "Nur die ausgewählten Gruppen haben Zugriff zu dieser Flotte. Wenn keine "
-"Gruppen ausgewählt sind ist die Flotte für alle verfügbar."
+"Gruppen ausgewählt sind, ist die Flotte für alle die Zugriff auf dieses "
+"Modul haben verfügbar."
 
 #: templates/fleetfinder/create-fleet.html:72
 #: templates/fleetfinder/edit-fleet.html:68
@@ -191,10 +188,8 @@ msgid "Select the characters to invite"
 msgstr "Wähle einzuladende Charaktere"
 
 #: templates/fleetfinder/join-fleet.html:29
-#, fuzzy
-#| msgid "Send fleet invite(s)"
 msgid "Send fleet invites"
-msgstr "Flotteneinladung(en) senden"
+msgstr "Flotteneinladungen senden"
 
 #: templates/fleetfinder/partials/header/header-navigation.html:7
 msgid "Toggle navigation"
