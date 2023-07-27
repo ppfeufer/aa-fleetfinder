@@ -25,4 +25,15 @@
     .aa-fleetfinder .table-vertical-middle td {
         vertical-align: middle;
     }
+
+    .aa-fleetfinder-footer {
+        border-top: 1px solid rgb(236 240 241);
+        font-size: 85%;
+        margin-top: 1rem;
+        padding-top: 1rem;
+    }
+
+    .template-dark-mode .aa-fleetfinder-footer {
+        border-color: rgb(70 69 69);
+    }
 }

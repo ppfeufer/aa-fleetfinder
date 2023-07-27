@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 04:47+0200\n"
+"POT-Creation-Date: 2023-07-27 23:27+0200\n"
 "PO-Revision-Date: 2023-07-13 09:38+0000\n"
 "Last-Translator: Nikolay <nick.postnikov@gmail.com>\n"
-"Language-Team: Russian <https://weblate.ppfeufer.de/projects/"
-"alliance-auth-apps/aa-fleetfinder/ru/>\n"
+"Language-Team: Russian <https://weblate.ppfeufer.de/projects/alliance-auth-"
+"apps/aa-fleetfinder/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -189,6 +189,19 @@ msgstr "Выберите пилота для приглашения"
 #: templates/fleetfinder/join-fleet.html:29
 msgid "Send fleet invites"
 msgstr "Отправить приглашения"
+
+#: templates/fleetfinder/partials/footer/app-translation-footer.html:4
+msgid "Join our team of translators!"
+msgstr ""
+
+#: templates/fleetfinder/partials/footer/app-translation-footer.html:7
+#, python-format
+msgid ""
+"\n"
+"            Do you want to help translate this app into your language or "
+"improve the existing translation? - %(weblate_link)s\n"
+"        "
+msgstr ""
 
 #: templates/fleetfinder/partials/header/header-navigation.html:7
 msgid "Toggle navigation"
