@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [In Development] - Unreleased
 
 
+## [1.3.1] - 2023-07-30
+
+### Added
+
+- Footer to promote help with the app translation
+
+### Changed
+
+- Ukrainian translation improved
+
+
 ## [1.3.0] - 2023-06-30
 
 ### Changed

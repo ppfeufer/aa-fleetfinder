@@ -23,7 +23,8 @@ Control access to your fleets through Alliance Auth.
   * [Installation](#installation)
     * [Step 1: Install the Package](#step-1-install-the-package)
     * [Step 2: Configure Alliance Auth](#step-2-configure-alliance-auth)
-    * [Step 3: Finalizing the Installation](#step-3-finalizing-the-installation)
+    * [Step 3: Add the Scheduled Task](#step-3-add-the-scheduled-task)
+    * [Step 4: Finalizing the Installation](#step-4-finalizing-the-installation)
     * [Step 4: Setup Permissions](#step-4-setup-permissions)
   * [Changelog](#changelog)
   * [Contributing](#contributing)
@@ -52,7 +53,21 @@ Configure your AA settings (`local.py`) as follows:
 - Add `"fleetfinder",` to `INSTALLED_APPS`
 
 
-### Step 3: Finalizing the Installation
+### Step 3: Add the Scheduled Task
+
+To set up the scheduled task, add the following code to your `local.py`:
+
+```python
+# AA Fleetfinder - https://github.com/ppfeufer/aa-fleetfinder
+if "fleetfinder" in INSTALLED_APPS:
+    CELERYBEAT_SCHEDULE["fleetfinder_check_fleet_adverts"] = {
+        "task": "fleetfinder.tasks.check_fleet_adverts",
+        "schedule": crontab(minute="*/1"),
+    }
+```
+
+
+### Step 4: Finalizing the Installation
 
 Run static files collection and migrations
 

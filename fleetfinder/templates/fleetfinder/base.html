@@ -6,8 +6,16 @@
 
 {% block content %}
     <div class="aa-fleetfinder">
-        {% include "fleetfinder/partials/header/header-navigation.html" %}
+        <div class="aa-fleetfinder-header">
+            {% include "fleetfinder/partials/header/header-navigation.html" %}
+        </div>
 
-        {% block fleetfinder_block %}{% endblock %}
+        <div class="aa-fleetfinder-body">
+            {% block aa_fleetfinder_body %}{% endblock %}
+        </div>
+
+        <div class="aa-fleetfinder-footer">
+            {% include "fleetfinder/partials/footer/app-translation-footer.html" %}
+        </div>
     </div>
 {% endblock %}
