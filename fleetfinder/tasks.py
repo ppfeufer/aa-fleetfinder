@@ -166,7 +166,7 @@ def _check_for_esi_fleet(fleet: Fleet):
         return {"fleet": fleet_from_esi, "token": esi_token}
     except HTTPNotFound:
         _esi_fleet_error_handling(error_key=Fleet.EsiError.NOT_IN_FLEET, fleet=fleet)
-    except Exception:
+    except Exception:  # pylint: disable=broad-exception-caught
         _esi_fleet_error_handling(error_key=Fleet.EsiError.NO_FLEET, fleet=fleet)
 
     return False
@@ -202,7 +202,7 @@ def _process_fleet(fleet: Fleet):
             _esi_fleet_error_handling(
                 fleet=fleet, error_key=Fleet.EsiError.NOT_IN_FLEET
             )
-        except Exception:
+        except Exception:  # pylint: disable=broad-exception-caught
             _esi_fleet_error_handling(fleet=fleet, error_key=Fleet.EsiError.NO_FLEET)
 
         # We have a valid fleet result from ESI
@@ -214,7 +214,7 @@ def _process_fleet(fleet: Fleet):
                         fleet_id=fleet_from_esi["fleet_id"],
                         token=esi_fleet["token"].valid_access_token(),
                     ).result()
-                except Exception:
+                except Exception:  # pylint: disable=broad-exception-caught
                     _esi_fleet_error_handling(
                         fleet=fleet, error_key=Fleet.EsiError.NOT_FLEETBOSS
                     )

@@ -52,7 +52,7 @@ def dashboard(request):
 
 @login_required()
 @permission_required("fleetfinder.access_fleetfinder")
-def ajax_dashboard(request) -> JsonResponse:
+def ajax_dashboard(request) -> JsonResponse:  # pylint: disable=too-many-locals
     """
     Ajax :: Dashboard information
     :param request:
@@ -280,7 +280,10 @@ def fleet_details(request, fleet_id):
 
 @login_required()
 @permission_required("fleetfinder.manage_fleets")
-def ajax_fleet_details(request, fleet_id) -> JsonResponse:
+def ajax_fleet_details(
+    request,  # pylint: disable=unused-argument
+    fleet_id,
+) -> JsonResponse:
     """
     Ajax :: Fleet Details
     :param request:
