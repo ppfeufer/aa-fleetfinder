@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [In Development] - Unreleased
 
 
+## [1.4.0] - 2023-08-15
+
+### Added
+
+- Spanish translation
+
+
 ## [1.3.2] - 2023-08-13
 
 ### Fixed
