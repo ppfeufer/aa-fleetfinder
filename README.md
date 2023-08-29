@@ -1,4 +1,4 @@
-# AA Fleet Finder
+# AA Fleet Finder<a name="aa-fleet-finder"></a>
 
 [![Version](https://img.shields.io/pypi/v/aa-fleetfinder?label=release)](https://pypi.org/project/aa-fleetfinder/)
 [![License](https://img.shields.io/github/license/ppfeufer/aa-fleetfinder)](https://github.com/ppfeufer/aa-fleetfinder/blob/master/LICENSE)
@@ -16,26 +16,27 @@
 
 Control access to your fleets through Alliance Auth.
 
----
+______________________________________________________________________
 
-<!-- TOC -->
-* [AA Fleet Finder](#aa-fleet-finder)
-  * [Installation](#installation)
-    * [Step 1: Install the Package](#step-1-install-the-package)
-    * [Step 2: Configure Alliance Auth](#step-2-configure-alliance-auth)
-    * [Step 3: Add the Scheduled Task](#step-3-add-the-scheduled-task)
-    * [Step 4: Finalizing the Installation](#step-4-finalizing-the-installation)
-    * [Step 4: Setup Permissions](#step-4-setup-permissions)
-  * [Changelog](#changelog)
-  * [Contributing](#contributing)
-<!-- TOC -->
+<!-- mdformat-toc start --slug=github --maxlevel=6 --minlevel=1 -->
 
----
+- [AA Fleet Finder](#aa-fleet-finder)
+  - [Installation](#installation)
+    - [Step 1: Install the Package](#step-1-install-the-package)
+    - [Step 2: Configure Alliance Auth](#step-2-configure-alliance-auth)
+    - [Step 3: Add the Scheduled Task](#step-3-add-the-scheduled-task)
+    - [Step 4: Finalizing the Installation](#step-4-finalizing-the-installation)
+    - [Step 4: Setup Permissions](#step-4-setup-permissions)
+  - [Changelog](#changelog)
+  - [Contributing](#contributing)
 
+<!-- mdformat-toc end -->
 
-## Installation
+______________________________________________________________________
 
-### Step 1: Install the Package
+## Installation<a name="installation"></a>
+
+### Step 1: Install the Package<a name="step-1-install-the-package"></a>
 
 Make sure you're in the virtual environment (venv) of your Alliance Auth installation Then install the latest release directly from PyPi.
 
@@ -43,8 +44,7 @@ Make sure you're in the virtual environment (venv) of your Alliance Auth install
 pip install aa-fleetfinder
 ```
 
-
-### Step 2: Configure Alliance Auth
+### Step 2: Configure Alliance Auth<a name="step-2-configure-alliance-auth"></a>
 
 This is fairly simple, just add the following to the `INSTALLED_APPS` of your `local.py`
 
@@ -52,8 +52,7 @@ Configure your AA settings (`local.py`) as follows:
 
 - Add `"fleetfinder",` to `INSTALLED_APPS`
 
-
-### Step 3: Add the Scheduled Task
+### Step 3: Add the Scheduled Task<a name="step-3-add-the-scheduled-task"></a>
 
 To set up the scheduled task, add the following code to your `local.py`:
 
@@ -66,8 +65,7 @@ if "fleetfinder" in INSTALLED_APPS:
     }
 ```
 
-
-### Step 4: Finalizing the Installation
+### Step 4: Finalizing the Installation<a name="step-4-finalizing-the-installation"></a>
 
 Run static files collection and migrations
 
@@ -76,23 +74,20 @@ python manage.py collectstatic
 python manage.py migrate
 ```
 
-
-### Step 4: Setup Permissions
+### Step 4: Setup Permissions<a name="step-4-setup-permissions"></a>
 
 Now it's time to set up access permissions for your new Fleetfinder module.
 
-| ID                    | Description                        | Notes                                                                                                        |
-|:----------------------|:-----------------------------------|:-------------------------------------------------------------------------------------------------------------|
-| `access_fleetfinder`  | Can access the Fleetfinder module  | Your line members should have this permission, together with everyone you want to have access to he module.  |
-| `manage_fleets`       | Can manage fleets                  | Everyone with this permission can open and edit fleets                                                       |
+| ID                   | Description                       | Notes                                                                                                       |
+| :------------------- | :-------------------------------- | :---------------------------------------------------------------------------------------------------------- |
+| `access_fleetfinder` | Can access the Fleetfinder module | Your line members should have this permission, together with everyone you want to have access to he module. |
+| `manage_fleets`      | Can manage fleets                 | Everyone with this permission can open and edit fleets                                                      |
 
-
-## Changelog
+## Changelog<a name="changelog"></a>
 
 See [CHANGELOG.md](https://github.com/ppfeufer/aa-fleetfinder/blob/master/CHANGELOG.md)
 
-
-## Contributing
+## Contributing<a name="contributing"></a>
 
 You want to contribute to this project? That's cool!
 

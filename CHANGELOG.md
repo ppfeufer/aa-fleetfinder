@@ -5,25 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## \[In Development\] - Unreleased
 
-## [In Development] - Unreleased
-
-
-## [1.4.0] - 2023-08-15
+## \[1.4.0\] - 2023-08-15
 
 ### Added
 
 - Spanish translation
 
-
-## [1.3.2] - 2023-08-13
+## \[1.3.2\] - 2023-08-13
 
 ### Fixed
 
 - Bootstrap CSS fix
 
-
-## [1.3.1] - 2023-07-30
+## \[1.3.1\] - 2023-07-30
 
 ### Added
 
@@ -33,8 +29,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Ukrainian translation improved
 
-
-## [1.3.0] - 2023-06-30
+## \[1.3.0\] - 2023-06-30
 
 ### Changed
 
@@ -45,36 +40,31 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   Redis was too unreliable and there was a good chance the task stopped working
   properly.
 
-
-## [1.2.0] - 2023-04-25
+## \[1.2.0\] - 2023-04-25
 
 ### Changed
 
 - Moved the build process to PEP 621 / pyproject.toml
 
-
-## [1.1.0] - 2023-04-16
+## \[1.1.0\] - 2023-04-16
 
 ### Added
 
 - Russian translation
 
-
-## [1.0.0] - 2023-04-13
+## \[1.0.0\] - 2023-04-13
 
 ### Added
 
 - German translation
 
-
-## [1.0.0-beta.1] - 2023-01-10
+## \[1.0.0-beta.1\] - 2023-01-10
 
 ### Changed
 
 - Migrations reset
 
-
-## [0.1.0-alpha.20] - 2023-01-05
+## \[0.1.0-alpha.20\] - 2023-01-05
 
 ### Fixed
 
@@ -85,16 +75,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Auto retry for ESI and OS errors in tasks, since django-esi already retries all
   relevant errors
 
-
-## [0.1.0-alpha.19] - 2022-09-18
+## \[0.1.0-alpha.19\] - 2022-09-18
 
 ### Changed
 
 - Dashboard error message replaced with Django message API
 - Internal improvements
 
-
-## [0.1.0-alpha.18] - 2022-08-23
+## \[0.1.0-alpha.18\] - 2022-08-23
 
 ### Added
 
@@ -117,16 +105,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Unused code
 
-
-## [0.1.0-alpha.17] - 2022-07-11
+## \[0.1.0-alpha.17\] - 2022-07-11
 
 ### Changed
 
 - Switch to f-strings for formatted strings
 - Templates cleaned up
 
-
-## [0.1.0-alpha.16] - 2022-06-24
+## \[0.1.0-alpha.16\] - 2022-06-24
 
 ### Added
 
@@ -136,8 +122,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - AVOID_CDN setting, we serve always locally (GDPR)
 
-
-## [0.1.0-alpha.15] - 2022-03-02
+## \[0.1.0-alpha.15\] - 2022-03-02
 
 ### Added
 
@@ -152,8 +137,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Minimum dependencies:
   - Alliance Auth>=2.11.0 (as last stable of the 2.x branch for now)
 
-
-## [0.1.0-alpha.14] - 2022-03-01
+## \[0.1.0-alpha.14\] - 2022-03-01
 
 ### Removed
 
@@ -163,37 +147,32 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Makefile updated
 
-
-## [0.1.0-alpha.13] - 2022-03-01
+## \[0.1.0-alpha.13\] - 2022-03-01
 
 ### Added
 
 - Package discovery to `setup.cfg` (hopefully)
 
-
-## [0.1.0-alpha.12] - 2022-03-01
+## \[0.1.0-alpha.12\] - 2022-03-01
 
 ### Fixed
 
 - Classifiers in `setup.cfg`
 
-
-## [0.1.0-alpha.11] - 2022-03-01
+## \[0.1.0-alpha.11\] - 2022-03-01
 
 ### Changed
 
 - Switched to `setup.cfg` instead of `setup.py`
 
-
-## [0.1.0-alpha.10] - 2022-02-28
+## \[0.1.0-alpha.10\] - 2022-02-28
 
 ### Fixed
 
-- [Compatibility] AA 3.x / Django 4 :: ImportError: cannot import name
+- \[Compatibility\] AA 3.x / Django 4 :: ImportError: cannot import name
   'ugettext_lazy' from 'django.utils.translation'
 
-
-## [0.1.0-alpha.9] - 2022-02-02
+## \[0.1.0-alpha.9\] - 2022-02-02
 
 ### Added
 
@@ -205,8 +184,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Minimum requirements
   - Alliance Auth v2.9.4
 
-
-## [0.1.0-alpha.8] - 2021-11-30
+## \[0.1.0-alpha.8\] - 2021-11-30
 
 ### Changed
 
@@ -214,22 +192,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Python 3.7
   - Alliance Auth v2.9.3
 
-
-## [0.1.0-alpha.7] - 2021-11-15
+## \[0.1.0-alpha.7\] - 2021-11-15
 
 ### Added
 
 - Basic test suite
 
-
-## [0.1.0-alpha.6] - 2021-07-08
+## \[0.1.0-alpha.6\] - 2021-07-08
 
 ### Changed
 
 - Compatibility with Python 3.9 and Django 3.2
 
-
-## [0.1.0-alpha.5] - 2021-01-25
+## \[0.1.0-alpha.5\] - 2021-01-25
 
 ### Added
 
@@ -239,22 +214,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Fleet table on dashboard is now loaded via ajax and refreshed every 30 seconds
 
-
-## [0.1.0-alpha.4] - 2021-01-12
+## \[0.1.0-alpha.4\] - 2021-01-12
 
 ### Removed
 
 - Django 2 support
 
-
-## [0.1.0-alpha.3] - 2021-01-05
+## \[0.1.0-alpha.3\] - 2021-01-05
 
 ### Fixed
 
 - Permission to create fleets
 
-
-## [0.1.0-alpha.2] - 2021-01-05
+## \[0.1.0-alpha.2\] - 2021-01-05
 
 ### Changed
 
@@ -262,8 +234,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - UI in fleet details view re-done
 - Fleet details are now refreshed every 15 seconds via Datatables reload
 
-
-## [0.1.0-alpha.1] - 2020-12-30
+## \[0.1.0-alpha.1\] - 2020-12-30
 
 App forked from [Dreadbomb/aa-fleet](https://github.com/Dreadbomb/aa-fleet)
 
