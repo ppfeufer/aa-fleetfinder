@@ -28,6 +28,7 @@ ______________________________________________________________________
     - [Step 4: Finalizing the Installation](#step-4-finalizing-the-installation)
     - [Step 4: Setup Permissions](#step-4-setup-permissions)
   - [Changelog](#changelog)
+  - [Translations](#translations)
   - [Contributing](#contributing)
 
 <!-- mdformat-toc end -->
@@ -87,9 +88,26 @@ Now it's time to set up access permissions for your new Fleetfinder module.
 
 See [CHANGELOG.md](https://github.com/ppfeufer/aa-fleetfinder/blob/master/CHANGELOG.md)
 
+## Translations<a name="translations"></a>
+
+This app is currently translated into:
+
+- English
+- German
+- Korean
+- Russian
+- Spanish
+
+If you want to help to translate this app or improve existing translations, join
+our team of translators over on [Weblate][weblate engage]!
+
 ## Contributing<a name="contributing"></a>
 
 You want to contribute to this project? That's cool!
 
 Please make sure to read the [Contribution Guidelines](https://github.com/ppfeufer/aa-fleetfinder/blob/master/CONTRIBUTING.md) (I promise, it's not much,
 just some basics)
+
+<!-- Links -->
+
+[weblate engage]: https://weblate.ppfeufer.de/engage/alliance-auth-apps/ "Weblate Translations"
