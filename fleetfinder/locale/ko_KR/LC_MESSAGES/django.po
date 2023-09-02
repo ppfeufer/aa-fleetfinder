@@ -2,12 +2,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Author50CO <tkddlschry@gmail.com>, 2023.
+# Peter Pfeufer <info@ppfeufer.de>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-30 18:42+0200\n"
-"PO-Revision-Date: 2023-08-29 00:10+0000\n"
+"PO-Revision-Date: 2023-09-02 15:40+0000\n"
 "Last-Translator: Author50CO <tkddlschry@gmail.com>\n"
 "Language-Team: Korean <https://weblate.ppfeufer.de/projects/"
 "alliance-auth-apps/aa-fleetfinder/ko/>\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.18.2\n"
+"X-Generator: Weblate 5.0\n"
 
 #: __init__.py:12 templates/fleetfinder/base.html:5
 msgid "Fleet Finder"
@@ -26,7 +27,7 @@ msgstr "함대 찾기"
 #: apps.py:21
 #, python-brace-format
 msgid "Fleet Finder v{__version__}"
-msgstr "함대 찾기 버전{__version__}"
+msgstr "함대 찾기 v{__version__}"
 
 #: models.py:44
 msgid ""
@@ -195,7 +196,7 @@ msgstr "이 앱을 번역하거나 기존 번역을 개선하고 싶으신가요
 
 #: templates/fleetfinder/partials/footer/app-translation-footer.html:8
 msgid "Join our team of translators!"
-msgstr "번역 팀에 참여하세요!"
+msgstr "번역가 팀에 참여하세요!"
 
 #: templates/fleetfinder/partials/header/header-navigation.html:7
 msgid "Toggle navigation"
