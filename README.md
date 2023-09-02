@@ -9,7 +9,7 @@
 [![Discord](https://img.shields.io/discord/790364535294132234?label=discord)](https://discord.gg/zmh52wnfvM)
 [![Checks](https://github.com/ppfeufer/aa-fleetfinder/actions/workflows/automated-checks.yml/badge.svg)](https://github.com/ppfeufer/aa-fleetfinder/actions/workflows/automated-checks.yml)
 [![codecov](https://codecov.io/gh/ppfeufer/aa-fleetfinder/branch/master/graph/badge.svg?token=GFOR9GWRNQ)](https://codecov.io/gh/ppfeufer/aa-fleetfinder)
-[![Translation Status](https://weblate.ppfeufer.de/widgets/alliance-auth-apps/-/aa-fleetfinder/svg-badge.svg)](https://weblate.ppfeufer.de/engage/alliance-auth-apps/)
+[![Translation status](https://weblate.ppfeufer.de/widget/alliance-auth-apps/aa-fleetfinder/svg-badge.svg)](https://weblate.ppfeufer.de/engage/alliance-auth-apps/)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](https://github.com/ppfeufer/aa-fleetfinder/blob/master/CODE_OF_CONDUCT.md)
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/N4N8CL1BY)
@@ -28,7 +28,7 @@ ______________________________________________________________________
     - [Step 4: Finalizing the Installation](#step-4-finalizing-the-installation)
     - [Step 4: Setup Permissions](#step-4-setup-permissions)
   - [Changelog](#changelog)
-  - [Translations](#translations)
+  - [Translation Status](#translation-status)
   - [Contributing](#contributing)
 
 <!-- mdformat-toc end -->
@@ -88,25 +88,19 @@ Now it's time to set up access permissions for your new Fleetfinder module.
 
 See [CHANGELOG.md](https://github.com/ppfeufer/aa-fleetfinder/blob/master/CHANGELOG.md)
 
-## Translations<a name="translations"></a>
+## Translation Status<a name="translation-status"></a>
 
-This app is currently translated into:
+[![Translation status](https://weblate.ppfeufer.de/widget/alliance-auth-apps/aa-fleetfinder/multi-auto.svg)](https://weblate.ppfeufer.de/engage/alliance-auth-apps/)
 
-- English
-- German
-- Korean
-- Russian
-- Spanish
-
-If you want to help to translate this app or improve existing translations, join
-our team of translators over on [Weblate][weblate engage]!
+Do you want to help translate this app into your language or improve the existing
+translation? - [Join our team of translators][weblate engage]!
 
 ## Contributing<a name="contributing"></a>
 
 You want to contribute to this project? That's cool!
 
-Please make sure to read the [Contribution Guidelines](https://github.com/ppfeufer/aa-fleetfinder/blob/master/CONTRIBUTING.md) (I promise, it's not much,
-just some basics)
+Please make sure to read the [Contribution Guidelines](https://github.com/ppfeufer/aa-fleetfinder/blob/master/CONTRIBUTING.md).\
+(I promise, it's not much, just some basics)
 
 <!-- Links -->
 
