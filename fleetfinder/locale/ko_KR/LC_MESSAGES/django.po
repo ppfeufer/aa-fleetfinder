@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-22 20:33+0200\n"
+"POT-Creation-Date: 2023-09-22 20:39+0200\n"
 "PO-Revision-Date: 2023-09-22 16:21+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: Korean <https://weblate.ppfeufer.de/projects/alliance-auth-"
@@ -198,8 +198,10 @@ msgstr "이름"
 msgid "System"
 msgstr "성계"
 
-#: templates/fleetfinder/join-fleet.html:6
-msgid "Join Fleet"
+#: templates/fleetfinder/join-fleet.html:6 views.py:79
+#, fuzzy
+#| msgid "Join Fleet"
+msgid "Join fleet"
 msgstr "함대 참가"
 
 #: templates/fleetfinder/join-fleet.html:14
@@ -229,12 +231,6 @@ msgstr "번역가 팀에 참여하세요!"
 #: templates/fleetfinder/partials/header/header-navigation.html:7
 msgid "Toggle navigation"
 msgstr "토글 메뉴"
-
-#: views.py:79
-#, fuzzy
-#| msgid "Join Fleet"
-msgid "Join fleet"
-msgstr "함대 참가"
 
 #: views.py:92
 #, fuzzy

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-22 20:33+0200\n"
+"POT-Creation-Date: 2023-09-22 20:39+0200\n"
 "PO-Revision-Date: 2023-08-30 17:40+0000\n"
 "Last-Translator: Zigor Fernandez Moreno <sietehierros@gmail.com>\n"
 "Language-Team: Spanish <https://weblate.ppfeufer.de/projects/alliance-auth-"
@@ -200,8 +200,10 @@ msgstr "Nombre"
 msgid "System"
 msgstr "Sistema"
 
-#: templates/fleetfinder/join-fleet.html:6
-msgid "Join Fleet"
+#: templates/fleetfinder/join-fleet.html:6 views.py:79
+#, fuzzy
+#| msgid "Join Fleet"
+msgid "Join fleet"
 msgstr "Unirse a la Flota"
 
 #: templates/fleetfinder/join-fleet.html:14
@@ -233,12 +235,6 @@ msgstr "¡Únete a nuestro equipo de traductores!"
 #: templates/fleetfinder/partials/header/header-navigation.html:7
 msgid "Toggle navigation"
 msgstr "Alternar la navegación"
-
-#: views.py:79
-#, fuzzy
-#| msgid "Join Fleet"
-msgid "Join fleet"
-msgstr "Unirse a la Flota"
 
 #: views.py:92
 #, fuzzy
