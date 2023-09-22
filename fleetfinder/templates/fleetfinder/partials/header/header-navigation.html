@@ -10,12 +10,20 @@
                 <span class="icon-bar"></span>
             </button>
 
-            <a class="navbar-brand" href="{% url 'fleetfinder:dashboard' %}">{% translate "Available Fleets" %}</a>
+            <a class="navbar-brand" href="{% url 'fleetfinder:dashboard' %}">
+                {% translate "Available fleets" as navigation_item %}
+                {{ navigation_item|title }}
+            </a>
         </div>
 
         <ul class="nav navbar-nav">
             {% if perms.fleetfinder.manage_fleets %}
-                <li> <a href="{% url 'fleetfinder:create_fleet' %}">{% translate "Create Fleet" %}</a></li>
+                <li>
+                    <a href="{% url 'fleetfinder:create_fleet' %}">
+                        {% translate "Create fleet" as navigation_item %}
+                        {{ navigation_item|title }}
+                    </a>
+                </li>
             {% endif %}
         </ul>
     </div>
