@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-21 21:27+0200\n"
+"POT-Creation-Date: 2023-09-22 20:33+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: __init__.py:12 templates/fleetfinder/base.html:5
+#: __init__.py:12 models.py:24 templates/fleetfinder/base.html:5
 msgid "Fleet Finder"
 msgstr ""
 
@@ -25,6 +25,10 @@ msgstr ""
 #: apps.py:21
 #, python-brace-format
 msgid "Fleet Finder v{__version__}"
+msgstr ""
+
+#: models.py:28
+msgid "Can access the Fleet Finder app"
 msgstr ""
 
 #: models.py:44
@@ -44,21 +48,22 @@ msgstr ""
 msgid "FC switched to another fleet."
 msgstr ""
 
-#: models.py:51 templates/fleetfinder/create-fleet.html:27
-#: templates/fleetfinder/edit-fleet.html:27
-msgid "Fleet Name"
+#: models.py:51 templates/fleetfinder/create-fleet.html:30
+#: templates/fleetfinder/dashboard.html:18
+#: templates/fleetfinder/edit-fleet.html:30
+msgid "Fleet name"
 msgstr ""
 
 #: models.py:59 templates/fleetfinder/dashboard.html:17
-msgid "Fleet Commander"
+msgid "Fleet commander"
 msgstr ""
 
 #: models.py:61
 msgid "Creation date and time"
 msgstr ""
 
-#: models.py:62 templates/fleetfinder/create-fleet.html:62
-#: templates/fleetfinder/edit-fleet.html:58
+#: models.py:62 templates/fleetfinder/create-fleet.html:65
+#: templates/fleetfinder/edit-fleet.html:61
 msgid "Fleet MOTD"
 msgstr ""
 
@@ -66,62 +71,57 @@ msgstr ""
 msgid "Free move"
 msgstr ""
 
-#: models.py:69
-msgid "Group restrictions"
-msgstr ""
-
-#: models.py:77
-msgid "Last ESI error"
-msgstr ""
-
-#: models.py:81
-msgid "Last ESI error time"
-msgstr ""
-
-#: models.py:84
-msgid "ESI error count"
-msgstr ""
-
-#: templates/fleetfinder/create-fleet.html:5
-#: templates/fleetfinder/create-fleet.html:11
-#: templates/fleetfinder/partials/header/header-navigation.html:18
-msgid "Create Fleet"
-msgstr ""
-
-#: templates/fleetfinder/create-fleet.html:36
-#: templates/fleetfinder/edit-fleet.html:36
-msgid "Select Groups"
-msgstr ""
-
-#: templates/fleetfinder/create-fleet.html:39
-#: templates/fleetfinder/edit-fleet.html:39
+#: models.py:69 templates/fleetfinder/create-fleet.html:42
+#: templates/fleetfinder/edit-fleet.html:42
 msgid ""
 "Only selected groups will have access to the fleet. If no groups are "
 "selected the fleet will be available to all who have access to this module."
 msgstr ""
 
-#: templates/fleetfinder/create-fleet.html:72
-#: templates/fleetfinder/edit-fleet.html:68
-msgid "Enable Free Move"
+#: models.py:73
+msgid "Group restrictions"
 msgstr ""
 
-#: templates/fleetfinder/create-fleet.html:74
-#: templates/fleetfinder/edit-fleet.html:70
+#: models.py:81
+msgid "Last ESI error"
+msgstr ""
+
+#: models.py:85
+msgid "Last ESI error time"
+msgstr ""
+
+#: models.py:88
+msgid "ESI error count"
+msgstr ""
+
+#: templates/fleetfinder/create-fleet.html:6
+#: templates/fleetfinder/create-fleet.html:14
+#: templates/fleetfinder/partials/header/header-navigation.html:23
+msgid "Create fleet"
+msgstr ""
+
+#: templates/fleetfinder/create-fleet.html:39
+#: templates/fleetfinder/edit-fleet.html:39
+msgid "Select groups"
+msgstr ""
+
+#: templates/fleetfinder/create-fleet.html:75
+#: templates/fleetfinder/edit-fleet.html:71
+msgid "Enable free move"
+msgstr ""
+
+#: templates/fleetfinder/create-fleet.html:77
+#: templates/fleetfinder/edit-fleet.html:73
 msgid "Submit"
 msgstr ""
 
 #: templates/fleetfinder/dashboard.html:9
-#: templates/fleetfinder/partials/header/header-navigation.html:13
-msgid "Available Fleets"
-msgstr ""
-
-#: templates/fleetfinder/dashboard.html:18
-#: templates/fleetfinder/fleet-details.html:44
-msgid "Name"
+#: templates/fleetfinder/partials/header/header-navigation.html:14
+msgid "Available fleets"
 msgstr ""
 
 #: templates/fleetfinder/dashboard.html:19
-msgid "Created At"
+msgid "Created at"
 msgstr ""
 
 #: templates/fleetfinder/dashboard.html:20
@@ -136,52 +136,53 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: templates/fleetfinder/edit-fleet.html:5
-#: templates/fleetfinder/edit-fleet.html:11
-msgid "Edit Fleet"
+#: templates/fleetfinder/edit-fleet.html:6
+#: templates/fleetfinder/edit-fleet.html:14
+msgid "Edit fleet"
 msgstr ""
 
-#: templates/fleetfinder/fleet-details.html:5
-msgid "Fleet Details"
+#: templates/fleetfinder/fleet-details.html:6
+msgid "Fleet details"
 msgstr ""
 
-#: templates/fleetfinder/fleet-details.html:13
-msgid "Fleet Composition"
+#: templates/fleetfinder/fleet-details.html:15
+msgid "Fleet composition"
 msgstr ""
 
-#: templates/fleetfinder/fleet-details.html:21
-msgid "Ship Name"
+#: templates/fleetfinder/fleet-details.html:23
+#: templates/fleetfinder/fleet-details.html:47
+msgid "Ship class"
 msgstr ""
 
-#: templates/fleetfinder/fleet-details.html:22
+#: templates/fleetfinder/fleet-details.html:24
 msgid "Count"
 msgstr ""
 
-#: templates/fleetfinder/fleet-details.html:36
-msgid "Fleet Members"
-msgstr ""
-
-#: templates/fleetfinder/fleet-details.html:45
-msgid "Ship type"
+#: templates/fleetfinder/fleet-details.html:38
+msgid "Fleet members"
 msgstr ""
 
 #: templates/fleetfinder/fleet-details.html:46
+msgid "Name"
+msgstr ""
+
+#: templates/fleetfinder/fleet-details.html:48
 msgid "System"
 msgstr ""
 
-#: templates/fleetfinder/join-fleet.html:5 views.py:79
+#: templates/fleetfinder/join-fleet.html:6
 msgid "Join Fleet"
 msgstr ""
 
-#: templates/fleetfinder/join-fleet.html:11
-msgid "Fleet Invitation"
+#: templates/fleetfinder/join-fleet.html:14
+msgid "Fleet invitation"
 msgstr ""
 
-#: templates/fleetfinder/join-fleet.html:21
+#: templates/fleetfinder/join-fleet.html:24
 msgid "Select the characters to invite"
 msgstr ""
 
-#: templates/fleetfinder/join-fleet.html:29
+#: templates/fleetfinder/join-fleet.html:33
 msgid "Send fleet invites"
 msgstr ""
 
@@ -199,12 +200,16 @@ msgstr ""
 msgid "Toggle navigation"
 msgstr ""
 
+#: views.py:79
+msgid "Join fleet"
+msgstr ""
+
 #: views.py:92
-msgid "View Fleet Details"
+msgid "View fleet details"
 msgstr ""
 
 #: views.py:99
-msgid "Edit Fleet Advert"
+msgid "Edit fleet advert"
 msgstr ""
 
 #: views.py:243
