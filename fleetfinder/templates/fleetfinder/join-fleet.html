@@ -2,13 +2,16 @@
 
 {% load i18n %}
 
-{% block page_title %}{% translate "Join Fleet" %}{% endblock %}
+{% block page_title %}
+    {% translate "Join fleet" as page_title %}
+    {{ page_title|title }}
+{% endblock %}
 
 {% block aa_fleetfinder_body %}
     <div class="panel panel-primary">
         <div class="panel-heading">
             <div class="panel-title">
-                {% translate "Fleet Invitation" %}
+                {% translate "Fleet invitation" %}
             </div>
         </div>
 
@@ -26,7 +29,9 @@
                             {% endfor %}
                         </select>
 
-                        <button class="btn btn-primary btn-block" style="margin-top: 10px;" type="submit">{% translate "Send fleet invites" %}</button>
+                        <button class="btn btn-primary btn-block" style="margin-top: 10px;" type="submit">
+                            {% translate "Send fleet invites" %}
+                        </button>
                     </form>
                 </div>
             </div>

@@ -7,20 +7,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-30 18:42+0200\n"
-"PO-Revision-Date: 2023-08-29 00:10+0000\n"
-"Last-Translator: Nikolay <nick.postnikov@gmail.com>\n"
-"Language-Team: Russian <https://weblate.ppfeufer.de/projects/"
-"alliance-auth-apps/aa-fleetfinder/ru/>\n"
+"POT-Creation-Date: 2023-09-24 16:26+0200\n"
+"PO-Revision-Date: 2023-09-24 13:13+0000\n"
+"Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
+"Language-Team: Russian <https://weblate.ppfeufer.de/projects/alliance-auth-"
+"apps/aa-fleetfinder/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : (n%10==1 && n%100!=11 ? 0 : "
 "n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 4.18.2\n"
+"X-Generator: Weblate 5.0.2\n"
 
-#: __init__.py:12 templates/fleetfinder/base.html:5
+#: __init__.py:12 models.py:24 templates/fleetfinder/base.html:5
 msgid "Fleet Finder"
 msgstr "Поиск флота"
 
@@ -29,6 +29,10 @@ msgstr "Поиск флота"
 #, python-brace-format
 msgid "Fleet Finder v{__version__}"
 msgstr "Поиск флота v{__version__}"
+
+#: models.py:28
+msgid "Can access the Fleet Finder app"
+msgstr ""
 
 #: models.py:44
 msgid ""
@@ -47,21 +51,24 @@ msgstr "ФК больше не руководитель флота."
 msgid "FC switched to another fleet."
 msgstr "ФК перешел в другой флот."
 
-#: models.py:51 templates/fleetfinder/create-fleet.html:27
-#: templates/fleetfinder/edit-fleet.html:27
-msgid "Fleet Name"
+#: models.py:51 templates/fleetfinder/create-fleet.html:30
+#: templates/fleetfinder/dashboard.html:18
+#: templates/fleetfinder/edit-fleet.html:30
+msgid "Fleet name"
 msgstr "Название флота"
 
 #: models.py:59 templates/fleetfinder/dashboard.html:17
-msgid "Fleet Commander"
+#, fuzzy
+#| msgid "Fleet Commander"
+msgid "Fleet commander"
 msgstr "Командир флота"
 
 #: models.py:61
 msgid "Creation date and time"
 msgstr "Дата и время создания"
 
-#: models.py:62 templates/fleetfinder/create-fleet.html:62
-#: templates/fleetfinder/edit-fleet.html:58
+#: models.py:62 templates/fleetfinder/create-fleet.html:65
+#: templates/fleetfinder/edit-fleet.html:61
 msgid "Fleet MOTD"
 msgstr "MOTD флота"
 
@@ -69,35 +76,8 @@ msgstr "MOTD флота"
 msgid "Free move"
 msgstr "Свободное перемещение"
 
-#: models.py:69
-msgid "Group restrictions"
-msgstr "Ограничения групп"
-
-#: models.py:77
-msgid "Last ESI error"
-msgstr "Последняя ESI ошибка"
-
-#: models.py:81
-msgid "Last ESI error time"
-msgstr "Время последней ESI ошибки"
-
-#: models.py:84
-msgid "ESI error count"
-msgstr "Счетчик ESI ошибок"
-
-#: templates/fleetfinder/create-fleet.html:5
-#: templates/fleetfinder/create-fleet.html:11
-#: templates/fleetfinder/partials/header/header-navigation.html:18
-msgid "Create Fleet"
-msgstr "Создание флота"
-
-#: templates/fleetfinder/create-fleet.html:36
-#: templates/fleetfinder/edit-fleet.html:36
-msgid "Select Groups"
-msgstr "Выбор групп"
-
-#: templates/fleetfinder/create-fleet.html:39
-#: templates/fleetfinder/edit-fleet.html:39
+#: models.py:69 templates/fleetfinder/create-fleet.html:42
+#: templates/fleetfinder/edit-fleet.html:42
 msgid ""
 "Only selected groups will have access to the fleet. If no groups are "
 "selected the fleet will be available to all who have access to this module."
@@ -105,28 +85,60 @@ msgstr ""
 "Только выбранные группы будут иметь доступ к флоту. Если группы не выбраны, "
 "флот будет доступен всем пользователям модуля."
 
-#: templates/fleetfinder/create-fleet.html:72
-#: templates/fleetfinder/edit-fleet.html:68
-msgid "Enable Free Move"
+#: models.py:73
+msgid "Group restrictions"
+msgstr "Ограничения групп"
+
+#: models.py:81
+msgid "Last ESI error"
+msgstr "Последняя ESI ошибка"
+
+#: models.py:85
+msgid "Last ESI error time"
+msgstr "Время последней ESI ошибки"
+
+#: models.py:88
+msgid "ESI error count"
+msgstr "Счетчик ESI ошибок"
+
+#: templates/fleetfinder/create-fleet.html:6
+#: templates/fleetfinder/create-fleet.html:14
+#: templates/fleetfinder/partials/header/header-navigation.html:23
+#, fuzzy
+#| msgid "Create Fleet"
+msgid "Create fleet"
+msgstr "Создание флота"
+
+#: templates/fleetfinder/create-fleet.html:39
+#: templates/fleetfinder/edit-fleet.html:39
+#, fuzzy
+#| msgid "Select Groups"
+msgid "Select groups"
+msgstr "Выбор групп"
+
+#: templates/fleetfinder/create-fleet.html:75
+#: templates/fleetfinder/edit-fleet.html:71
+#, fuzzy
+#| msgid "Enable Free Move"
+msgid "Enable free move"
 msgstr "Разрешить Free Move"
 
-#: templates/fleetfinder/create-fleet.html:74
-#: templates/fleetfinder/edit-fleet.html:70
+#: templates/fleetfinder/create-fleet.html:77
+#: templates/fleetfinder/edit-fleet.html:73
 msgid "Submit"
 msgstr "Отправить"
 
 #: templates/fleetfinder/dashboard.html:9
-#: templates/fleetfinder/partials/header/header-navigation.html:13
-msgid "Available Fleets"
+#: templates/fleetfinder/partials/header/header-navigation.html:14
+#, fuzzy
+#| msgid "Available Fleets"
+msgid "Available fleets"
 msgstr "Доступные флота"
 
-#: templates/fleetfinder/dashboard.html:18
-#: templates/fleetfinder/fleet-details.html:44
-msgid "Name"
-msgstr "Название"
-
 #: templates/fleetfinder/dashboard.html:19
-msgid "Created At"
+#, fuzzy
+#| msgid "Created At"
+msgid "Created at"
 msgstr "Создан"
 
 #: templates/fleetfinder/dashboard.html:20
@@ -141,52 +153,61 @@ msgstr "Подробности"
 msgid "Edit"
 msgstr "Редактировать"
 
-#: templates/fleetfinder/edit-fleet.html:5
-#: templates/fleetfinder/edit-fleet.html:11
-msgid "Edit Fleet"
+#: templates/fleetfinder/edit-fleet.html:6
+#: templates/fleetfinder/edit-fleet.html:14
+#, fuzzy
+#| msgid "Edit Fleet"
+msgid "Edit fleet"
 msgstr "Редактировать флот"
 
-#: templates/fleetfinder/fleet-details.html:5
-msgid "Fleet Details"
+#: templates/fleetfinder/fleet-details.html:6
+msgid "Fleet details"
 msgstr "Подробное описание флота"
 
-#: templates/fleetfinder/fleet-details.html:13
-msgid "Fleet Composition"
+#: templates/fleetfinder/fleet-details.html:15
+msgid "Fleet composition"
 msgstr "Состав флота"
 
-#: templates/fleetfinder/fleet-details.html:21
-msgid "Ship Name"
-msgstr "Название корабля"
+#: templates/fleetfinder/fleet-details.html:23
+#: templates/fleetfinder/fleet-details.html:47
+msgid "Ship class"
+msgstr "Класс корабля"
 
-#: templates/fleetfinder/fleet-details.html:22
-msgid "Quantity"
+#: templates/fleetfinder/fleet-details.html:24
+msgid "Count"
 msgstr "Количество"
 
-#: templates/fleetfinder/fleet-details.html:36
-msgid "Fleet Members"
+#: templates/fleetfinder/fleet-details.html:38
+#, fuzzy
+#| msgid "Fleet Members"
+msgid "Fleet members"
 msgstr "Пилоты флота"
 
-#: templates/fleetfinder/fleet-details.html:45
-msgid "Ship type"
-msgstr "Тип корабля"
-
 #: templates/fleetfinder/fleet-details.html:46
+msgid "Name"
+msgstr "Название"
+
+#: templates/fleetfinder/fleet-details.html:48
 msgid "System"
 msgstr "Система"
 
-#: templates/fleetfinder/join-fleet.html:5 views.py:79
-msgid "Join Fleet"
+#: templates/fleetfinder/join-fleet.html:6 views.py:79
+#, fuzzy
+#| msgid "Join Fleet"
+msgid "Join fleet"
 msgstr "Присоединиться к флоту"
 
-#: templates/fleetfinder/join-fleet.html:11
-msgid "Fleet Invitation"
+#: templates/fleetfinder/join-fleet.html:14
+#, fuzzy
+#| msgid "Fleet Invitation"
+msgid "Fleet invitation"
 msgstr "Приглашение во флот"
 
-#: templates/fleetfinder/join-fleet.html:21
+#: templates/fleetfinder/join-fleet.html:24
 msgid "Select the characters to invite"
 msgstr "Выберите пилота для приглашения"
 
-#: templates/fleetfinder/join-fleet.html:29
+#: templates/fleetfinder/join-fleet.html:33
 msgid "Send fleet invites"
 msgstr "Отправить приглашения"
 
@@ -207,11 +228,15 @@ msgid "Toggle navigation"
 msgstr "Переключить навигацию"
 
 #: views.py:92
-msgid "View Fleet Details"
+#, fuzzy
+#| msgid "View Fleet Details"
+msgid "View fleet details"
 msgstr "Показать подробности"
 
 #: views.py:99
-msgid "Edit Fleet Advert"
+#, fuzzy
+#| msgid "Edit Fleet Advert"
+msgid "Edit fleet advert"
 msgstr "Редактировать оповещение"
 
 #: views.py:243

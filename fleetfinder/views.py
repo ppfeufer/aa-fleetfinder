@@ -76,7 +76,7 @@ def ajax_dashboard(request) -> JsonResponse:  # pylint: disable=too-many-locals
         fleet_commander_html = fleet_commander_portrait + fleet_commander_name
 
         button_join_url = reverse("fleetfinder:join_fleet", args=[fleet.fleet_id])
-        button_join_text = _("Join Fleet")
+        button_join_text = _("Join fleet")
         button_join = (
             f'<a href="{button_join_url}" '
             f'class="btn btn-sm btn-default">{button_join_text}</a>'
@@ -89,14 +89,14 @@ def ajax_dashboard(request) -> JsonResponse:  # pylint: disable=too-many-locals
             button_details_url = reverse(
                 "fleetfinder:fleet_details", args=[fleet.fleet_id]
             )
-            button_details_text = _("View Fleet Details")
+            button_details_text = _("View fleet details")
             button_details = (
                 f'<a href="{button_details_url}" '
                 f'class="btn btn-sm btn-default">{button_details_text}</a>'
             )
 
             button_edit_url = reverse("fleetfinder:edit_fleet", args=[fleet.fleet_id])
-            button_edit_text = _("Edit Fleet Advert")
+            button_edit_text = _("Edit fleet advert")
             button_edit = (
                 f'<a href="{button_edit_url}" '
                 f'class="btn btn-sm btn-default">{button_edit_text}</a>'

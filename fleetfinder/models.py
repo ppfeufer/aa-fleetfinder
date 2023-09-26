@@ -21,11 +21,11 @@ class General(models.Model):
         Meta Definitions
         """
 
-        verbose_name = "Fleet Finder"
+        verbose_name = _("Fleet Finder")
         managed = False
         default_permissions = ()
         permissions = (
-            ("access_fleetfinder", "Can access the Fleet Finder app"),
+            ("access_fleetfinder", _("Can access the Fleet Finder app")),
             ("manage_fleets", "Can manage fleets"),
         )
 
@@ -48,7 +48,7 @@ class Fleet(models.Model):
         FC_CHANGED_FLEET = "FC_CHANGED_FLEET", _("FC switched to another fleet.")
 
     fleet_id = models.BigIntegerField(primary_key=True)
-    name = models.CharField(max_length=50, default="", verbose_name=_("Fleet Name"))
+    name = models.CharField(max_length=50, default="", verbose_name=_("Fleet name"))
     fleet_commander = models.ForeignKey(
         EveCharacter,
         on_delete=models.SET_NULL,
@@ -56,7 +56,7 @@ class Fleet(models.Model):
         default=None,
         null=True,
         blank=True,
-        verbose_name=_("Fleet Commander"),
+        verbose_name=_("Fleet commander"),
     )
     created_at = models.DateTimeField(verbose_name=_("Creation date and time"))
     motd = models.TextField(blank=True, default="", verbose_name=_("Fleet MOTD"))
@@ -65,7 +65,11 @@ class Fleet(models.Model):
     groups = models.ManyToManyField(
         AuthGroup,
         related_name="fleetfinder_restricted_groups",
-        help_text="Groups listed here will be able to join the fleet",
+        help_text=_(
+            "Only selected groups will have access to the fleet. "
+            "If no groups are selected the fleet will be available to all who have "
+            "access to this module."
+        ),
         verbose_name=_("Group restrictions"),
     )
 
