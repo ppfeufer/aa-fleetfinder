@@ -3,15 +3,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 # "H. Peter Pfeufer" <info@ppfeufer.de>, 2023.
 # Nikolay <nick.postnikov@gmail.com>, 2023.
+# Max <mark25@inbox.ru>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-09-24 16:26+0200\n"
-"PO-Revision-Date: 2023-09-24 13:13+0000\n"
-"Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
-"Language-Team: Russian <https://weblate.ppfeufer.de/projects/alliance-auth-"
-"apps/aa-fleetfinder/ru/>\n"
+"PO-Revision-Date: 2023-10-03 11:31+0000\n"
+"Last-Translator: Max <mark25@inbox.ru>\n"
+"Language-Team: Russian <https://weblate.ppfeufer.de/projects/"
+"alliance-auth-apps/aa-fleetfinder/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,7 +33,7 @@ msgstr "Поиск флота v{__version__}"
 
 #: models.py:28
 msgid "Can access the Fleet Finder app"
-msgstr ""
+msgstr "Предоставить доступ к Fleet Finder"
 
 #: models.py:44
 msgid ""
@@ -58,8 +59,6 @@ msgid "Fleet name"
 msgstr "Название флота"
 
 #: models.py:59 templates/fleetfinder/dashboard.html:17
-#, fuzzy
-#| msgid "Fleet Commander"
 msgid "Fleet commander"
 msgstr "Командир флота"
 
@@ -104,22 +103,16 @@ msgstr "Счетчик ESI ошибок"
 #: templates/fleetfinder/create-fleet.html:6
 #: templates/fleetfinder/create-fleet.html:14
 #: templates/fleetfinder/partials/header/header-navigation.html:23
-#, fuzzy
-#| msgid "Create Fleet"
 msgid "Create fleet"
-msgstr "Создание флота"
+msgstr "Создать флот"
 
 #: templates/fleetfinder/create-fleet.html:39
 #: templates/fleetfinder/edit-fleet.html:39
-#, fuzzy
-#| msgid "Select Groups"
 msgid "Select groups"
 msgstr "Выбор групп"
 
 #: templates/fleetfinder/create-fleet.html:75
 #: templates/fleetfinder/edit-fleet.html:71
-#, fuzzy
-#| msgid "Enable Free Move"
 msgid "Enable free move"
 msgstr "Разрешить Free Move"
 
@@ -130,16 +123,12 @@ msgstr "Отправить"
 
 #: templates/fleetfinder/dashboard.html:9
 #: templates/fleetfinder/partials/header/header-navigation.html:14
-#, fuzzy
-#| msgid "Available Fleets"
 msgid "Available fleets"
-msgstr "Доступные флота"
+msgstr "Доступные флоты"
 
 #: templates/fleetfinder/dashboard.html:19
-#, fuzzy
-#| msgid "Created At"
 msgid "Created at"
-msgstr "Создан"
+msgstr "Созданный в"
 
 #: templates/fleetfinder/dashboard.html:20
 msgid "Join"
@@ -155,8 +144,6 @@ msgstr "Редактировать"
 
 #: templates/fleetfinder/edit-fleet.html:6
 #: templates/fleetfinder/edit-fleet.html:14
-#, fuzzy
-#| msgid "Edit Fleet"
 msgid "Edit fleet"
 msgstr "Редактировать флот"
 
@@ -178,8 +165,6 @@ msgid "Count"
 msgstr "Количество"
 
 #: templates/fleetfinder/fleet-details.html:38
-#, fuzzy
-#| msgid "Fleet Members"
 msgid "Fleet members"
 msgstr "Пилоты флота"
 
@@ -192,14 +177,10 @@ msgid "System"
 msgstr "Система"
 
 #: templates/fleetfinder/join-fleet.html:6 views.py:79
-#, fuzzy
-#| msgid "Join Fleet"
 msgid "Join fleet"
-msgstr "Присоединиться к флоту"
+msgstr "Вступить во флот"
 
 #: templates/fleetfinder/join-fleet.html:14
-#, fuzzy
-#| msgid "Fleet Invitation"
 msgid "Fleet invitation"
 msgstr "Приглашение во флот"
 
@@ -228,16 +209,12 @@ msgid "Toggle navigation"
 msgstr "Переключить навигацию"
 
 #: views.py:92
-#, fuzzy
-#| msgid "View Fleet Details"
 msgid "View fleet details"
-msgstr "Показать подробности"
+msgstr "Показать подробности флота"
 
 #: views.py:99
-#, fuzzy
-#| msgid "Edit Fleet Advert"
 msgid "Edit fleet advert"
-msgstr "Редактировать оповещение"
+msgstr "Редактировать объявления о флоте"
 
 #: views.py:243
 #, python-brace-format
