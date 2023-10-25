@@ -68,7 +68,11 @@ def ajax_dashboard(request) -> JsonResponse:  # pylint: disable=too-many-locals
 
     data = []
     groups = request.user.groups.all()
-    fleets = Fleet.objects.filter(Q(groups__group__in=groups) | Q(groups=None)).all()
+    fleets = (
+        Fleet.objects.filter(Q(groups__group__in=groups) | Q(groups__isnull=True))
+        .distinct()
+        .order_by("name")
+    )
 
     for fleet in fleets:
         fleet_commander_name = fleet.fleet_commander.character_name
@@ -76,7 +80,7 @@ def ajax_dashboard(request) -> JsonResponse:  # pylint: disable=too-many-locals
             character_id=fleet.fleet_commander.character_id, size=32
         )
         fleet_commander_portrait = (
-            '<img class="img-rounded eve-character-portrait" '
+            '<img class="rounded eve-character-portrait" '
             f'src="{fleet_commander_portrait_url}" '
             f'alt="{fleet_commander_name}">'
         )
@@ -88,7 +92,7 @@ def ajax_dashboard(request) -> JsonResponse:  # pylint: disable=too-many-locals
         button_join_text = _("Join fleet")
         button_join = (
             f'<a href="{button_join_url}" '
-            f'class="btn btn-sm btn-default">{button_join_text}</a>'
+            f'class="btn btn-sm btn-primary">{button_join_text}</a>'
         )
 
         button_details = ""
@@ -101,7 +105,7 @@ def ajax_dashboard(request) -> JsonResponse:  # pylint: disable=too-many-locals
             button_details_text = _("View fleet details")
             button_details = (
                 f'<a href="{button_details_url}" '
-                f'class="btn btn-sm btn-default">{button_details_text}</a>'
+                f'class="btn btn-sm btn-primary">{button_details_text}</a>'
             )
 
             button_edit_url = reverse(
@@ -110,7 +114,7 @@ def ajax_dashboard(request) -> JsonResponse:  # pylint: disable=too-many-locals
             button_edit_text = _("Edit fleet advert")
             button_edit = (
                 f'<a href="{button_edit_url}" '
-                f'class="btn btn-sm btn-default">{button_edit_text}</a>'
+                f'class="btn btn-sm btn-primary">{button_edit_text}</a>'
             )
 
         data.append(
