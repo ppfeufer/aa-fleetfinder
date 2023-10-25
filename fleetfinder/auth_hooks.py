@@ -19,9 +19,9 @@ class FleetFinderMenuItem(MenuItemHook):  # pylint: disable=too-few-public-metho
         # Setup menu entry for sidebar
         MenuItemHook.__init__(
             self,
-            __title__,
-            "fas fa-users fa-fw",
-            "fleetfinder:dashboard",
+            text=__title__,
+            classes="fas fa-users fa-fw",
+            url_name="fleetfinder:dashboard",
             navactive=["fleetfinder:"],
         )
 
@@ -33,7 +33,7 @@ class FleetFinderMenuItem(MenuItemHook):  # pylint: disable=too-few-public-metho
         """
 
         if request.user.has_perm("fleetfinder.access_fleetfinder"):
-            return MenuItemHook.render(self, request)
+            return MenuItemHook.render(self, request=request)
 
         return ""
 
@@ -55,4 +55,4 @@ def register_urls():
     :return:
     """
 
-    return UrlHook(urls, "fleetfinder", "^fleetfinder/")
+    return UrlHook(urls=urls, namespace="fleetfinder", base_url="^fleetfinder/")
