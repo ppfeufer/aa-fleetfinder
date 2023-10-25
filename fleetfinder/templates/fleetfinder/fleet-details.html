@@ -66,10 +66,13 @@
     {% include "bundles/datatables-js.html" %}
 
     <script>
-        $(document).ready(function () {
-            const populateDatatables = function () {
-                $.get('{% url "fleetfinder:ajax_fleet_details" fleet_id %}', function (data) {
-                    $('#table_fleet_members').DataTable({
+        $(document).ready(() => {
+            const table_fleet_members = $('#table_fleet_members');
+            const tabe_fleet_composition = $('#table_fleet_composition');
+
+            const populateDatatables = () => {
+                $.get('{% url "fleetfinder:ajax_fleet_details" fleet_id %}', (data) => {
+                    table_fleet_members.DataTable({
                         destroy: true,
                         paging: false,
                         data: data.fleet_member,
@@ -80,7 +83,7 @@
                         ]
                     });
 
-                    $('#table_fleet_composition').DataTable({
+                    tabe_fleet_composition.DataTable({
                         destroy: true,
                         paging: false,
                         data: data.fleet_composition,
@@ -93,13 +96,13 @@
                 });
             };
 
-            $('#table_fleet_members').DataTable({
+            table_fleet_members.DataTable({
                 language: {
                     emptyTable: 'No data / loading ...'
                 }
             });
 
-            $('#table_fleet_composition').DataTable({
+            tabe_fleet_composition.DataTable({
                 language: {
                     emptyTable: 'No data / loading ...'
                 }
