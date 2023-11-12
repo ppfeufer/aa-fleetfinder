@@ -28,7 +28,6 @@ from app_utils.logging import LoggerAddTag
 
 # AA Fleet Finder
 from fleetfinder import __title__
-from fleetfinder.constants import TEMPLATE_PATH
 from fleetfinder.models import Fleet
 from fleetfinder.tasks import get_fleet_composition, open_fleet, send_fleet_invitation
 
@@ -51,7 +50,7 @@ def dashboard(request):
 
     return render(
         request=request,
-        template_name=f"{TEMPLATE_PATH}/dashboard.html",
+        template_name="fleetfinder/dashboard.html",
         context=context,
     )
 
@@ -169,7 +168,7 @@ def create_fleet(request, token):
 
         return render(
             request=request,
-            template_name=f"{TEMPLATE_PATH}/create-fleet.html",
+            template_name="fleetfinder/create-fleet.html",
             context=context,
         )
 
@@ -200,7 +199,7 @@ def edit_fleet(request, fleet_id):
 
     return render(
         request=request,
-        template_name=f"{TEMPLATE_PATH}/edit-fleet.html",
+        template_name="fleetfinder/edit-fleet.html",
         context=context,
     )
 
@@ -241,7 +240,7 @@ def join_fleet(request, fleet_id):
 
     return render(
         request=request,
-        template_name=f"{TEMPLATE_PATH}/join-fleet.html",
+        template_name="fleetfinder/join-fleet.html",
         context=context,
     )
 
@@ -315,7 +314,7 @@ def fleet_details(request, fleet_id):
 
     return render(
         request=request,
-        template_name=f"{TEMPLATE_PATH}/fleet-details.html",
+        template_name="fleetfinder/fleet-details.html",
         context=context,
     )
 
