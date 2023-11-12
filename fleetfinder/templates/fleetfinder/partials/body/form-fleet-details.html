@@ -41,8 +41,10 @@
         </div>
     </div>
 
-    <input type="checkbox" style="margin-right: 5px;" class="form-check-input" name="free_move" id="free_move" {% if is_free_move %}checked{% endif %}>
-    <label for="free_move" class="form-check-label">{% translate "Enable free move" %}</label>
+    <div class="mb-3">
+        <input type="checkbox" style="margin-right: 5px;" class="form-check-input" name="free_move" id="free_move" {% if is_free_move %}checked{% endif %}>
+        <label for="free_move" class="form-check-label">{% translate "Enable free move" %}</label>
+    </div>
 
     <button class="btn btn-primary btn-block" type="submit">{% translate "Submit" %}</button>
 </form>

@@ -4,13 +4,13 @@
 
 {% block page_title %}
     {% translate "Edit fleet" as page_title %}
-    {{ page_title|title }}
+    {{ page_title|title }} » {% translate "Fleet Finder" %}
 {% endblock %}
 
 {% block aa_fleetfinder_body %}
     <div class="card card-primary border-0">
         <div class="card-header bg-default">
-            <div class="panel-title">
+            <div class="card-title">
                 {% translate "Edit fleet" %}
             </div>
         </div>

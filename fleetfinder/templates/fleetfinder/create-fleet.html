@@ -4,20 +4,20 @@
 
 {% block page_title %}
     {% translate "Create fleet" as page_title %}
-    {{ page_title|title }}
+    {{ page_title|title }} » {% translate "Fleet Finder" %}
 {% endblock %}
 
 {% block aa_fleetfinder_body %}
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <div class="panel-title">
+    <div class="card card-primary border-0">
+        <div class="card-header bg-default">
+            <div class="card-title">
                 {% translate "Create fleet" %}
             </div>
         </div>
 
-        <div class="panel-body">
+        <div class="card-body container">
             <div class="row">
-                <div class="col-md-10 col-md-offset-1">
+                <div class="align-self-center">
                     {% include "fleetfinder/partials/body/form-fleet-details.html" with name=name origin="create" groups=groups %}
                 </div>
             </div>
