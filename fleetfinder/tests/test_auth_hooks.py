@@ -39,9 +39,9 @@ class TestHooks(TestCase):
         )
 
         cls.html_menu = f"""
-            <li>
-                <a class href="{reverse(viewname='fleetfinder:dashboard')}">
-                    <i class="fas fa-users fa-fw"></i>
+            <li class="d-flex flex-wrap m-2 p-2 pt-0 pb-0 mt-0 mb-0 me-0 pe-0">
+                <i class="nav-link fas fa-users fa-fw align-self-center me-3 "></i>
+                <a class="nav-link flex-fill align-self-center" href="{reverse(viewname='fleetfinder:dashboard')}">
                     Fleet Finder
                 </a>
             </li>

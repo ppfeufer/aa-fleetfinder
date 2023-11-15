@@ -56,7 +56,7 @@ tests-allianceauth-stable = [
     "django-webtest",
 ]
 tests-allianceauth-testing = [
-    "allianceauth>=4.0.0a3",
+    "allianceauth>=4.0.0a4",
     "coverage",
     "django-webtest",
 ]
