@@ -12,7 +12,7 @@ from fleetfinder import __version__
 
 class TestVersionedStatic(TestCase):
     """
-    Test the fleetfinder_versioned_static template tag
+    Test the fleetfinder_static template tag
     """
 
     def test_versioned_static(self):
@@ -26,7 +26,7 @@ class TestVersionedStatic(TestCase):
         context = Context(dict_={"version": __version__})
         template_to_render = Template(
             template_string=(
-                "{% load fleetfinder_versioned_static %}"
+                "{% load fleetfinder %}"
                 "{% fleetfinder_static 'fleetfinder/css/fleetfinder.min.css' %}"
             )
         )
