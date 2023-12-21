@@ -38,6 +38,14 @@ ______________________________________________________________________
 
 ## Installation<a name="installation"></a>
 
+> \[!NOTE\]
+>
+> **AA Fleet Finder needs at least Alliance Auth v4.0.0!**
+>
+> Please make sure to update your Alliance Auth instance _before_ you install this
+> module or update to the latest version, otherwise an update to Alliance Auth will
+> be pulled in unsupervised.
+
 ### Step 1: Install the Package<a name="step-1-install-the-package"></a>
 
 Make sure you're in the virtual environment (venv) of your Alliance Auth installation Then install the latest release directly from PyPi.
