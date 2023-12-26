@@ -31,6 +31,7 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Topic :: Internet :: WWW/HTTP",
     "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
 ]
@@ -38,25 +39,11 @@ dynamic = [
     "version",
 ]
 dependencies = [
-    "allianceauth>=4.0.0a4",
+    "allianceauth>=4.0.0a5",
     "allianceauth-app-utils>=1.14.2",
 ]
 [project.optional-dependencies]
-tests-allianceauth-dependency-target = [
-    "coverage",
-    "django-webtest",
-]
-tests-allianceauth-legacy = [
-    "allianceauth<=4",
-    "coverage",
-    "django-webtest",
-]
-tests-allianceauth-stable = [
-    "coverage",
-    "django-webtest",
-]
-tests-allianceauth-testing = [
-    "allianceauth>=4.0.0a4",
+tests-allianceauth-latest = [
     "coverage",
     "django-webtest",
 ]

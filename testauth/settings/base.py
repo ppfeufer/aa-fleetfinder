@@ -6,14 +6,10 @@ It gets overwritten by the 'allianceauth update' command.
 If you wish to make changes, overload the setting in your project's settings file (local.py).
 """
 
-# Standard Library
 import os
 
-# Third Party
-from celery.schedules import crontab
-
-# Django
 from django.contrib import messages
+from celery.schedules import crontab
 
 INSTALLED_APPS = [
     "allianceauth",  # needs to be on top of this list to support favicons in Django admin (see https://gitlab.com/allianceauth/allianceauth/-/issues/1301)
@@ -29,6 +25,7 @@ INSTALLED_APPS = [
     "django_bootstrap5",  # https://github.com/zostera/django-bootstrap5
     "sortedm2m",
     "esi",
+    "allianceauth.framework",
     "allianceauth.authentication",
     "allianceauth.services",
     "allianceauth.eveonline",
@@ -76,6 +73,7 @@ PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 MIDDLEWARE = [
+    "allianceauth.menu.middleware.MenuSyncMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "allianceauth.authentication.middleware.UserSettingsMiddleware",
