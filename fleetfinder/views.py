@@ -81,7 +81,7 @@ def ajax_dashboard(request) -> JsonResponse:  # pylint: disable=too-many-locals
         fleet_commander_portrait = (
             '<img class="rounded eve-character-portrait" '
             f'src="{fleet_commander_portrait_url}" '
-            f'alt="{fleet_commander_name}">'
+            f'alt="{fleet_commander_name}" loading="lazy">'
         )
         fleet_commander_html = fleet_commander_portrait + fleet_commander_name
 

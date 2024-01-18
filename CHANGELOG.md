@@ -43,9 +43,19 @@ Section Order:
 > you install this version, otherwise an update to Alliance Auth will
 > be pulled in unsupervised.
 
+### Added
+
+- Support for Alliance Auth v4.x
+- Support for Django 4.0
+- Native lazy loading support for images
+
 ### Fixed
 
 - Fleet is being displayed multiple times when multiple group restrictions are in place
+
+### Removed
+
+- Support for Alliance Auth v3.x
 
 ## \[1.5.2\] - 2023-09-26
 
