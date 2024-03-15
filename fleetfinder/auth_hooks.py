@@ -20,7 +20,7 @@ class FleetFinderMenuItem(MenuItemHook):  # pylint: disable=too-few-public-metho
         MenuItemHook.__init__(
             self,
             text=__title__,
-            classes="fas fa-users",
+            classes="fa-solid fa-users",
             url_name="fleetfinder:dashboard",
             navactive=["fleetfinder:"],
         )
