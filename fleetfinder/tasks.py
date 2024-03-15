@@ -28,7 +28,7 @@ from fleetfinder import __title__
 from fleetfinder.models import Fleet
 from fleetfinder.providers import esi
 
-logger = LoggerAddTag(get_extension_logger(__name__), __title__)
+logger = LoggerAddTag(my_logger=get_extension_logger(name=__name__), prefix=__title__)
 
 
 ESI_ERROR_LIMIT = 50
@@ -57,6 +57,7 @@ class FleetViewAggregate:  # pylint: disable=too-few-public-methods
 def _send_invitation(character_id, fleet_commander_token, fleet_id):
     """
     Open the fleet invite window in the eve client
+
     :param character_id:
     :param fleet_commander_token:
     :param fleet_id:
@@ -74,13 +75,16 @@ def _send_invitation(character_id, fleet_commander_token, fleet_id):
 def _close_esi_fleet(fleet: Fleet, reason: str) -> None:
     """
     Closing registered fleet
+
     :param fleet:
     :param reason:
     """
 
     logger.info(
-        f'Fleet "{fleet.name}" of {fleet.fleet_commander} (ESI ID: {fleet.fleet_id}) » '
-        f"Closing: {reason}"
+        msg=(
+            f'Fleet "{fleet.name}" of {fleet.fleet_commander} (ESI ID: {fleet.fleet_id}) » '
+            f"Closing: {reason}"
+        )
     )
 
     fleet.delete()
@@ -89,6 +93,7 @@ def _close_esi_fleet(fleet: Fleet, reason: str) -> None:
 def _esi_fleet_error_handling(fleet: Fleet, error_key: str) -> None:
     """
     ESI error handling
+
     :param fleet:
     :type fleet:
     :param error_key:
@@ -133,6 +138,7 @@ def _esi_fleet_error_handling(fleet: Fleet, error_key: str) -> None:
 def _get_fleet_aggregate(fleet_infos):
     """
     Getting numbers for fleet composition
+
     :param fleet_infos:
     :return:
     """
@@ -151,6 +157,15 @@ def _get_fleet_aggregate(fleet_infos):
 
 
 def _check_for_esi_fleet(fleet: Fleet):
+    """
+    Check for required ESI scopes
+
+    :param fleet:
+    :type fleet:
+    :return:
+    :rtype:
+    """
+
     required_scopes = ["esi-fleets.read_fleet.v1"]
 
     # Check if there is a fleet
@@ -175,6 +190,7 @@ def _check_for_esi_fleet(fleet: Fleet):
 def _process_fleet(fleet: Fleet):
     """
     Processing a fleet
+
     :param fleet:
     :type fleet:
     :return:
@@ -228,6 +244,7 @@ def _process_fleet(fleet: Fleet):
 def open_fleet(character_id, motd, free_move, name, groups):
     """
     Open a fleet
+
     :param character_id:
     :param motd:
     :param free_move:
@@ -237,7 +254,7 @@ def open_fleet(character_id, motd, free_move, name, groups):
     """
 
     required_scopes = ["esi-fleets.read_fleet.v1", "esi-fleets.write_fleet.v1"]
-    token = Token.get_token(character_id, required_scopes)
+    token = Token.get_token(character_id=character_id, scopes=required_scopes)
 
     fleet_result = esi.client.Fleets.get_characters_character_id_fleet(
         character_id=token.character_id, token=token.valid_access_token()
@@ -271,6 +288,7 @@ def open_fleet(character_id, motd, free_move, name, groups):
 def send_fleet_invitation(character_ids, fleet_id):
     """
     Send a fleet invitation through the eve client
+
     :param character_ids:
     :param fleet_id:
     """
@@ -278,7 +296,7 @@ def send_fleet_invitation(character_ids, fleet_id):
     required_scopes = ["esi-fleets.write_fleet.v1"]
     fleet = Fleet.objects.get(fleet_id=fleet_id)
     fleet_commander_token = Token.get_token(
-        fleet.fleet_commander.character_id, required_scopes
+        character_id=fleet.fleet_commander.character_id, scopes=required_scopes
     )
     _processes = []
 
@@ -308,12 +326,14 @@ def check_fleet_adverts():
 
     processing_text = "Processing..." if fleet_count > 0 else "Nothing to do..."
 
-    logger.info(f"{fleet_count} registered fleets found. {processing_text}")
+    logger.info(msg=f"{fleet_count} registered fleets found. {processing_text}")
 
     if fleet_count > 0:
         # Abort if ESI seems to be offline or above the error limit
         if not fetch_esi_status().is_ok:
-            logger.warning("ESI doesn't seem to be available at this time. Aborting.")
+            logger.warning(
+                msg="ESI doesn't seem to be available at this time. Aborting."
+            )
 
             return
 
@@ -325,13 +345,16 @@ def check_fleet_adverts():
 def get_fleet_composition(fleet_id):
     """
     Getting the fleet composition
+
     :param fleet_id:
     :return:
     """
 
     required_scopes = ["esi-fleets.read_fleet.v1", "esi-fleets.write_fleet.v1"]
     fleet = Fleet.objects.get(fleet_id=fleet_id)
-    token = Token.get_token(fleet.fleet_commander.character_id, required_scopes)
+    token = Token.get_token(
+        character_id=fleet.fleet_commander.character_id, scopes=required_scopes
+    )
     fleet_infos = esi.client.Fleets.get_fleets_fleet_id_members(
         fleet_id=fleet_id, token=token.valid_access_token()
     ).result()
@@ -364,6 +387,6 @@ def get_fleet_composition(fleet_id):
         index_ship_type = [x["id"] for x in ids_to_name].index(member["ship_type_id"])
         member["ship_type_name"] = ids_to_name[index_ship_type]["name"]
 
-    aggregate = _get_fleet_aggregate(fleet_infos)
+    aggregate = _get_fleet_aggregate(fleet_infos=fleet_infos)
 
-    return FleetViewAggregate(fleet_infos, aggregate)
+    return FleetViewAggregate(fleet=fleet_infos, aggregate=aggregate)

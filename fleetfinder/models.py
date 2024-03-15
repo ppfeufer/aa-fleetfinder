@@ -50,7 +50,7 @@ class Fleet(models.Model):
     fleet_id = models.BigIntegerField(primary_key=True)
     name = models.CharField(max_length=50, default="", verbose_name=_("Fleet name"))
     fleet_commander = models.ForeignKey(
-        EveCharacter,
+        to=EveCharacter,
         on_delete=models.SET_NULL,
         related_name="fleetfinder_fleet_commander",
         default=None,
@@ -63,7 +63,7 @@ class Fleet(models.Model):
     is_free_move = models.BooleanField(verbose_name=_("Free move"))
 
     groups = models.ManyToManyField(
-        AuthGroup,
+        to=AuthGroup,
         related_name="fleetfinder_restricted_groups",
         help_text=_(
             "Only selected groups will have access to the fleet. "

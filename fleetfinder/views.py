@@ -31,37 +31,47 @@ from fleetfinder import __title__
 from fleetfinder.models import Fleet
 from fleetfinder.tasks import get_fleet_composition, open_fleet, send_fleet_invitation
 
-logger = LoggerAddTag(get_extension_logger(__name__), __title__)
+logger = LoggerAddTag(my_logger=get_extension_logger(name=__name__), prefix=__title__)
 
 
 @login_required()
-@permission_required("fleetfinder.access_fleetfinder")
+@permission_required(perm="fleetfinder.access_fleetfinder")
 def dashboard(request):
     """
     Dashboard view
+
     :param request:
     :return:
     """
 
     context = {}
 
-    logger.info(f"Module called by {request.user}")
+    logger.info(msg=f"Module called by {request.user}")
 
-    return render(request, "fleetfinder/dashboard.html", context)
+    return render(
+        request=request,
+        template_name="fleetfinder/dashboard.html",
+        context=context,
+    )
 
 
 @login_required()
-@permission_required("fleetfinder.access_fleetfinder")
+@permission_required(perm="fleetfinder.access_fleetfinder")
 def ajax_dashboard(request) -> JsonResponse:  # pylint: disable=too-many-locals
     """
     Ajax :: Dashboard information
+
     :param request:
     :return:
     """
 
     data = []
     groups = request.user.groups.all()
-    fleets = Fleet.objects.filter(Q(groups__group__in=groups) | Q(groups=None)).all()
+    fleets = (
+        Fleet.objects.filter(Q(groups__group__in=groups) | Q(groups__isnull=True))
+        .distinct()
+        .order_by("name")
+    )
 
     for fleet in fleets:
         fleet_commander_name = fleet.fleet_commander.character_name
@@ -69,37 +79,41 @@ def ajax_dashboard(request) -> JsonResponse:  # pylint: disable=too-many-locals
             character_id=fleet.fleet_commander.character_id, size=32
         )
         fleet_commander_portrait = (
-            '<img class="img-rounded eve-character-portrait" '
+            '<img class="rounded eve-character-portrait" '
             f'src="{fleet_commander_portrait_url}" '
-            f'alt="{fleet_commander_name}">'
+            f'alt="{fleet_commander_name}" loading="lazy">'
         )
         fleet_commander_html = fleet_commander_portrait + fleet_commander_name
 
-        button_join_url = reverse("fleetfinder:join_fleet", args=[fleet.fleet_id])
+        button_join_url = reverse(
+            viewname="fleetfinder:join_fleet", args=[fleet.fleet_id]
+        )
         button_join_text = _("Join fleet")
         button_join = (
             f'<a href="{button_join_url}" '
-            f'class="btn btn-sm btn-default">{button_join_text}</a>'
+            f'class="btn btn-sm btn-primary">{button_join_text}</a>'
         )
 
         button_details = ""
         button_edit = ""
 
-        if request.user.has_perm("fleetfinder.manage_fleets"):
+        if request.user.has_perm(perm="fleetfinder.manage_fleets"):
             button_details_url = reverse(
-                "fleetfinder:fleet_details", args=[fleet.fleet_id]
+                viewname="fleetfinder:fleet_details", args=[fleet.fleet_id]
             )
             button_details_text = _("View fleet details")
             button_details = (
                 f'<a href="{button_details_url}" '
-                f'class="btn btn-sm btn-default">{button_details_text}</a>'
+                f'class="btn btn-sm btn-primary">{button_details_text}</a>'
             )
 
-            button_edit_url = reverse("fleetfinder:edit_fleet", args=[fleet.fleet_id])
+            button_edit_url = reverse(
+                viewname="fleetfinder:edit_fleet", args=[fleet.fleet_id]
+            )
             button_edit_text = _("Edit fleet advert")
             button_edit = (
                 f'<a href="{button_edit_url}" '
-                f'class="btn btn-sm btn-default">{button_edit_text}</a>'
+                f'class="btn btn-sm btn-primary">{button_edit_text}</a>'
             )
 
         data.append(
@@ -116,15 +130,16 @@ def ajax_dashboard(request) -> JsonResponse:  # pylint: disable=too-many-locals
             }
         )
 
-    return JsonResponse(data, safe=False)
+    return JsonResponse(data=data, safe=False)
 
 
 @login_required()
-@permission_required("fleetfinder.manage_fleets")
+@permission_required(perm="fleetfinder.manage_fleets")
 @token_required(scopes=("esi-fleets.read_fleet.v1", "esi-fleets.write_fleet.v1"))
 def create_fleet(request, token):
     """
     Create fleet view
+
     :param request:
     :param token:
     :return:
@@ -149,18 +164,23 @@ def create_fleet(request, token):
         else:
             context = {"character_id": token.character_id, "auth_groups": auth_groups}
 
-        logger.info(f"Fleet created by {request.user}")
+        logger.info(msg=f"Fleet created by {request.user}")
 
-        return render(request, "fleetfinder/create-fleet.html", context=context)
+        return render(
+            request=request,
+            template_name="fleetfinder/create-fleet.html",
+            context=context,
+        )
 
-    return redirect("fleetfinder:dashboard")
+    return redirect(to="fleetfinder:dashboard")
 
 
 @login_required()
-@permission_required("fleetfinder.manage_fleets")
+@permission_required(perm="fleetfinder.manage_fleets")
 def edit_fleet(request, fleet_id):
     """
     Fleet edit view
+
     :param request:
     :param fleet_id:
     :return:
@@ -175,16 +195,21 @@ def edit_fleet(request, fleet_id):
         "fleet": fleet,
     }
 
-    logger.info(f"Fleet {fleet_id} edit view by {request.user}")
+    logger.info(msg=f"Fleet {fleet_id} edit view by {request.user}")
 
-    return render(request, "fleetfinder/edit-fleet.html", context=context)
+    return render(
+        request=request,
+        template_name="fleetfinder/edit-fleet.html",
+        context=context,
+    )
 
 
 @login_required()
-@permission_required("fleetfinder.access_fleetfinder")
+@permission_required(perm="fleetfinder.access_fleetfinder")
 def join_fleet(request, fleet_id):
     """
     Join fleet view
+
     :param request:
     :param fleet_id:
     :return:
@@ -197,13 +222,13 @@ def join_fleet(request, fleet_id):
     ).count()
 
     if fleet == 0:
-        return redirect("fleetfinder:dashboard")
+        return redirect(to="fleetfinder:dashboard")
 
     if request.method == "POST":
-        character_ids = request.POST.getlist("character_ids", [])
-        send_fleet_invitation.delay(character_ids, fleet_id)
+        character_ids = request.POST.getlist(key="character_ids", default=[])
+        send_fleet_invitation.delay(character_ids=character_ids, fleet_id=fleet_id)
 
-        return redirect("fleetfinder:dashboard")
+        return redirect(to="fleetfinder:dashboard")
 
     characters = (
         EveCharacter.objects.filter(character_ownership__user=request.user)
@@ -213,7 +238,11 @@ def join_fleet(request, fleet_id):
 
     context["characters"] = characters
 
-    return render(request, "fleetfinder/join-fleet.html", context=context)
+    return render(
+        request=request,
+        template_name="fleetfinder/join-fleet.html",
+        context=context,
+    )
 
 
 @login_required()
@@ -221,34 +250,41 @@ def join_fleet(request, fleet_id):
 def save_fleet(request):
     """
     Save fleet
+
     :param request:
     :return:
     """
 
     if request.method == "POST":
-        free_move = request.POST.get("free_move", False)
+        free_move = request.POST.get(key="free_move", default=False)
 
         if free_move == "on":
             free_move = True
 
-        motd = request.POST.get("motd", "")
-        name = request.POST.get("name", "")
-        groups = request.POST.getlist("groups", [])
+        motd = request.POST.get(key="motd", default="")
+        name = request.POST.get(key="name", default="")
+        groups = request.POST.getlist(key="groups", default=[])
 
         try:
-            open_fleet(request.POST["character_id"], motd, free_move, name, groups)
+            open_fleet(
+                character_id=request.POST["character_id"],
+                motd=motd,
+                free_move=free_move,
+                name=name,
+                groups=groups,
+            )
         except HTTPNotFound as ex:
             esi_error_message = ex.swagger_result["error"]
             error_message = _(
                 f"<h4>Error!</h4><p>ESI returned the following error: {esi_error_message}</p>"
             )
 
-            messages.error(request, mark_safe(error_message))
+            messages.error(request=request, message=mark_safe(s=error_message))
 
-            if request.POST.get("origin", "") == "edit":
-                return redirect("fleetfinder:dashboard")
+            if request.POST.get(key="origin", default="") == "edit":
+                return redirect(to="fleetfinder:dashboard")
 
-            if request.POST.get("origin", "") == "create":
+            if request.POST.get(key="origin", default="") == "create":
                 request.session["modified_fleet_data"] = {
                     "motd": motd,
                     "name": name,
@@ -256,16 +292,17 @@ def save_fleet(request):
                     "groups": groups,
                 }
 
-                return redirect("fleetfinder:create_fleet")
+                return redirect(to="fleetfinder:create_fleet")
 
-    return redirect("fleetfinder:dashboard")
+    return redirect(to="fleetfinder:dashboard")
 
 
 @login_required()
-@permission_required("fleetfinder.manage_fleets")
+@permission_required(perm="fleetfinder.manage_fleets")
 def fleet_details(request, fleet_id):
     """
     Fleet details view
+
     :param request:
     :param fleet_id:
     :return:
@@ -273,19 +310,24 @@ def fleet_details(request, fleet_id):
 
     context = {"fleet_id": fleet_id}
 
-    logger.info(f"Fleet {fleet_id} details view called by {request.user}")
+    logger.info(msg=f"Fleet {fleet_id} details view called by {request.user}")
 
-    return render(request, "fleetfinder/fleet-details.html", context=context)
+    return render(
+        request=request,
+        template_name="fleetfinder/fleet-details.html",
+        context=context,
+    )
 
 
 @login_required()
-@permission_required("fleetfinder.manage_fleets")
+@permission_required(perm="fleetfinder.manage_fleets")
 def ajax_fleet_details(
     request,  # pylint: disable=unused-argument
     fleet_id,
 ) -> JsonResponse:
     """
     Ajax :: Fleet Details
+
     :param request:
     :param fleet_id:
     """
@@ -300,16 +342,17 @@ def ajax_fleet_details(
     for ship, number in fleet.aggregate.items():
         data["fleet_composition"].append({"ship_type_name": ship, "number": number})
 
-    return JsonResponse(data, safe=False)
+    return JsonResponse(data=data, safe=False)
 
 
 @register.filter
 def get_item(dictionary, key):
     """
     Little helper: get a key from a dictionary
+
     :param dictionary:
     :param key:
     :return:
     """
 
-    return dictionary.get(key)
+    return dictionary.get(key=key, default=None)
