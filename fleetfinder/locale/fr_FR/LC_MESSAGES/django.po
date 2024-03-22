@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-15 20:22+0100\n"
-"PO-Revision-Date: 2024-01-12 19:05+0000\n"
-"Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
-"Language-Team: French <https://weblate.ppfeufer.de/projects/alliance-auth-"
-"apps/aa-fleetfinder/fr/>\n"
+"PO-Revision-Date: 2024-03-22 01:11+0000\n"
+"Last-Translator: erka Ekanon <M6musicT@hotmail.fr>\n"
+"Language-Team: French <https://weblate.ppfeufer.de/projects/"
+"alliance-auth-apps/aa-fleetfinder/fr/>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.3.1\n"
+"X-Generator: Weblate 5.4.2\n"
 
 #: fleetfinder/__init__.py:9 fleetfinder/models.py:24
 #: fleetfinder/templates/fleetfinder/base.html:6
@@ -59,7 +59,7 @@ msgstr ""
 #: fleetfinder/models.py:51 fleetfinder/templates/fleetfinder/dashboard.html:18
 #: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:10
 msgid "Fleet name"
-msgstr ""
+msgstr "Nom de la flotte"
 
 #: fleetfinder/models.py:59 fleetfinder/templates/fleetfinder/dashboard.html:17
 msgid "Fleet commander"
@@ -87,7 +87,7 @@ msgstr ""
 
 #: fleetfinder/models.py:73
 msgid "Group restrictions"
-msgstr ""
+msgstr "Restrictions de groupe"
 
 #: fleetfinder/models.py:81
 msgid "Last ESI error"
