@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # erka Ekanon <M6musicT@hotmail.fr>, 2024.
 # Peter Pfeufer <info@ppfeufer.de>, 2024.
+# Matthias P <randomusernetcom@gmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-15 20:22+0100\n"
-"PO-Revision-Date: 2024-04-07 13:07+0000\n"
-"Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
+"PO-Revision-Date: 2024-04-17 22:13+0000\n"
+"Last-Translator: Matthias P <randomusernetcom@gmail.com>\n"
 "Language-Team: French <https://weblate.ppfeufer.de/projects/"
 "alliance-auth-apps/aa-fleetfinder/fr/>\n"
 "Language: fr_FR\n"
@@ -134,20 +135,20 @@ msgstr ""
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:6
 msgid "Fleet details"
-msgstr ""
+msgstr "Details de la flotte"
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:15
 msgid "Fleet composition"
-msgstr ""
+msgstr "Composition de flotte"
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:23
 #: fleetfinder/templates/fleetfinder/fleet-details.html:47
 msgid "Ship class"
-msgstr ""
+msgstr "Classe de vaisseaux"
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:24
 msgid "Count"
-msgstr ""
+msgstr "Compte"
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:38
 msgid "Fleet members"
@@ -155,11 +156,11 @@ msgstr ""
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:46
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:48
 msgid "System"
-msgstr ""
+msgstr "Système"
 
 #: fleetfinder/templates/fleetfinder/join-fleet.html:6 fleetfinder/views.py:91
 msgid "Join fleet"
@@ -187,7 +188,7 @@ msgstr ""
 
 #: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:49
 msgid "Submit"
-msgstr ""
+msgstr "Soumettre"
 
 #: fleetfinder/templates/fleetfinder/partials/footer/app-translation-footer.html:5
 msgid ""
