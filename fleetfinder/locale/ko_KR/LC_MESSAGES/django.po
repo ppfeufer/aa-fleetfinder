@@ -1,15 +1,15 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Author50CO <tkddlschry@gmail.com>, 2023.
-# Peter Pfeufer <info@ppfeufer.de>, 2023.
+# Author50CO <tkddlschry@gmail.com>, 2023, 2024.
+# Peter Pfeufer <info@ppfeufer.de>, 2023, 2024.
 # Mind of the Raven <okanieva@gmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-15 20:22+0100\n"
-"PO-Revision-Date: 2024-03-22 01:11+0000\n"
+"PO-Revision-Date: 2024-05-10 14:03+0000\n"
 "Last-Translator: Mind of the Raven <okanieva@gmail.com>\n"
 "Language-Team: Korean <https://weblate.ppfeufer.de/projects/"
 "alliance-auth-apps/aa-fleetfinder/ko/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.4.2\n"
+"X-Generator: Weblate 5.5.3\n"
 
 #: fleetfinder/__init__.py:9 fleetfinder/models.py:24
 #: fleetfinder/templates/fleetfinder/base.html:6
@@ -84,9 +84,8 @@ msgstr "자유 이동"
 msgid ""
 "Only selected groups will have access to the fleet. If no groups are "
 "selected the fleet will be available to all who have access to this module."
-msgstr ""
-"선택한 그룹만이 함대에 참가할 수 있습니다. 선택된 그룹이 없을 경우 해당 모듈"
-"을 사용 가능한 모든 유저가 참가 가능합니다."
+msgstr "선택한 그룹만이 함대에 참가할 수 있습니다. 선택된 그룹이 없을 경우 해당 "
+"모듈을 사용 가능한 모든 유저가 참가 가능합니다."
 
 #: fleetfinder/models.py:73
 msgid "Group restrictions"
