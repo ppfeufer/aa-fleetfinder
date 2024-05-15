@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Dehao Wu <wudehao2000@163.com>, 2024.
 # Faer Yili <yilifaer@gmail.com>, 2024.
+# SAM_FPS <sam_fps@163.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-15 20:22+0100\n"
-"PO-Revision-Date: 2024-05-10 14:03+0000\n"
-"Last-Translator: Dehao Wu <wudehao2000@163.com>\n"
+"PO-Revision-Date: 2024-05-15 09:21+0000\n"
+"Last-Translator: SAM_FPS <sam_fps@163.com>\n"
 "Language-Team: Chinese (Simplified) <https://weblate.ppfeufer.de/projects/"
 "alliance-auth-apps/aa-fleetfinder/zh_Hans/>\n"
 "Language: zh_Hans\n"
@@ -27,34 +28,34 @@ msgstr ""
 #: fleetfinder/templates/fleetfinder/fleet-details.html:6
 #: fleetfinder/templates/fleetfinder/join-fleet.html:7
 msgid "Fleet Finder"
-msgstr ""
+msgstr "舰队搜寻器"
 
 #. Translators: This is the app name and version, which will appear in the Django Backend
 #: fleetfinder/apps.py:21
 #, python-brace-format
 msgid "Fleet Finder v{__version__}"
-msgstr ""
+msgstr "舰队搜寻器v{__version__}"
 
 #: fleetfinder/models.py:28
 msgid "Can access the Fleet Finder app"
-msgstr ""
+msgstr "可以访问舰队搜寻器应用程序"
 
 #: fleetfinder/models.py:44
 msgid ""
 "FC is not in the registered fleet anymore or fleet is no longer available."
-msgstr ""
+msgstr "舰队指挥官不在已注册的舰队中或舰队不再可用。"
 
 #: fleetfinder/models.py:46
 msgid "Registered fleet seems to be no longer available."
-msgstr ""
+msgstr "已登记的舰队似乎不再可用。"
 
 #: fleetfinder/models.py:47
 msgid "FC is no longer the fleet boss."
-msgstr ""
+msgstr "舰队指挥官不再是舰队统帅。"
 
 #: fleetfinder/models.py:48
 msgid "FC switched to another fleet."
-msgstr ""
+msgstr "舰队指挥官转到了另一个舰队。"
 
 #: fleetfinder/models.py:51 fleetfinder/templates/fleetfinder/dashboard.html:18
 #: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:10
@@ -63,35 +64,36 @@ msgstr "舰队名字"
 
 #: fleetfinder/models.py:59 fleetfinder/templates/fleetfinder/dashboard.html:17
 msgid "Fleet commander"
-msgstr "舰队指挥"
+msgstr "舰队指挥官"
 
 #: fleetfinder/models.py:61
 msgid "Creation date and time"
-msgstr ""
+msgstr "创建日期和时间"
 
 #: fleetfinder/models.py:62
 #: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:37
 msgid "Fleet MOTD"
-msgstr ""
+msgstr "舰队置顶信息"
 
 #: fleetfinder/models.py:63
 msgid "Free move"
-msgstr ""
+msgstr "自由移动"
 
 #: fleetfinder/models.py:69
 #: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:32
 msgid ""
 "Only selected groups will have access to the fleet. If no groups are "
 "selected the fleet will be available to all who have access to this module."
-msgstr ""
+msgstr "只有选定的群组才能进入舰队。如果没有选择群组，舰队将对所有访问此模块的人可用"
+"。"
 
 #: fleetfinder/models.py:73
 msgid "Group restrictions"
-msgstr ""
+msgstr "组别限制"
 
 #: fleetfinder/models.py:81
 msgid "Last ESI error"
-msgstr ""
+msgstr "上一次ESI错误"
 
 #: fleetfinder/models.py:85
 msgid "Last ESI error time"
@@ -125,7 +127,7 @@ msgstr ""
 
 #: fleetfinder/templates/fleetfinder/dashboard.html:24
 msgid "Edit"
-msgstr ""
+msgstr "编辑"
 
 #: fleetfinder/templates/fleetfinder/edit-fleet.html:6
 #: fleetfinder/templates/fleetfinder/edit-fleet.html:14
@@ -159,7 +161,7 @@ msgstr "名字"
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:48
 msgid "System"
-msgstr ""
+msgstr "星系"
 
 #: fleetfinder/templates/fleetfinder/join-fleet.html:6 fleetfinder/views.py:91
 msgid "Join fleet"
@@ -205,7 +207,7 @@ msgstr ""
 
 #: fleetfinder/templates/fleetfinder/partials/header/header-navigation.html:17
 msgid "Toggle navigation"
-msgstr ""
+msgstr "切换导航"
 
 #: fleetfinder/views.py:104
 msgid "View fleet details"
