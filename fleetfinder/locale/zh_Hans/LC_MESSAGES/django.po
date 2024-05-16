@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-15 20:22+0100\n"
-"PO-Revision-Date: 2024-05-15 09:21+0000\n"
+"PO-Revision-Date: 2024-05-16 13:20+0000\n"
 "Last-Translator: SAM_FPS <sam_fps@163.com>\n"
 "Language-Team: Chinese (Simplified) <https://weblate.ppfeufer.de/projects/"
 "alliance-auth-apps/aa-fleetfinder/zh_Hans/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.5.3\n"
+"X-Generator: Weblate 5.5.5\n"
 
 #: fleetfinder/__init__.py:9 fleetfinder/models.py:24
 #: fleetfinder/templates/fleetfinder/base.html:6
@@ -97,33 +97,33 @@ msgstr "上一次ESI错误"
 
 #: fleetfinder/models.py:85
 msgid "Last ESI error time"
-msgstr ""
+msgstr "最后一次ESI错误时间"
 
 #: fleetfinder/models.py:88
 msgid "ESI error count"
-msgstr ""
+msgstr "ESI错误计数"
 
 #: fleetfinder/templates/fleetfinder/create-fleet.html:6
 #: fleetfinder/templates/fleetfinder/create-fleet.html:14
 #: fleetfinder/templates/fleetfinder/partials/header/header-navigation.html:27
 msgid "Create fleet"
-msgstr ""
+msgstr "创建舰队"
 
 #: fleetfinder/templates/fleetfinder/dashboard.html:9
 msgid "Fleets available to you"
-msgstr ""
+msgstr "您有权访问的舰队"
 
 #: fleetfinder/templates/fleetfinder/dashboard.html:19
 msgid "Created at"
-msgstr ""
+msgstr "创建于"
 
 #: fleetfinder/templates/fleetfinder/dashboard.html:20
 msgid "Join"
-msgstr ""
+msgstr "加入"
 
 #: fleetfinder/templates/fleetfinder/dashboard.html:23
 msgid "Details"
-msgstr ""
+msgstr "细节"
 
 #: fleetfinder/templates/fleetfinder/dashboard.html:24
 msgid "Edit"
@@ -132,28 +132,28 @@ msgstr "编辑"
 #: fleetfinder/templates/fleetfinder/edit-fleet.html:6
 #: fleetfinder/templates/fleetfinder/edit-fleet.html:14
 msgid "Edit fleet"
-msgstr ""
+msgstr "编辑舰队"
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:6
 msgid "Fleet details"
-msgstr ""
+msgstr "舰队细节"
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:15
 msgid "Fleet composition"
-msgstr ""
+msgstr "舰队组成"
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:23
 #: fleetfinder/templates/fleetfinder/fleet-details.html:47
 msgid "Ship class"
-msgstr ""
+msgstr "舰船等级"
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:24
 msgid "Count"
-msgstr ""
+msgstr "计数"
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:38
 msgid "Fleet members"
-msgstr ""
+msgstr "舰队成员"
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:46
 msgid "Name"
@@ -165,31 +165,31 @@ msgstr "星系"
 
 #: fleetfinder/templates/fleetfinder/join-fleet.html:6 fleetfinder/views.py:91
 msgid "Join fleet"
-msgstr ""
+msgstr "加入舰队"
 
 #: fleetfinder/templates/fleetfinder/join-fleet.html:14
 msgid "Fleet invitation"
-msgstr ""
+msgstr "舰队邀请"
 
 #: fleetfinder/templates/fleetfinder/join-fleet.html:25
 msgid "Select the characters to invite"
-msgstr ""
+msgstr "选择要邀请的角色"
 
 #: fleetfinder/templates/fleetfinder/join-fleet.html:35
 msgid "Send fleet invites"
-msgstr ""
+msgstr "发送舰队邀请"
 
 #: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:15
 msgid "Select groups"
-msgstr ""
+msgstr "选择群组"
 
 #: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:46
 msgid "Enable free move"
-msgstr ""
+msgstr "允许自由行动"
 
 #: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:49
 msgid "Submit"
-msgstr ""
+msgstr "提交"
 
 #: fleetfinder/templates/fleetfinder/partials/footer/app-translation-footer.html:5
 msgid ""
@@ -203,7 +203,7 @@ msgstr "加入我们的翻译团队吧！"
 
 #: fleetfinder/templates/fleetfinder/partials/header/header-navigation.html:6
 msgid "Available fleets"
-msgstr ""
+msgstr "可用的舰队"
 
 #: fleetfinder/templates/fleetfinder/partials/header/header-navigation.html:17
 msgid "Toggle navigation"
@@ -211,14 +211,14 @@ msgstr "切换导航"
 
 #: fleetfinder/views.py:104
 msgid "View fleet details"
-msgstr ""
+msgstr "查看船队详情"
 
 #: fleetfinder/views.py:113
 msgid "Edit fleet advert"
-msgstr ""
+msgstr "编辑舰队宣传信息"
 
 #: fleetfinder/views.py:279
 #, python-brace-format
 msgid ""
 "<h4>Error!</h4><p>ESI returned the following error: {esi_error_message}</p>"
-msgstr ""
+msgstr "<h4>错误!</h4><p>ESI返回如下错误:{esi_error_message}</p>"
