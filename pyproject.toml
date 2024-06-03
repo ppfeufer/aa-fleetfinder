@@ -13,7 +13,7 @@ keywords = [
     "eveonline",
     "fleetfinder",
 ]
-license = {file = "LICENSE"}
+license = { file = "LICENSE" }
 authors = [
     { name = "Peter Pfeufer", email = "develop@ppfeufer.de" },
 ]
@@ -39,21 +39,19 @@ dynamic = [
     "version",
 ]
 dependencies = [
-    "allianceauth<5.0.0,>=4",
+    "allianceauth<5,>=4",
     "allianceauth-app-utils>=1.14.2",
 ]
-[project.optional-dependencies]
-tests-allianceauth-latest = [
+optional-dependencies.tests-allianceauth-latest = [
     "coverage",
     "django-webtest",
 ]
-[project.urls]
-Changelog = "https://github.com/ppfeufer/aa-fleetfinder/blob/master/CHANGELOG.md"
-Documentation = "https://github.com/ppfeufer/aa-fleetfinder/blob/master/README.md"
-Donations = "https://ko-fi.com/ppfeufer"
-Homepage = "https://github.com/ppfeufer/aa-fleetfinder"
-Source = "https://github.com/ppfeufer/aa-fleetfinder.git"
-Tracker = "https://github.com/ppfeufer/aa-fleetfinder/issues"
+urls.Changelog = "https://github.com/ppfeufer/aa-fleetfinder/blob/master/CHANGELOG.md"
+urls.Documentation = "https://github.com/ppfeufer/aa-fleetfinder/blob/master/README.md"
+urls.Donations = "https://ko-fi.com/ppfeufer"
+urls.Homepage = "https://github.com/ppfeufer/aa-fleetfinder"
+urls.Source = "https://github.com/ppfeufer/aa-fleetfinder.git"
+urls.Tracker = "https://github.com/ppfeufer/aa-fleetfinder/issues"
 
 [tool.hatch.build]
 include = [
