@@ -145,10 +145,10 @@ def create_fleet(request, token):
     :return:
     """
 
+    context = {}
+
     if request.method == "POST":
         auth_groups = AuthGroup.objects.filter(internal=False).all()
-
-        context = {}
 
         if "modified_fleet_data" in request.session:
             context["motd"] = request.session["modified_fleet_data"].get("motd", "")
@@ -166,13 +166,11 @@ def create_fleet(request, token):
 
         logger.info(msg=f"Fleet created by {request.user}")
 
-        return render(
-            request=request,
-            template_name="fleetfinder/create-fleet.html",
-            context=context,
-        )
-
-    return redirect(to="fleetfinder:dashboard")
+    return render(
+        request=request,
+        template_name="fleetfinder/create-fleet.html",
+        context=context,
+    )
 
 
 @login_required()
