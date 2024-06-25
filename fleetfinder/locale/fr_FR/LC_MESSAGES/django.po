@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-15 20:22+0100\n"
-"PO-Revision-Date: 2024-05-28 16:27+0000\n"
+"PO-Revision-Date: 2024-06-25 18:27+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: French <https://weblate.ppfeufer.de/projects/"
 "alliance-auth-apps/aa-fleetfinder/fr/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.5.5\n"
+"X-Generator: Weblate 5.6\n"
 
 #: fleetfinder/__init__.py:9 fleetfinder/models.py:24
 #: fleetfinder/templates/fleetfinder/base.html:6
@@ -28,7 +28,7 @@ msgstr ""
 #: fleetfinder/templates/fleetfinder/fleet-details.html:6
 #: fleetfinder/templates/fleetfinder/join-fleet.html:7
 msgid "Fleet Finder"
-msgstr ""
+msgstr "Recherche de flotte"
 
 #. Translators: This is the app name and version, which will appear in the Django Backend
 #: fleetfinder/apps.py:21
