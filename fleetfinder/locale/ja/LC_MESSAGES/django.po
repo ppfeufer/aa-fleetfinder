@@ -1,15 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# Xrandier <xrandier@gmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-15 20:22+0100\n"
-"PO-Revision-Date: 2024-05-10 14:03+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2024-07-08 05:27+0000\n"
+"Last-Translator: Xrandier <xrandier@gmail.com>\n"
 "Language-Team: Japanese <https://weblate.ppfeufer.de/projects/"
 "alliance-auth-apps/aa-fleetfinder/ja/>\n"
 "Language: ja\n"
@@ -17,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.5.3\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #: fleetfinder/__init__.py:9 fleetfinder/models.py:24
 #: fleetfinder/templates/fleetfinder/base.html:6
@@ -59,11 +58,11 @@ msgstr ""
 #: fleetfinder/models.py:51 fleetfinder/templates/fleetfinder/dashboard.html:18
 #: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:10
 msgid "Fleet name"
-msgstr ""
+msgstr "艦隊名"
 
 #: fleetfinder/models.py:59 fleetfinder/templates/fleetfinder/dashboard.html:17
 msgid "Fleet commander"
-msgstr ""
+msgstr "艦隊長名"
 
 #: fleetfinder/models.py:61
 msgid "Creation date and time"
@@ -155,7 +154,7 @@ msgstr ""
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:46
 msgid "Name"
-msgstr ""
+msgstr "名前"
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:48
 msgid "System"
