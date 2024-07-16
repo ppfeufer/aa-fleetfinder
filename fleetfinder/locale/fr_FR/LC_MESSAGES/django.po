@@ -5,13 +5,14 @@
 # Peter Pfeufer <info@ppfeufer.de>, 2024.
 # Matthias P <randomusernetcom@gmail.com>, 2024.
 # Hexo <ghostcig@free.fr>, 2024.
+# Houbi_Houba <paul.lacape@live.fr>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-15 20:22+0100\n"
-"PO-Revision-Date: 2024-07-04 07:27+0000\n"
-"Last-Translator: Hexo <ghostcig@free.fr>\n"
+"PO-Revision-Date: 2024-07-10 09:27+0000\n"
+"Last-Translator: Houbi_Houba <paul.lacape@live.fr>\n"
 "Language-Team: French <https://weblate.ppfeufer.de/projects/"
 "alliance-auth-apps/aa-fleetfinder/fr/>\n"
 "Language: fr_FR\n"
@@ -19,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.6.1\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #: fleetfinder/__init__.py:9 fleetfinder/models.py:24
 #: fleetfinder/templates/fleetfinder/base.html:6
@@ -29,30 +30,32 @@ msgstr ""
 #: fleetfinder/templates/fleetfinder/fleet-details.html:6
 #: fleetfinder/templates/fleetfinder/join-fleet.html:7
 msgid "Fleet Finder"
-msgstr "Recherche de flotte"
+msgstr "Recherche de Flotte"
 
 #. Translators: This is the app name and version, which will appear in the Django Backend
 #: fleetfinder/apps.py:21
 #, python-brace-format
 msgid "Fleet Finder v{__version__}"
-msgstr ""
+msgstr "Recherche de Flotte v{__version__}"
 
 #: fleetfinder/models.py:28
 msgid "Can access the Fleet Finder app"
-msgstr ""
+msgstr "Peut accéder à l'application Recherche de Flotte"
 
 #: fleetfinder/models.py:44
 msgid ""
 "FC is not in the registered fleet anymore or fleet is no longer available."
 msgstr ""
+"Le FC n'est plus dans la flotte enregistré ou cette flotte n'est plus "
+"disponible."
 
 #: fleetfinder/models.py:46
 msgid "Registered fleet seems to be no longer available."
-msgstr ""
+msgstr "La flotte enregistrée ne semble plus disponible."
 
 #: fleetfinder/models.py:47
 msgid "FC is no longer the fleet boss."
-msgstr ""
+msgstr "Le FC n'est plus à la tête de la flotte."
 
 #: fleetfinder/models.py:48
 msgid "FC switched to another fleet."
