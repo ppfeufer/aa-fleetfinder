@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-15 20:22+0100\n"
+"POT-Creation-Date: 2024-07-27 20:48+0200\n"
 "PO-Revision-Date: 2024-06-06 14:27+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: Chinese (Simplified) <https://weblate.ppfeufer.de/projects/"
@@ -85,8 +85,9 @@ msgstr "自由移动"
 msgid ""
 "Only selected groups will have access to the fleet. If no groups are "
 "selected the fleet will be available to all who have access to this module."
-msgstr "只有选定的群组才能进入舰队。如果没有选择群组，舰队将对所有访问此模块的人可用"
-"。"
+msgstr ""
+"只有选定的群组才能进入舰队。如果没有选择群组，舰队将对所有访问此模块的人可"
+"用。"
 
 #: fleetfinder/models.py:73
 msgid "Group restrictions"
@@ -218,7 +219,7 @@ msgstr "查看船队详情"
 msgid "Edit fleet advert"
 msgstr "编辑舰队宣传信息"
 
-#: fleetfinder/views.py:279
+#: fleetfinder/views.py:277
 #, python-brace-format
 msgid ""
 "<h4>Error!</h4><p>ESI returned the following error: {esi_error_message}</p>"
