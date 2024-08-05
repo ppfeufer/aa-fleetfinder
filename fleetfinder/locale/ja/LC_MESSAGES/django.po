@@ -2,15 +2,16 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Xrandier <xrandier@gmail.com>, 2024.
+# Anata_no_Usiro <yt23542354m@gmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-27 20:48+0200\n"
-"PO-Revision-Date: 2024-07-08 05:27+0000\n"
-"Last-Translator: Xrandier <xrandier@gmail.com>\n"
-"Language-Team: Japanese <https://weblate.ppfeufer.de/projects/alliance-auth-"
-"apps/aa-fleetfinder/ja/>\n"
+"PO-Revision-Date: 2024-08-05 10:10+0000\n"
+"Last-Translator: Anata_no_Usiro <yt23542354m@gmail.com>\n"
+"Language-Team: Japanese <https://weblate.ppfeufer.de/projects/"
+"alliance-auth-apps/aa-fleetfinder/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,34 +27,34 @@ msgstr ""
 #: fleetfinder/templates/fleetfinder/fleet-details.html:6
 #: fleetfinder/templates/fleetfinder/join-fleet.html:7
 msgid "Fleet Finder"
-msgstr ""
+msgstr "フリート検索"
 
 #. Translators: This is the app name and version, which will appear in the Django Backend
 #: fleetfinder/apps.py:21
 #, python-brace-format
 msgid "Fleet Finder v{__version__}"
-msgstr ""
+msgstr "フリートファインダーv{__version__}"
 
 #: fleetfinder/models.py:28
 msgid "Can access the Fleet Finder app"
-msgstr ""
+msgstr "フリートファインダーのアプリへアクセスできます"
 
 #: fleetfinder/models.py:44
 msgid ""
 "FC is not in the registered fleet anymore or fleet is no longer available."
-msgstr ""
+msgstr "FCが登録されていない。もしくはフリートが利用できなくなりました。"
 
 #: fleetfinder/models.py:46
 msgid "Registered fleet seems to be no longer available."
-msgstr ""
+msgstr "登録されたフリートは利用できません。"
 
 #: fleetfinder/models.py:47
 msgid "FC is no longer the fleet boss."
-msgstr ""
+msgstr "FCは、もうフリートのボスではない"
 
 #: fleetfinder/models.py:48
 msgid "FC switched to another fleet."
-msgstr ""
+msgstr "FCは別のフリートに切り替えました。"
 
 #: fleetfinder/models.py:51 fleetfinder/templates/fleetfinder/dashboard.html:18
 #: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:10
@@ -66,7 +67,7 @@ msgstr "艦隊長名"
 
 #: fleetfinder/models.py:61
 msgid "Creation date and time"
-msgstr ""
+msgstr "作成日時"
 
 #: fleetfinder/models.py:62
 #: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:37
@@ -86,7 +87,7 @@ msgstr ""
 
 #: fleetfinder/models.py:73
 msgid "Group restrictions"
-msgstr ""
+msgstr "グループの制限"
 
 #: fleetfinder/models.py:81
 msgid "Last ESI error"
@@ -137,7 +138,7 @@ msgstr ""
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:15
 msgid "Fleet composition"
-msgstr ""
+msgstr "フリートの構成"
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:23
 #: fleetfinder/templates/fleetfinder/fleet-details.html:47
