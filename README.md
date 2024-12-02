@@ -38,7 +38,7 @@ ______________________________________________________________________
 
 ## Installation<a name="installation"></a>
 
-> \[!NOTE\]
+> [!NOTE]
 >
 > **AA Fleet Finder >= 2.0.0 needs at least Alliance Auth v4.0.0!**
 >
