@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-27 20:48+0200\n"
-"PO-Revision-Date: 2024-12-08 19:15+0000\n"
+"PO-Revision-Date: 2024-12-10 17:15+0000\n"
 "Last-Translator: balbozorre <loic.petiot2002@gmail.com>\n"
 "Language-Team: French <https://weblate.ppfeufer.de/projects/"
 "alliance-auth-apps/aa-fleetfinder/fr/>\n"
@@ -73,7 +73,7 @@ msgstr "Commandant de flotte"
 
 #: fleetfinder/models.py:61
 msgid "Creation date and time"
-msgstr ""
+msgstr "Date et heure de création"
 
 #: fleetfinder/models.py:62
 #: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:37
