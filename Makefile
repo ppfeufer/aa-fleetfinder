@@ -4,7 +4,8 @@
 appname = aa-fleetfinder
 appname_verbose = AA Fleet Finder
 package = fleetfinder
-translation_template = $(package)/locale/django.pot
+translation_directory = $(package)/locale
+translation_template = $(translation_directory)/django.pot
 git_repository = https://github.com/ppfeufer/$(appname)
 git_repository_issues = $(git_repository)/issues
 
