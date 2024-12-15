@@ -2,13 +2,12 @@
 Constants used in this app
 """
 
-# Django
-from django.utils.text import slugify
+# Alliance Auth
+from esi import __version__ as esi_version
 
 # AA Fleet Finder
-from fleetfinder import __verbose_name__, __version__
+from fleetfinder import __version__
 
-verbose_name_slugified: str = slugify(value=__verbose_name__, allow_unicode=True)
-github_url: str = "https://github.com/ppfeufer/aa-fleetfinder"
-
-USER_AGENT = f"{verbose_name_slugified} v{__version__} {github_url}"
+APP_NAME = "aa-fleetfinder"
+GITHUB_URL = f"https://github.com/ppfeufer/{APP_NAME}"
+USER_AGENT = f"{APP_NAME}/{__version__} ({GITHUB_URL}) via django-esi/{esi_version}"
