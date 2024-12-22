@@ -8,16 +8,15 @@ msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
 "POT-Creation-Date: 2024-12-14 16:44+0100\n"
-"PO-Revision-Date: 2024-11-06 20:10+0000\n"
+"PO-Revision-Date: 2024-12-22 21:15+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
-"Language-Team: Italian <https://weblate.ppfeufer.de/projects/alliance-auth-"
-"apps/aa-fleetfinder/it/>\n"
+"Language-Team: Italian <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/it/>\n"
 "Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.8.2\n"
+"X-Generator: Weblate 5.9.2\n"
 
 #: fleetfinder/__init__.py:9 fleetfinder/models.py:24
 #: fleetfinder/templates/fleetfinder/base.html:6
@@ -27,7 +26,7 @@ msgstr ""
 #: fleetfinder/templates/fleetfinder/fleet-details.html:6
 #: fleetfinder/templates/fleetfinder/join-fleet.html:7
 msgid "Fleet Finder"
-msgstr ""
+msgstr "Trova Flotta"
 
 #. Translators: This is the app name and version, which will appear in the Django Backend
 #: fleetfinder/apps.py:21
