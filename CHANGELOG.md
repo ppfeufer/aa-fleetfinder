@@ -38,6 +38,7 @@ Section Order:
 ### Changed
 
 - Set user agent according to MDN guidelines
+- URLs to be more semantic
 
 ## [2.2.2] - 2024-12-14
 
