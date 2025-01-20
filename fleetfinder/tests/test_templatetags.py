@@ -8,16 +8,17 @@ from django.test import TestCase
 
 # AA Fleet Finder
 from fleetfinder import __version__
+from fleetfinder.helper.static_files import calculate_integrity_hash
 
 
 class TestVersionedStatic(TestCase):
     """
-    Test the fleetfinder_static template tag
+    Test the `fleetfinder_static` template tag
     """
 
     def test_versioned_static(self):
         """
-        Test should return a versioned static
+        Test should return the versioned static
 
         :return:
         :rtype:
@@ -27,13 +28,18 @@ class TestVersionedStatic(TestCase):
         template_to_render = Template(
             template_string=(
                 "{% load fleetfinder %}"
-                "{% fleetfinder_static 'fleetfinder/css/fleetfinder.min.css' %}"
+                "{% fleetfinder_static 'css/fleetfinder.min.css' %}"
             )
         )
 
         rendered_template = template_to_render.render(context)
 
-        self.assertInHTML(
-            needle=f'/static/fleetfinder/css/fleetfinder.min.css?v={context["version"]}',
-            haystack=rendered_template,
+        expected_static_src = (
+            f'/static/fleetfinder/css/fleetfinder.min.css?v={context["version"]}'
         )
+        expected_static_src_integrity = calculate_integrity_hash(
+            "css/fleetfinder.min.css"
+        )
+
+        self.assertIn(member=expected_static_src, container=rendered_template)
+        self.assertIn(member=expected_static_src_integrity, container=rendered_template)

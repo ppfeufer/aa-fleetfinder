@@ -37,6 +37,8 @@ Section Order:
 
 ### Added
 
+- Integrity hash for the static files
+- Cache busting for static files
 - Datatable translations
 
 ### Changed
