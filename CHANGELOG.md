@@ -35,6 +35,10 @@ Section Order:
 ### Security
 -->
 
+### Added
+
+- Datatable translations
+
 ### Changed
 
 - Set user agent according to MDN guidelines

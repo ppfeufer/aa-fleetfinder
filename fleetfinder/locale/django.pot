@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.2.2\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2024-12-14 16:44+0100\n"
+"POT-Creation-Date: 2025-01-20 16:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: fleetfinder/templates/fleetfinder/base.html:10
 #: fleetfinder/templates/fleetfinder/create-fleet.html:7
 #: fleetfinder/templates/fleetfinder/edit-fleet.html:7
-#: fleetfinder/templates/fleetfinder/fleet-details.html:6
+#: fleetfinder/templates/fleetfinder/fleet-details.html:7
 #: fleetfinder/templates/fleetfinder/join-fleet.html:7
 msgid "Fleet Finder"
 msgstr ""
@@ -54,12 +54,12 @@ msgstr ""
 msgid "FC switched to another fleet."
 msgstr ""
 
-#: fleetfinder/models.py:51 fleetfinder/templates/fleetfinder/dashboard.html:18
+#: fleetfinder/models.py:51 fleetfinder/templates/fleetfinder/dashboard.html:20
 #: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:10
 msgid "Fleet name"
 msgstr ""
 
-#: fleetfinder/models.py:59 fleetfinder/templates/fleetfinder/dashboard.html:17
+#: fleetfinder/models.py:59 fleetfinder/templates/fleetfinder/dashboard.html:19
 msgid "Fleet commander"
 msgstr ""
 
@@ -105,23 +105,23 @@ msgstr ""
 msgid "Create fleet"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/dashboard.html:9
+#: fleetfinder/templates/fleetfinder/dashboard.html:10
 msgid "Fleets available to you"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/dashboard.html:19
+#: fleetfinder/templates/fleetfinder/dashboard.html:21
 msgid "Created at"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/dashboard.html:20
+#: fleetfinder/templates/fleetfinder/dashboard.html:22
 msgid "Join"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/dashboard.html:23
+#: fleetfinder/templates/fleetfinder/dashboard.html:25
 msgid "Details"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/dashboard.html:24
+#: fleetfinder/templates/fleetfinder/dashboard.html:26
 msgid "Edit"
 msgstr ""
 
@@ -130,32 +130,32 @@ msgstr ""
 msgid "Edit fleet"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:6
+#: fleetfinder/templates/fleetfinder/fleet-details.html:7
 msgid "Fleet details"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:15
+#: fleetfinder/templates/fleetfinder/fleet-details.html:16
 msgid "Fleet composition"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:23
-#: fleetfinder/templates/fleetfinder/fleet-details.html:47
+#: fleetfinder/templates/fleetfinder/fleet-details.html:25
+#: fleetfinder/templates/fleetfinder/fleet-details.html:51
 msgid "Ship class"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:24
+#: fleetfinder/templates/fleetfinder/fleet-details.html:26
 msgid "Count"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:38
+#: fleetfinder/templates/fleetfinder/fleet-details.html:41
 msgid "Fleet members"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:46
+#: fleetfinder/templates/fleetfinder/fleet-details.html:50
 msgid "Name"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:48
+#: fleetfinder/templates/fleetfinder/fleet-details.html:52
 msgid "System"
 msgstr ""
 
