@@ -35,6 +35,8 @@ Section Order:
 ### Security
 -->
 
+## [2.3.0] - 2025-01-20
+
 ### Added
 
 - Integrity hash for the static files
@@ -45,6 +47,8 @@ Section Order:
 
 - Set user agent according to MDN guidelines
 - URLs to be more semantic
+- Minimum requirements
+  - Alliance Auth >= 4.6.0
 
 ## [2.2.2] - 2024-12-14
 
