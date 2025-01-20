@@ -35,6 +35,12 @@ Section Order:
 ### Security
 -->
 
+## [2.3.1] - 2025-01-20
+
+### Removed
+
+- Rogue quotation mark
+
 ## [2.3.0] - 2025-01-20
 
 ### Added
