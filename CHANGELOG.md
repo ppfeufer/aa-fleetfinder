@@ -35,6 +35,10 @@ Section Order:
 ### Security
 -->
 
+### Changed
+
+- Omit SRI has calculation when `DEBUG=True`
+
 ## [2.3.1] - 2025-01-20
 
 ### Removed
