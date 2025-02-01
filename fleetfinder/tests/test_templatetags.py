@@ -4,7 +4,7 @@ Test the apps' template tags
 
 # Django
 from django.template import Context, Template
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 # AA Fleet Finder
 from fleetfinder import __version__
@@ -16,6 +16,7 @@ class TestVersionedStatic(TestCase):
     Test the `fleetfinder_static` template tag
     """
 
+    @override_settings(DEBUG=False)
     def test_versioned_static(self):
         """
         Test should return the versioned static
@@ -32,14 +33,42 @@ class TestVersionedStatic(TestCase):
             )
         )
 
-        rendered_template = template_to_render.render(context)
+        rendered_template = template_to_render.render(context=context)
 
-        expected_static_src = (
+        expected_static_css_src = (
             f'/static/fleetfinder/css/fleetfinder.min.css?v={context["version"]}'
         )
-        expected_static_src_integrity = calculate_integrity_hash(
+        expected_static_css_src_integrity = calculate_integrity_hash(
             "css/fleetfinder.min.css"
         )
 
-        self.assertIn(member=expected_static_src, container=rendered_template)
-        self.assertIn(member=expected_static_src_integrity, container=rendered_template)
+        self.assertIn(member=expected_static_css_src, container=rendered_template)
+        self.assertIn(
+            member=expected_static_css_src_integrity, container=rendered_template
+        )
+
+    @override_settings(DEBUG=True)
+    def test_versioned_static_with_debug_enabled(self) -> None:
+        """
+        Test versioned static template tag with DEBUG enabled
+
+        :return:
+        :rtype:
+        """
+
+        context = Context({"version": __version__})
+        template_to_render = Template(
+            template_string=(
+                "{% load fleetfinder %}"
+                "{% fleetfinder_static 'css/fleetfinder.min.css' %}"
+            )
+        )
+
+        rendered_template = template_to_render.render(context=context)
+
+        expected_static_css_src = (
+            f'/static/fleetfinder/css/fleetfinder.min.css?v={context["version"]}'
+        )
+
+        self.assertIn(member=expected_static_css_src, container=rendered_template)
+        self.assertNotIn(member="integrity=", container=rendered_template)
