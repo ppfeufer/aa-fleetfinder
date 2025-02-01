@@ -37,7 +37,7 @@ Section Order:
 
 ### Changed
 
-- Omit SRI has calculation when `DEBUG=True`
+- Omit SRI hash calculation when `DEBUG=True`
 
 ## [2.3.1] - 2025-01-20
 
