@@ -37,6 +37,7 @@ Section Order:
 
 ### Changed
 
+- Templatetag code improved
 - Omit SRI hash calculation when `DEBUG=True`
 
 ## [2.3.1] - 2025-01-20
