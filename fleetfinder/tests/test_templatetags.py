@@ -8,6 +8,7 @@ from django.test import TestCase, override_settings
 
 # AA Fleet Finder
 from fleetfinder import __version__
+from fleetfinder.constants import PACKAGE_NAME
 from fleetfinder.helper.static_files import calculate_integrity_hash
 
 
@@ -36,7 +37,7 @@ class TestVersionedStatic(TestCase):
         rendered_template = template_to_render.render(context=context)
 
         expected_static_css_src = (
-            f'/static/fleetfinder/css/fleetfinder.min.css?v={context["version"]}'
+            f'/static/{PACKAGE_NAME}/css/fleetfinder.min.css?v={context["version"]}'
         )
         expected_static_css_src_integrity = calculate_integrity_hash(
             "css/fleetfinder.min.css"
@@ -67,8 +68,28 @@ class TestVersionedStatic(TestCase):
         rendered_template = template_to_render.render(context=context)
 
         expected_static_css_src = (
-            f'/static/fleetfinder/css/fleetfinder.min.css?v={context["version"]}'
+            f'/static/{PACKAGE_NAME}/css/fleetfinder.min.css?v={context["version"]}'
         )
 
         self.assertIn(member=expected_static_css_src, container=rendered_template)
         self.assertNotIn(member="integrity=", container=rendered_template)
+
+    @override_settings(DEBUG=False)
+    def test_invalid_file_type(self) -> None:
+        """
+        Test should raise a ValueError for an invalid file type
+
+        :return:
+        :rtype:
+        """
+
+        context = Context({"version": __version__})
+        template_to_render = Template(
+            template_string=(
+                "{% load fleetfinder %}"
+                "{% fleetfinder_static 'invalid/invalid.txt' %}"
+            )
+        )
+
+        with self.assertRaises(ValueError):
+            template_to_render.render(context=context)
