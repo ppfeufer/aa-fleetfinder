@@ -19,18 +19,17 @@ Control access to your fleets through Alliance Auth.
 
 ______________________________________________________________________
 
-<!-- mdformat-toc start --slug=github --maxlevel=6 --minlevel=1 -->
+<!-- mdformat-toc start --slug=github --maxlevel=6 --minlevel=2 -->
 
-- [AA Fleet Finder](#aa-fleet-finder)
-  - [Installation](#installation)
-    - [Step 1: Install the Package](#step-1-install-the-package)
-    - [Step 2: Configure Alliance Auth](#step-2-configure-alliance-auth)
-    - [Step 3: Add the Scheduled Task](#step-3-add-the-scheduled-task)
-    - [Step 4: Finalizing the Installation](#step-4-finalizing-the-installation)
-    - [Step 4: Setup Permissions](#step-4-setup-permissions)
-  - [Changelog](#changelog)
-  - [Translation Status](#translation-status)
-  - [Contributing](#contributing)
+- [Installation](#installation)
+  - [Step 1: Install the Package](#step-1-install-the-package)
+  - [Step 2: Configure Alliance Auth](#step-2-configure-alliance-auth)
+  - [Step 3: Add the Scheduled Task](#step-3-add-the-scheduled-task)
+  - [Step 4: Finalizing the Installation](#step-4-finalizing-the-installation)
+  - [Step 4: Setup Permissions](#step-4-setup-permissions)
+- [Changelog](#changelog)
+- [Translation Status](#translation-status)
+- [Contributing](#contributing)
 
 <!-- mdformat-toc end -->
 
