@@ -11,7 +11,6 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
-from django.template.defaulttags import register
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
@@ -341,16 +340,3 @@ def ajax_fleet_details(
         data["fleet_composition"].append({"ship_type_name": ship, "number": number})
 
     return JsonResponse(data=data, safe=False)
-
-
-@register.filter
-def get_item(dictionary, key):
-    """
-    Little helper: get a key from a dictionary
-
-    :param dictionary:
-    :param key:
-    :return:
-    """
-
-    return dictionary.get(key=key, default=None)

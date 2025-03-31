@@ -84,3 +84,19 @@ def fleetfinder_static(relative_file_path: str, script_type: str = None) -> str 
         )
 
     return return_value
+
+
+@register.filter
+def get_item(dictionary: dict | None, key: str) -> str | None:
+    """
+    Little helper: get a key from a dictionary
+
+    :param dictionary:
+    :param key:
+    :return:
+    """
+
+    if dictionary is None:
+        return None
+
+    return dictionary.get(key, None)

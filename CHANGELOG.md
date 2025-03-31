@@ -35,6 +35,10 @@ Section Order:
 ### Security
 -->
 
+### Changed
+
+- Moved the template tag to the `templatetags` module
+
 ## [2.3.2] - 2025-03-06
 
 ### Changed
