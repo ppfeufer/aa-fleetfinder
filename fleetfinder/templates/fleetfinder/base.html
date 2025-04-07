@@ -10,12 +10,17 @@
     {% translate "Fleet Finder" %}
 {% endblock %}
 
+{% block header_nav_collapse_left %}
+    {% include "fleetfinder/partials/header/header-nav-left.html" %}
+{% endblock %}
+
+
+{% block header_nav_collapse_right %}
+    {% include "fleetfinder/partials/header/header-nav-right.html" %}
+{% endblock %}
+
 {% block content %}
     <div class="aa-fleetfinder">
-        <div class="aa-fleetfinder-header">
-            {% include "fleetfinder/partials/header/header-navigation.html" %}
-        </div>
-
         <div class="aa-fleetfinder-body">
             {% block aa_fleetfinder_body %}{% endblock %}
         </div>

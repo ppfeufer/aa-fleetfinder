@@ -26,8 +26,8 @@ build_test:
 tox_tests:
 	@echo "Running tests with tox …"
 	@export USE_MYSQL=False; \
-	tox -v -e allianceauth-latest;
-#	rm -rf .tox
+	tox -v -e allianceauth-latest; \
+#	rm -rf .tox/
 
 # Help message
 .PHONY: help

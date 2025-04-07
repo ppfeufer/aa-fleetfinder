@@ -1,0 +1,19 @@
+{% load i18n %}
+
+{% if perms.fleetfinder.manage_fleets %}
+    {% translate "Create fleet" as navigation_item %}
+
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'fleetfinder:create_fleet' %}">
+            <span class="btn btn-success btn-add-bulletin d-none d-lg-inline-block">
+                <i class="fa-solid fa-plus"></i>
+                {{ navigation_item|title }}
+            </span>
+
+            <span class="d-inline-block d-lg-none">
+                <i class="fa-solid fa-plus me-2"></i>
+                {{ navigation_item|title }}
+            </span>
+        </a>
+    </li>
+{% endif %}
