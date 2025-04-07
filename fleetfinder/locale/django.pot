@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.3.2\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2025-03-31 13:27+0200\n"
+"POT-Creation-Date: 2025-04-07 07:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -101,7 +101,7 @@ msgstr ""
 
 #: fleetfinder/templates/fleetfinder/create-fleet.html:6
 #: fleetfinder/templates/fleetfinder/create-fleet.html:14
-#: fleetfinder/templates/fleetfinder/partials/header/header-navigation.html:27
+#: fleetfinder/templates/fleetfinder/partials/header/header-nav-right.html:4
 msgid "Create fleet"
 msgstr ""
 
@@ -197,12 +197,8 @@ msgstr ""
 msgid "Join our team of translators!"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/partials/header/header-navigation.html:6
+#: fleetfinder/templates/fleetfinder/partials/header/header-nav-left.html:6
 msgid "Available fleets"
-msgstr ""
-
-#: fleetfinder/templates/fleetfinder/partials/header/header-navigation.html:17
-msgid "Toggle navigation"
 msgstr ""
 
 #: fleetfinder/views.py:103
