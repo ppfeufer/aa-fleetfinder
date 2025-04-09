@@ -35,6 +35,8 @@ Section Order:
 ### Security
 -->
 
+## [2.3.3] - 2025-04-09
+
 ### Changed
 
 - Moved the navigation to the top nav bar
