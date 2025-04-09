@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2025-03-06 22:02+0100\n"
+"POT-Creation-Date: 2025-04-09 10:23+0200\n"
 "PO-Revision-Date: 2024-08-06 11:28+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: Japanese <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/ja/>\n"
@@ -100,7 +100,7 @@ msgstr ""
 
 #: fleetfinder/templates/fleetfinder/create-fleet.html:6
 #: fleetfinder/templates/fleetfinder/create-fleet.html:14
-#: fleetfinder/templates/fleetfinder/partials/header/header-navigation.html:27
+#: fleetfinder/templates/fleetfinder/partials/header/header-nav-right.html:4
 msgid "Create fleet"
 msgstr ""
 
@@ -158,7 +158,7 @@ msgstr "名前"
 msgid "System"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/join-fleet.html:6 fleetfinder/views.py:91
+#: fleetfinder/templates/fleetfinder/join-fleet.html:6 fleetfinder/views.py:90
 msgid "Join fleet"
 msgstr ""
 
@@ -194,23 +194,19 @@ msgstr ""
 msgid "Join our team of translators!"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/partials/header/header-navigation.html:6
+#: fleetfinder/templates/fleetfinder/partials/header/header-nav-left.html:6
 msgid "Available fleets"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/partials/header/header-navigation.html:17
-msgid "Toggle navigation"
-msgstr ""
-
-#: fleetfinder/views.py:104
+#: fleetfinder/views.py:103
 msgid "View fleet details"
 msgstr ""
 
-#: fleetfinder/views.py:113
+#: fleetfinder/views.py:112
 msgid "Edit fleet advert"
 msgstr ""
 
-#: fleetfinder/views.py:277
+#: fleetfinder/views.py:276
 #, python-brace-format
 msgid "<h4>Error!</h4><p>ESI returned the following error: {esi_error_message}</p>"
 msgstr ""
