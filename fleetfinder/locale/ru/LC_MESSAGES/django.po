@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2025-03-06 22:02+0100\n"
+"POT-Creation-Date: 2025-04-09 10:23+0200\n"
 "PO-Revision-Date: 2024-06-06 14:27+0000\n"
 "Last-Translator: Roycce_ <malyasov.roma@mail.ru>\n"
 "Language-Team: Russian <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/ru/>\n"
@@ -101,7 +101,7 @@ msgstr "Счетчик ESI ошибок"
 
 #: fleetfinder/templates/fleetfinder/create-fleet.html:6
 #: fleetfinder/templates/fleetfinder/create-fleet.html:14
-#: fleetfinder/templates/fleetfinder/partials/header/header-navigation.html:27
+#: fleetfinder/templates/fleetfinder/partials/header/header-nav-right.html:4
 msgid "Create fleet"
 msgstr "Создать флот"
 
@@ -159,7 +159,7 @@ msgstr "Название"
 msgid "System"
 msgstr "Система"
 
-#: fleetfinder/templates/fleetfinder/join-fleet.html:6 fleetfinder/views.py:91
+#: fleetfinder/templates/fleetfinder/join-fleet.html:6 fleetfinder/views.py:90
 msgid "Join fleet"
 msgstr "Вступить во флот"
 
@@ -195,23 +195,22 @@ msgstr "Вы хотите помочь перевести это приложе�
 msgid "Join our team of translators!"
 msgstr "Присоединяйтесь к нашей команде переводчиков!"
 
-#: fleetfinder/templates/fleetfinder/partials/header/header-navigation.html:6
+#: fleetfinder/templates/fleetfinder/partials/header/header-nav-left.html:6
 msgid "Available fleets"
 msgstr "Доступные флоты"
 
-#: fleetfinder/templates/fleetfinder/partials/header/header-navigation.html:17
-msgid "Toggle navigation"
-msgstr "Переключить навигацию"
-
-#: fleetfinder/views.py:104
+#: fleetfinder/views.py:103
 msgid "View fleet details"
 msgstr "Показать подробности флота"
 
-#: fleetfinder/views.py:113
+#: fleetfinder/views.py:112
 msgid "Edit fleet advert"
 msgstr "Редактировать объявления о флоте"
 
-#: fleetfinder/views.py:277
+#: fleetfinder/views.py:276
 #, python-brace-format
 msgid "<h4>Error!</h4><p>ESI returned the following error: {esi_error_message}</p>"
 msgstr "<h4>Ошибка!</h4><p>ESI вернул следующую ошибку: {esi_error_message}</p>"
+
+#~ msgid "Toggle navigation"
+#~ msgstr "Переключить навигацию"
