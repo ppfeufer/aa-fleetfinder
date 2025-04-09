@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2025-03-06 22:02+0100\n"
+"POT-Creation-Date: 2025-04-09 10:23+0200\n"
 "PO-Revision-Date: 2024-05-10 14:03+0000\n"
 "Last-Translator: Mind of the Raven <okanieva@gmail.com>\n"
 "Language-Team: Korean <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/ko/>\n"
@@ -100,7 +100,7 @@ msgstr "ESI 오류 갯수"
 
 #: fleetfinder/templates/fleetfinder/create-fleet.html:6
 #: fleetfinder/templates/fleetfinder/create-fleet.html:14
-#: fleetfinder/templates/fleetfinder/partials/header/header-navigation.html:27
+#: fleetfinder/templates/fleetfinder/partials/header/header-nav-right.html:4
 msgid "Create fleet"
 msgstr "함대 생성"
 
@@ -162,7 +162,7 @@ msgstr "이름"
 msgid "System"
 msgstr "시스템"
 
-#: fleetfinder/templates/fleetfinder/join-fleet.html:6 fleetfinder/views.py:91
+#: fleetfinder/templates/fleetfinder/join-fleet.html:6 fleetfinder/views.py:90
 #, fuzzy
 #| msgid "Join Fleet"
 msgid "Join fleet"
@@ -206,29 +206,28 @@ msgstr "이 앱을 번역하거나 기존 번역을 개선하고 싶으신가요
 msgid "Join our team of translators!"
 msgstr "번역팀에 참여하세요!"
 
-#: fleetfinder/templates/fleetfinder/partials/header/header-navigation.html:6
+#: fleetfinder/templates/fleetfinder/partials/header/header-nav-left.html:6
 #, fuzzy
 #| msgid "Available Fleets"
 msgid "Available fleets"
 msgstr "참가 가능한 함대"
 
-#: fleetfinder/templates/fleetfinder/partials/header/header-navigation.html:17
-msgid "Toggle navigation"
-msgstr "토글 메뉴"
-
-#: fleetfinder/views.py:104
+#: fleetfinder/views.py:103
 #, fuzzy
 #| msgid "View Fleet Details"
 msgid "View fleet details"
 msgstr "함대 세부 내용 보기"
 
-#: fleetfinder/views.py:113
+#: fleetfinder/views.py:112
 #, fuzzy
 #| msgid "Edit Fleet Advert"
 msgid "Edit fleet advert"
 msgstr "함대 광고 수정"
 
-#: fleetfinder/views.py:277
+#: fleetfinder/views.py:276
 #, python-brace-format
 msgid "<h4>Error!</h4><p>ESI returned the following error: {esi_error_message}</p>"
 msgstr "<h4>오류!</h4><p>ESI가 다음 오류를 출력함:{esi_error_message}</p>"
+
+#~ msgid "Toggle navigation"
+#~ msgstr "토글 메뉴"
