@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2025-03-06 22:02+0100\n"
+"POT-Creation-Date: 2025-04-09 10:23+0200\n"
 "PO-Revision-Date: 2024-12-02 17:40+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: Spanish <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/es/>\n"
@@ -103,7 +103,7 @@ msgstr "Recuento de errores del ESI"
 
 #: fleetfinder/templates/fleetfinder/create-fleet.html:6
 #: fleetfinder/templates/fleetfinder/create-fleet.html:14
-#: fleetfinder/templates/fleetfinder/partials/header/header-navigation.html:27
+#: fleetfinder/templates/fleetfinder/partials/header/header-nav-right.html:4
 #, fuzzy
 #| msgid "Create Fleet"
 msgid "Create fleet"
@@ -171,7 +171,7 @@ msgstr "Nombre"
 msgid "System"
 msgstr "Sistema"
 
-#: fleetfinder/templates/fleetfinder/join-fleet.html:6 fleetfinder/views.py:91
+#: fleetfinder/templates/fleetfinder/join-fleet.html:6 fleetfinder/views.py:90
 #, fuzzy
 #| msgid "Join Fleet"
 msgid "Join fleet"
@@ -215,29 +215,28 @@ msgstr "¿Quieres ayudar a traducir esta aplicación a tu idioma o mejorar la tr
 msgid "Join our team of translators!"
 msgstr "¡Únete a nuestro equipo de traductores!"
 
-#: fleetfinder/templates/fleetfinder/partials/header/header-navigation.html:6
+#: fleetfinder/templates/fleetfinder/partials/header/header-nav-left.html:6
 #, fuzzy
 #| msgid "Available Fleets"
 msgid "Available fleets"
 msgstr "Flotas Disponibles"
 
-#: fleetfinder/templates/fleetfinder/partials/header/header-navigation.html:17
-msgid "Toggle navigation"
-msgstr "Alternar la navegación"
-
-#: fleetfinder/views.py:104
+#: fleetfinder/views.py:103
 #, fuzzy
 #| msgid "View Fleet Details"
 msgid "View fleet details"
 msgstr "Ver detalles de la Flota"
 
-#: fleetfinder/views.py:113
+#: fleetfinder/views.py:112
 #, fuzzy
 #| msgid "Edit Fleet Advert"
 msgid "Edit fleet advert"
 msgstr "Editar Anuncio de la Flota"
 
-#: fleetfinder/views.py:277
+#: fleetfinder/views.py:276
 #, python-brace-format
 msgid "<h4>Error!</h4><p>ESI returned the following error: {esi_error_message}</p>"
 msgstr "<h4>Error!</h4><p>El ESI devolvió el siguiente error: {esi_error_message}</p>"
+
+#~ msgid "Toggle navigation"
+#~ msgstr "Alternar la navegación"
