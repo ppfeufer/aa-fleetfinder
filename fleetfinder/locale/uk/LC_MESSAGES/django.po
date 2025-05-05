@@ -5,13 +5,14 @@
 # Peter Pfeufer <info@ppfeufer.de>, 2023, 2024.
 # Kristof <kristof@teh.ninja>, 2023, 2024.
 # M <skrypets@gmail.com>, 2025.
+# s0k0l -_- <salarysalo@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2025-04-09 10:23+0200\n"
-"PO-Revision-Date: 2025-03-23 08:24+0000\n"
-"Last-Translator: M <skrypets@gmail.com>\n"
+"POT-Creation-Date: 2025-05-05 21:13+0200\n"
+"PO-Revision-Date: 2025-04-10 07:05+0000\n"
+"Last-Translator: s0k0l -_- <salarysalo@gmail.com>\n"
 "Language-Team: Ukrainian <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
@@ -76,7 +77,7 @@ msgstr "«Шапка» флоту"
 
 #: fleetfinder/models.py:63
 msgid "Free move"
-msgstr "Дозволити вільне переміщення"
+msgstr "вільне переміщення"
 
 #: fleetfinder/models.py:69
 #: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:32
@@ -107,7 +108,7 @@ msgstr "Створити флот"
 
 #: fleetfinder/templates/fleetfinder/dashboard.html:10
 msgid "Fleets available to you"
-msgstr "Доступні флоти"
+msgstr "Флоти що доступні Вам"
 
 #: fleetfinder/templates/fleetfinder/dashboard.html:21
 msgid "Created at"
