@@ -6,13 +6,13 @@
 # Matthias P <randomusernetcom@gmail.com>, 2024.
 # Hexo <ghostcig@free.fr>, 2024.
 # Houbi_Houba <paul.lacape@live.fr>, 2024.
-# balbozorre <loic.petiot2002@gmail.com>, 2024.
+# balbozorre <loic.petiot2002@gmail.com>, 2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2025-05-05 21:13+0200\n"
-"PO-Revision-Date: 2024-12-10 17:15+0000\n"
+"POT-Creation-Date: 2025-06-03 10:57+0200\n"
+"PO-Revision-Date: 2025-05-20 16:24+0000\n"
 "Last-Translator: balbozorre <loic.petiot2002@gmail.com>\n"
 "Language-Team: French <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/fr/>\n"
 "Language: fr_FR\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.8.4\n"
+"X-Generator: Weblate 5.11.4\n"
 
 #: fleetfinder/__init__.py:9 fleetfinder/models.py:24
 #: fleetfinder/templates/fleetfinder/base.html:6
@@ -74,16 +74,16 @@ msgstr "Date et heure de création"
 #: fleetfinder/models.py:62
 #: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:37
 msgid "Fleet MOTD"
-msgstr ""
+msgstr "MOTD de la flotte"
 
 #: fleetfinder/models.py:63
 msgid "Free move"
-msgstr ""
+msgstr "Mouvement libre"
 
 #: fleetfinder/models.py:69
 #: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:32
 msgid "Only selected groups will have access to the fleet. If no groups are selected the fleet will be available to all who have access to this module."
-msgstr ""
+msgstr "Seuls les groupes sélectionnés auront accès à la flotte. Si aucun groupe n'est sélectionné, la flotte sera accessible à tous ceux qui ont accès à ce module."
 
 #: fleetfinder/models.py:73
 msgid "Group restrictions"
