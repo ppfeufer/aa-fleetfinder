@@ -11,8 +11,7 @@ from esi import __url__ as esi_url
 from esi import __version__ as esi_version
 
 # AA Fleet Finder
-from fleetfinder import __version__
-from fleetfinder.constants import APP_NAME_USERAGENT, GITHUB_URL
+from fleetfinder import __app_name_useragent__, __github_url__, __version__
 from fleetfinder.providers import esi
 
 
@@ -33,5 +32,9 @@ class TestUserAgent(TestCase):
 
         self.assertEqual(
             operation.future.request.headers["User-Agent"],
-            f"{APP_NAME_USERAGENT}/{__version__} ({settings.ESI_USER_CONTACT_EMAIL}; +{GITHUB_URL}) Django-ESI/{esi_version} (+{esi_url})",
+            (
+                f"{__app_name_useragent__}/{__version__} "
+                f"({settings.ESI_USER_CONTACT_EMAIL}; +{__github_url__}) "
+                f"Django-ESI/{esi_version} (+{esi_url})"
+            ),
         )
