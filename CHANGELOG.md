@@ -35,6 +35,10 @@ Section Order:
 ### Security
 -->
 
+### Changed
+
+- User Agent generation updated to match latest `django-esi` guidelines
+
 ## [2.4.0] - 2025-06-03
 
 ### Changed
