@@ -1,0 +1,37 @@
+"""
+Test user agent header for ESI requests
+"""
+
+# Django
+from django.conf import settings
+from django.test import TestCase
+
+# Alliance Auth
+from esi import __url__ as esi_url
+from esi import __version__ as esi_version
+
+# AA Fleet Finder
+from fleetfinder import __version__
+from fleetfinder.constants import APP_NAME_USERAGENT, GITHUB_URL
+from fleetfinder.providers import esi
+
+
+class TestUserAgent(TestCase):
+    """
+    Test the user agent header for ESI requests
+    """
+
+    def test_user_agent_header(self):
+        """
+        Test that the user agent header is set correctly for ESI requests.
+
+        :return:
+        :rtype:
+        """
+
+        operation = esi.client.Universe.get_universe_factions()
+
+        self.assertEqual(
+            operation.future.request.headers["User-Agent"],
+            f"{APP_NAME_USERAGENT}/{__version__} ({settings.ESI_USER_CONTACT_EMAIL}; +{GITHUB_URL}) Django-ESI/{esi_version} (+{esi_url})",
+        )
