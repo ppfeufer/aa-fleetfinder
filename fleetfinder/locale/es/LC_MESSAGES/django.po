@@ -2,13 +2,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Zigor Fernandez Moreno <sietehierros@gmail.com>, 2023, 2024.
-# Peter Pfeufer <info@ppfeufer.de>, 2023, 2024.
+# Peter Pfeufer <info@ppfeufer.de>, 2023, 2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2025-06-03 10:57+0200\n"
-"PO-Revision-Date: 2024-12-02 17:40+0000\n"
+"POT-Creation-Date: 2025-08-04 22:06+0200\n"
+"PO-Revision-Date: 2025-07-29 20:18+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: Spanish <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/es/>\n"
 "Language: es\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.8.4\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #: fleetfinder/__init__.py:9 fleetfinder/models.py:24
 #: fleetfinder/templates/fleetfinder/base.html:6
@@ -56,14 +56,10 @@ msgstr "El FC se cambió a otra flota."
 
 #: fleetfinder/models.py:51 fleetfinder/templates/fleetfinder/dashboard.html:20
 #: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:10
-#, fuzzy
-#| msgid "Fleet Name"
 msgid "Fleet name"
-msgstr "Nombre de la Flota"
+msgstr "Nombre de la flota"
 
 #: fleetfinder/models.py:59 fleetfinder/templates/fleetfinder/dashboard.html:19
-#, fuzzy
-#| msgid "Fleet Commander"
 msgid "Fleet commander"
 msgstr "Comandante de Flota"
 
@@ -104,8 +100,6 @@ msgstr "Recuento de errores del ESI"
 #: fleetfinder/templates/fleetfinder/create-fleet.html:6
 #: fleetfinder/templates/fleetfinder/create-fleet.html:14
 #: fleetfinder/templates/fleetfinder/partials/header/header-nav-right.html:4
-#, fuzzy
-#| msgid "Create Fleet"
 msgid "Create fleet"
 msgstr "Crear Flota"
 
@@ -114,8 +108,6 @@ msgid "Fleets available to you"
 msgstr ""
 
 #: fleetfinder/templates/fleetfinder/dashboard.html:21
-#, fuzzy
-#| msgid "Created At"
 msgid "Created at"
 msgstr "Creado En"
 
@@ -133,8 +125,6 @@ msgstr "Editar"
 
 #: fleetfinder/templates/fleetfinder/edit-fleet.html:6
 #: fleetfinder/templates/fleetfinder/edit-fleet.html:14
-#, fuzzy
-#| msgid "Edit Fleet"
 msgid "Edit fleet"
 msgstr "Editar la Flota"
 
@@ -158,8 +148,6 @@ msgid "Count"
 msgstr ""
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:41
-#, fuzzy
-#| msgid "Fleet Members"
 msgid "Fleet members"
 msgstr "Miembros de la Flota"
 
@@ -172,14 +160,10 @@ msgid "System"
 msgstr "Sistema"
 
 #: fleetfinder/templates/fleetfinder/join-fleet.html:6 fleetfinder/views.py:90
-#, fuzzy
-#| msgid "Join Fleet"
 msgid "Join fleet"
 msgstr "Unirse a la Flota"
 
 #: fleetfinder/templates/fleetfinder/join-fleet.html:14
-#, fuzzy
-#| msgid "Fleet Invitation"
 msgid "Fleet invitation"
 msgstr "Invitación a la Flota"
 
@@ -192,14 +176,10 @@ msgid "Send fleet invites"
 msgstr "Enviar invitaciones de Flota"
 
 #: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:15
-#, fuzzy
-#| msgid "Select Groups"
 msgid "Select groups"
 msgstr "Grupos Seleccionados"
 
 #: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:46
-#, fuzzy
-#| msgid "Enable Free Move"
 msgid "Enable free move"
 msgstr "Habilitar Movimiento Libre"
 
@@ -216,20 +196,14 @@ msgid "Join our team of translators!"
 msgstr "¡Únete a nuestro equipo de traductores!"
 
 #: fleetfinder/templates/fleetfinder/partials/header/header-nav-left.html:6
-#, fuzzy
-#| msgid "Available Fleets"
 msgid "Available fleets"
 msgstr "Flotas Disponibles"
 
 #: fleetfinder/views.py:103
-#, fuzzy
-#| msgid "View Fleet Details"
 msgid "View fleet details"
 msgstr "Ver detalles de la Flota"
 
 #: fleetfinder/views.py:112
-#, fuzzy
-#| msgid "Edit Fleet Advert"
 msgid "Edit fleet advert"
 msgstr "Editar Anuncio de la Flota"
 
