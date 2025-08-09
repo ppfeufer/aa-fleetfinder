@@ -78,7 +78,10 @@
             const tabe_fleet_composition = $('#table_fleet_composition');
 
             const populateDatatables = () => {
-                $.get('{% url "fleetfinder:ajax_fleet_details" fleet_id %}', (data) => {
+                fetchGet({
+                    url: '{% url "fleetfinder:ajax_fleet_details" fleet_id %}'
+                })
+                .then((data) => {
                     table_fleet_members.DataTable({
                         language: {
                             url: '{{ DT_LANG_PATH }}'
@@ -106,6 +109,9 @@
                         ],
                         order: [[1, 'desc']]
                     });
+                })
+                .catch((error) => {
+                    console.error('Error fetching fleet details:', error);
                 });
             };
 
