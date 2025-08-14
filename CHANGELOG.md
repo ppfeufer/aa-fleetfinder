@@ -44,6 +44,7 @@ Section Order:
 - `views.ajax_fleet_details` refactored
 - `tasks._process_fleet` refactored
 - `tasks.open_fleet` refactored
+- `tasks.send_fleet_invitation` refactored
 
 ## [2.6.0] - 2025-08-14
 

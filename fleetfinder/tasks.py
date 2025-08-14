@@ -279,12 +279,17 @@ def open_fleet(
 
 
 @shared_task
-def send_fleet_invitation(character_ids, fleet_id):
+def send_fleet_invitation(fleet_id: int, character_ids: list) -> None:
     """
-    Send a fleet invitation through the eve client
+    Send fleet invitations to characters through ESI
+    This task sends fleet invitations to a list of character IDs using the ESI API.
 
-    :param character_ids:
-    :param fleet_id:
+    :param fleet_id: The ID of the fleet to which invitations are sent
+    :type fleet_id: int
+    :param character_ids: List of character IDs to invite to the fleet
+    :type character_ids: list[int]
+    :return: None
+    :rtype: None
     """
 
     required_scopes = ["esi-fleets.write_fleet.v1"]
@@ -292,21 +297,20 @@ def send_fleet_invitation(character_ids, fleet_id):
     fleet_commander_token = Token.get_token(
         character_id=fleet.fleet_commander.character_id, scopes=required_scopes
     )
-    _processes = []
 
     with ThreadPoolExecutor(max_workers=50) as ex:
-        for _character_id in character_ids:
-            _processes.append(
-                ex.submit(
-                    _send_invitation,
-                    character_id=_character_id,
-                    fleet_commander_token=fleet_commander_token,
-                    fleet_id=fleet_id,
-                )
+        futures = [
+            ex.submit(
+                _send_invitation,
+                character_id=character_id,
+                fleet_commander_token=fleet_commander_token,
+                fleet_id=fleet_id,
             )
+            for character_id in character_ids
+        ]
 
-    for item in as_completed(_processes):
-        _ = item.result()
+        for future in as_completed(futures):
+            future.result()  # This will raise any exceptions that occurred
 
 
 @shared_task(**{**TASK_DEFAULT_KWARGS}, **{"base": QueueOnce})
