@@ -226,16 +226,24 @@ def _process_fleet(fleet: Fleet) -> None:
 
 
 @shared_task
-def open_fleet(character_id, motd, free_move, name, groups):
+def open_fleet(
+    character_id: int, motd: str, free_move: bool, name: str, groups: list
+) -> None:
     """
-    Open a fleet
+    Open a fleet from a fleet in EVE Online
 
-    :param character_id:
-    :param motd:
-    :param free_move:
-    :param name:
-    :param groups:
-    :return:
+    :param character_id: The character ID of the fleet commander
+    :type character_id: int
+    :param motd: Message of the Day for the fleet
+    :type motd: str
+    :param free_move: Whether the fleet is free move or not
+    :type free_move: bool
+    :param name: Name of the fleet
+    :type name: str
+    :param groups: Groups that are allowed to access the fleet
+    :type groups: list[AuthGroup]
+    :return: None
+    :rtype: None
     """
 
     required_scopes = ["esi-fleets.read_fleet.v1", "esi-fleets.write_fleet.v1"]
@@ -244,10 +252,11 @@ def open_fleet(character_id, motd, free_move, name, groups):
     fleet_result = esi.client.Fleets.get_characters_character_id_fleet(
         character_id=token.character_id, token=token.valid_access_token()
     ).result()
-    fleet_id = fleet_result.pop("fleet_id")
-    fleet_role = fleet_result.pop("role")
 
-    if fleet_id is None or fleet_role is None or fleet_role != "fleet_commander":
+    fleet_id = fleet_result.get("fleet_id")
+    fleet_role = fleet_result.get("role")
+
+    if not fleet_id or fleet_role != "fleet_commander":
         return
 
     fleet_commander = EveCharacter.objects.get(character_id=token.character_id)
@@ -260,12 +269,12 @@ def open_fleet(character_id, motd, free_move, name, groups):
         fleet_commander=fleet_commander,
         name=name,
     )
-    fleet.save()
     fleet.groups.set(groups)
 
-    esi_fleet = {"is_free_move": free_move, "motd": motd}
     esi.client.Fleets.put_fleets_fleet_id(
-        fleet_id=fleet_id, token=token.valid_access_token(), new_settings=esi_fleet
+        fleet_id=fleet_id,
+        token=token.valid_access_token(),
+        new_settings={"is_free_move": free_move, "motd": motd},
     ).result()
 
 
