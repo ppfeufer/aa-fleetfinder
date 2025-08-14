@@ -187,57 +187,42 @@ def _check_for_esi_fleet(fleet: Fleet):
     return False
 
 
-def _process_fleet(fleet: Fleet):
+def _process_fleet(fleet: Fleet) -> None:
     """
     Processing a fleet
 
-    :param fleet:
-    :type fleet:
-    :return:
-    :rtype:
+    :param fleet: Fleet object to process
+    :type fleet: Fleet
+    :return: None
+    :rtype: None
     """
 
-    fleet_id = fleet.fleet_id
-    fleet_name = fleet.name
-    fleet_commander = fleet.fleet_commander
-
     logger.info(
-        f'Processing information for fleet "{fleet_name}" '
-        f"of {fleet_commander} (ESI ID: {fleet_id})"
+        f'Processing information for fleet "{fleet.name}" '
+        f"of {fleet.fleet_commander} (ESI ID: {fleet.fleet_id})"
     )
 
     # Check if there is a fleet
     esi_fleet = _check_for_esi_fleet(fleet=fleet)
-    if esi_fleet and fleet.fleet_id == esi_fleet["fleet"]["fleet_id"]:
-        try:
-            fleet_from_esi = esi.client.Fleets.get_characters_character_id_fleet(
-                character_id=fleet.fleet_commander.character_id,
-                token=esi_fleet["token"].valid_access_token(),
-            ).result()
-        except HTTPNotFound:
-            _esi_fleet_error_handling(
-                fleet=fleet, error_key=Fleet.EsiError.NOT_IN_FLEET
-            )
-        except Exception:  # pylint: disable=broad-exception-caught
-            _esi_fleet_error_handling(fleet=fleet, error_key=Fleet.EsiError.NO_FLEET)
 
-        # We have a valid fleet result from ESI
-        else:
-            if fleet_id == fleet_from_esi["fleet_id"]:
-                # Check if we deal with the fleet boss here
-                try:
-                    _ = esi.client.Fleets.get_fleets_fleet_id_members(
-                        fleet_id=fleet_from_esi["fleet_id"],
-                        token=esi_fleet["token"].valid_access_token(),
-                    ).result()
-                except Exception:  # pylint: disable=broad-exception-caught
-                    _esi_fleet_error_handling(
-                        fleet=fleet, error_key=Fleet.EsiError.NOT_FLEETBOSS
-                    )
-            else:
-                _esi_fleet_error_handling(
-                    fleet=fleet, error_key=Fleet.EsiError.FC_CHANGED_FLEET
-                )
+    if not esi_fleet or fleet.fleet_id != esi_fleet["fleet"]["fleet_id"]:
+        return
+
+    # Fleet IDs don't match, FC changed fleets
+    if fleet.fleet_id != esi_fleet["fleet"]["fleet_id"]:
+        _esi_fleet_error_handling(
+            fleet=fleet, error_key=Fleet.EsiError.FC_CHANGED_FLEET
+        )
+        return
+
+    # Check if we deal with the fleet boss here
+    try:
+        _ = esi.client.Fleets.get_fleets_fleet_id_members(
+            fleet_id=fleet.fleet_id,
+            token=esi_fleet["token"].valid_access_token(),
+        ).result()
+    except Exception:  # pylint: disable=broad-exception-caught
+        _esi_fleet_error_handling(fleet=fleet, error_key=Fleet.EsiError.NOT_FLEETBOSS)
 
 
 @shared_task

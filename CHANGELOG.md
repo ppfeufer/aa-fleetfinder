@@ -42,6 +42,7 @@ Section Order:
 ### Changed
 
 - `views.ajax_fleet_details` refactored
+- `tasks._process_fleet` refactored
 
 ## [2.6.0] - 2025-08-14
 
