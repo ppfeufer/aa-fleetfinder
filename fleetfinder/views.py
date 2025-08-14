@@ -331,12 +331,12 @@ def ajax_fleet_details(
 
     fleet = get_fleet_composition(fleet_id)
 
-    data = {"fleet_member": [], "fleet_composition": []}
-
-    for member in fleet.fleet:
-        data["fleet_member"].append(member)
-
-    for ship, number in fleet.aggregate.items():
-        data["fleet_composition"].append({"ship_type_name": ship, "number": number})
+    data = {
+        "fleet_member": list(fleet.fleet),
+        "fleet_composition": [
+            {"ship_type_name": ship, "number": number}
+            for ship, number in fleet.aggregate.items()
+        ],
+    }
 
     return JsonResponse(data=data, safe=False)

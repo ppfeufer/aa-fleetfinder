@@ -35,6 +35,10 @@ Section Order:
 ### Security
 -->
 
+### Changed
+
+- `views.ajax_fleet_details` refactored
+
 ## [2.6.0] - 2025-08-14
 
 ### Changed
