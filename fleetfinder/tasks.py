@@ -342,51 +342,73 @@ def check_fleet_adverts() -> None:
 
 
 @shared_task
-def get_fleet_composition(fleet_id):
+def get_fleet_composition(fleet_id: int) -> FleetViewAggregate | None:
     """
-    Getting the fleet composition
+    Get the composition of a fleet by its ID
+    This task retrieves the composition of a fleet using its ESI ID.
 
-    :param fleet_id:
-    :return:
+    :param fleet_id: The ESI ID of the fleet to retrieve
+    :type fleet_id:  int
+    :return: FleetViewAggregate containing fleet members and aggregate data
+    :rtype: FleetViewAggregate | None
     """
 
-    required_scopes = ["esi-fleets.read_fleet.v1", "esi-fleets.write_fleet.v1"]
-    fleet = Fleet.objects.get(fleet_id=fleet_id)
-    token = Token.get_token(
-        character_id=fleet.fleet_commander.character_id, scopes=required_scopes
+    try:
+        fleet = Fleet.objects.get(fleet_id=fleet_id)
+    except Fleet.DoesNotExist:
+        logger.error(f"Fleet with ID {fleet_id} not found")
+
+        return None
+
+    logger.info(
+        f'Getting fleet composition for fleet "{fleet.name}" '
+        f"of {fleet.fleet_commander.character_name} (ESI ID: {fleet_id})"
     )
-    fleet_infos = esi.client.Fleets.get_fleets_fleet_id_members(
-        fleet_id=fleet_id, token=token.valid_access_token()
-    ).result()
 
-    characters = {}
-    systems = {}
-    ship_type = {}
+    required_scopes = ["esi-fleets.read_fleet.v1"]
 
-    for member in fleet_infos:
-        characters[member["character_id"]] = ""
-        systems[member["solar_system_id"]] = ""
-        ship_type[member["ship_type_id"]] = ""
-
-    ids = []
-    ids.extend(list(characters.keys()))
-    ids.extend(list(systems.keys()))
-    ids.extend(list(ship_type.keys()))
-
-    ids_to_name = esi.client.Universe.post_universe_names(ids=ids).result()
-
-    for member in fleet_infos:
-        index_character = [x["id"] for x in ids_to_name].index(member["character_id"])
-        member["character_name"] = ids_to_name[index_character]["name"]
-
-        index_solar_system = [x["id"] for x in ids_to_name].index(
-            member["solar_system_id"]
+    try:
+        token = Token.get_token(
+            character_id=fleet.fleet_commander.character_id, scopes=required_scopes
         )
-        member["solar_system_name"] = ids_to_name[index_solar_system]["name"]
 
-        index_ship_type = [x["id"] for x in ids_to_name].index(member["ship_type_id"])
-        member["ship_type_name"] = ids_to_name[index_ship_type]["name"]
+        fleet_infos = esi.client.Fleets.get_fleets_fleet_id_members(
+            fleet_id=fleet_id, token=token.valid_access_token()
+        ).result()
 
-    aggregate = _get_fleet_aggregate(fleet_infos=fleet_infos)
+        # Get all unique IDs and fetch names in one call
+        all_ids = {
+            item_id
+            for member in fleet_infos
+            for item_id in [
+                member["character_id"],
+                member["solar_system_id"],
+                member["ship_type_id"],
+            ]
+        }
 
-    return FleetViewAggregate(fleet=fleet_infos, aggregate=aggregate)
+        ids_to_name = esi.client.Universe.post_universe_names(
+            ids=list(all_ids)
+        ).result()
+
+        # Create a lookup dictionary for names
+        name_lookup = {item["id"]: item["name"] for item in ids_to_name}
+
+        # Add names to fleet members
+        for member in fleet_infos:
+            member.update(
+                {
+                    "character_name": name_lookup[member["character_id"]],
+                    "solar_system_name": name_lookup[member["solar_system_id"]],
+                    "ship_type_name": name_lookup[member["ship_type_id"]],
+                }
+            )
+
+        aggregate = _get_fleet_aggregate(fleet_infos=fleet_infos)
+
+        return FleetViewAggregate(fleet=fleet_infos, aggregate=aggregate)
+
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error(f"Failed to get fleet composition for fleet {fleet_id}: {e}")
+
+        return None
