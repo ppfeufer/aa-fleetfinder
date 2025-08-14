@@ -314,29 +314,31 @@ def send_fleet_invitation(fleet_id: int, character_ids: list) -> None:
 
 
 @shared_task(**{**TASK_DEFAULT_KWARGS}, **{"base": QueueOnce})
-def check_fleet_adverts():
+def check_fleet_adverts() -> None:
     """
-    Scheduled task :: Check for fleets adverts
+    Check all registered fleets and process them
+
+    :return: None
+    :rtype: None
     """
 
     fleets = Fleet.objects.all()
-    fleet_count = fleets.count()
 
-    processing_text = "Processing..." if fleet_count > 0 else "Nothing to do..."
+    if not fleets.exists():
+        logger.info("No registered fleets found. Nothing to do...")
 
-    logger.info(msg=f"{fleet_count} registered fleets found. {processing_text}")
+        return
 
-    if fleet_count > 0:
-        # Abort if ESI seems to be offline or above the error limit
-        if not fetch_esi_status().is_ok:
-            logger.warning(
-                msg="ESI doesn't seem to be available at this time. Aborting."
-            )
+    logger.info(f"Processing {fleets.count()} registered fleets...")
 
-            return
+    # Abort if ESI seems to be offline or above the error limit
+    if not fetch_esi_status().is_ok:
+        logger.warning("ESI doesn't seem to be available at this time. Aborting.")
 
-        for fleet in fleets:
-            _process_fleet(fleet=fleet)
+        return
+
+    for fleet in fleets:
+        _process_fleet(fleet=fleet)
 
 
 @shared_task

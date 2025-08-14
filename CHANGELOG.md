@@ -45,6 +45,7 @@ Section Order:
 - `tasks._process_fleet` refactored
 - `tasks.open_fleet` refactored
 - `tasks.send_fleet_invitation` refactored
+- `tasks.check_fleet_adverts` refactored
 
 ## [2.6.0] - 2025-08-14
 
