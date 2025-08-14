@@ -35,6 +35,10 @@ Section Order:
 ### Security
 -->
 
+### Fixed
+
+- FC can't see own fleet when not in selected group(s)
+
 ### Changed
 
 - `views.ajax_fleet_details` refactored

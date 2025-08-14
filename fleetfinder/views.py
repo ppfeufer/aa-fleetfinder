@@ -18,6 +18,7 @@ from django.utils.translation import gettext_lazy as _
 # Alliance Auth
 from allianceauth.eveonline.evelinks.eveimageserver import character_portrait_url
 from allianceauth.eveonline.models import EveCharacter
+from allianceauth.framework.api.user import get_all_characters_from_user
 from allianceauth.groupmanagement.models import AuthGroup
 from allianceauth.services.hooks import get_extension_logger
 from esi.decorators import token_required
@@ -66,8 +67,13 @@ def ajax_dashboard(request) -> JsonResponse:  # pylint: disable=too-many-locals
 
     data = []
     groups = request.user.groups.all()
+    user_characters = get_all_characters_from_user(user=request.user)
     fleets = (
-        Fleet.objects.filter(Q(groups__group__in=groups) | Q(groups__isnull=True))
+        Fleet.objects.filter(
+            Q(groups__group__in=groups)
+            | Q(groups__isnull=True)
+            | Q(fleet_commander__in=user_characters)
+        )
         .distinct()
         .order_by("name")
     )
