@@ -12,6 +12,7 @@ from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
@@ -22,6 +23,7 @@ from allianceauth.framework.api.user import get_all_characters_from_user
 from allianceauth.groupmanagement.models import AuthGroup
 from allianceauth.services.hooks import get_extension_logger
 from esi.decorators import token_required
+from esi.models import Token
 
 # Alliance Auth (External Libs)
 from app_utils.logging import LoggerAddTag
@@ -29,9 +31,43 @@ from app_utils.logging import LoggerAddTag
 # AA Fleet Finder
 from fleetfinder import __title__
 from fleetfinder.models import Fleet
-from fleetfinder.tasks import get_fleet_composition, open_fleet, send_fleet_invitation
+from fleetfinder.providers import esi
+from fleetfinder.tasks import get_fleet_composition, send_fleet_invitation
 
 logger = LoggerAddTag(my_logger=get_extension_logger(name=__name__), prefix=__title__)
+
+
+@login_required()
+@permission_required(perm="fleetfinder.access_fleetfinder")
+def _get_and_validate_fleet(token: Token, character_id: int) -> tuple:
+    """
+    Get fleet information and validate fleet commander permissions
+
+    :param token: Token object containing the access token
+    :type token: Token
+    :param character_id: The character ID of the fleet commander
+    :type character_id: int
+    :return: Tuple containing the fleet result, fleet commander, and fleet ID
+    :rtype: tuple
+    """
+
+    fleet_result = esi.client.Fleets.get_characters_character_id_fleet(
+        character_id=token.character_id, token=token.valid_access_token()
+    ).result()
+
+    logger.debug(f"Fleet result: {fleet_result}")
+
+    fleet_commander = EveCharacter.objects.get(character_id=token.character_id)
+    fleet_id = fleet_result.get("fleet_id")
+    fleet_boss_id = fleet_result.get("fleet_boss_id")
+
+    if not fleet_id:
+        raise ValueError(f"No fleet found for {fleet_commander.character_name}")
+
+    if fleet_boss_id != character_id:
+        raise ValueError(f"{fleet_commander.character_name} is not the fleet boss")
+
+    return fleet_result
 
 
 @login_required()
@@ -150,26 +186,30 @@ def create_fleet(request, token):
     :return:
     """
 
-    context = {}
+    # Validate the token and check if the character is in a fleet and is the fleet boss
+    try:
+        _get_and_validate_fleet(token, token.character_id)
+    except (HTTPNotFound, ValueError) as ex:
+        logger.debug(f"Error during fleet creation: {ex}", exc_info=True)
 
-    if request.method == "POST":
-        auth_groups = AuthGroup.objects.filter(internal=False).all()
-
-        if "modified_fleet_data" in request.session:
-            context["motd"] = request.session["modified_fleet_data"].get("motd", "")
-            context["name"] = request.session["modified_fleet_data"].get("name", "")
-            context["groups"] = request.session["modified_fleet_data"].get("groups", "")
-            context["is_free_move"] = request.session["modified_fleet_data"].get(
-                "free_move", ""
-            )
-            context["character_id"] = token.character_id
-            context["auth_groups"] = auth_groups
-
-            del request.session["modified_fleet_data"]
+        if isinstance(ex, HTTPNotFound):
+            error_detail = ex.swagger_result["error"]
         else:
-            context = {"character_id": token.character_id, "auth_groups": auth_groups}
+            error_detail = str(ex)
 
-        logger.info(msg=f"Fleet created by {request.user}")
+        error_message = _(
+            f"<h4>Error!</h4><p>There was an error creating the fleet: {error_detail}</p>"
+        )
+
+        messages.error(request, mark_safe(error_message))
+
+        return redirect("fleetfinder:dashboard")
+
+    if request.method != "POST":
+        return redirect("fleetfinder:dashboard")
+
+    auth_groups = AuthGroup.objects.filter(internal=False)
+    context = {"character_id": token.character_id, "auth_groups": auth_groups}
 
     return render(
         request=request,
@@ -258,46 +298,84 @@ def save_fleet(request):
     :return:
     """
 
-    if request.method == "POST":
-        free_move = request.POST.get(key="free_move", default=False)
+    def _edit_or_create_fleet(
+        character_id: int, motd: str, free_move: bool, name: str, groups: list
+    ) -> None:
+        """
+        Edit or create a fleet from a fleet in EVE Online
 
-        if free_move == "on":
-            free_move = True
+        :param character_id: The character ID of the fleet commander
+        :type character_id: int
+        :param motd: Message of the Day for the fleet
+        :type motd: str
+        :param free_move: Whether the fleet is free move or not
+        :type free_move: bool
+        :param name: Name of the fleet
+        :type name: str
+        :param groups: Groups that are allowed to access the fleet
+        :type groups: list[AuthGroup]
+        :return: None
+        :rtype: None
+        """
 
-        motd = request.POST.get(key="motd", default="")
-        name = request.POST.get(key="name", default="")
-        groups = request.POST.getlist(key="groups", default=[])
+        required_scopes = ["esi-fleets.read_fleet.v1", "esi-fleets.write_fleet.v1"]
+        token = Token.get_token(character_id=character_id, scopes=required_scopes)
 
-        try:
-            open_fleet(
-                character_id=request.POST["character_id"],
-                motd=motd,
-                free_move=free_move,
-                name=name,
-                groups=groups,
-            )
-        except HTTPNotFound as ex:
-            esi_error_message = ex.swagger_result["error"]
-            error_message = _(
-                f"<h4>Error!</h4><p>ESI returned the following error: {esi_error_message}</p>"
-            )
+        fleet_result = _get_and_validate_fleet(token, character_id)
+        fleet_commander = EveCharacter.objects.get(character_id=character_id)
+        fleet_id = fleet_result.get("fleet_id")
 
-            messages.error(request=request, message=mark_safe(s=error_message))
+        fleet, created = Fleet.objects.get_or_create(  # pylint: disable=unused-variable
+            fleet_id=fleet_id,
+            defaults={
+                "created_at": timezone.now(),
+                "motd": motd,
+                "is_free_move": free_move,
+                "fleet_commander": fleet_commander,
+                "name": name,
+            },
+        )
 
-            if request.POST.get(key="origin", default="") == "edit":
-                return redirect(to="fleetfinder:dashboard")
+        fleet.groups.set(groups)
 
-            if request.POST.get(key="origin", default="") == "create":
-                request.session["modified_fleet_data"] = {
-                    "motd": motd,
-                    "name": name,
-                    "free_move": free_move,
-                    "groups": groups,
-                }
+        esi.client.Fleets.put_fleets_fleet_id(
+            fleet_id=fleet_id,
+            token=token.valid_access_token(),
+            new_settings={"is_free_move": free_move, "motd": motd},
+        ).result()
 
-                return redirect(to="fleetfinder:create_fleet")
+    if request.method != "POST":
+        return redirect("fleetfinder:dashboard")
 
-    return redirect(to="fleetfinder:dashboard")
+    # Extract form data
+    form_data = {
+        "character_id": int(request.POST["character_id"]),
+        "free_move": request.POST.get("free_move") == "on",
+        "motd": request.POST.get("motd", ""),
+        "name": request.POST.get("name", ""),
+        "groups": request.POST.getlist("groups", []),
+    }
+
+    try:
+        _edit_or_create_fleet(**form_data)
+    except HTTPNotFound as ex:
+        logger.debug(f"ESI returned 404 for fleet creation: {ex}", exc_info=True)
+
+        error_message = _(
+            f"<h4>Error!</h4><p>ESI returned the following error: {ex.swagger_result['error']}</p>"
+        )
+
+        messages.error(request, mark_safe(error_message))
+    except ValueError as ex:
+        logger.debug(f"Value error during fleet creation: {ex}", exc_info=True)
+
+        error_message = _(
+            f"<h4>Error!</h4><p>There was an error creating the fleet: {ex}</p>"
+        )
+
+        messages.error(request, mark_safe(error_message))
+
+    return redirect("fleetfinder:dashboard")
 
 
 @login_required()

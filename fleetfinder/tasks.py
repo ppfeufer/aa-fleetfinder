@@ -14,7 +14,6 @@ from celery import shared_task
 from django.utils import timezone
 
 # Alliance Auth
-from allianceauth.eveonline.models import EveCharacter
 from allianceauth.services.hooks import get_extension_logger
 from allianceauth.services.tasks import QueueOnce
 from esi.models import Token
@@ -205,7 +204,7 @@ def _process_fleet(fleet: Fleet) -> None:
     # Check if there is a fleet
     esi_fleet = _check_for_esi_fleet(fleet=fleet)
 
-    if not esi_fleet or fleet.fleet_id != esi_fleet["fleet"]["fleet_id"]:
+    if not esi_fleet:
         return
 
     # Fleet IDs don't match, FC changed fleets
@@ -223,59 +222,6 @@ def _process_fleet(fleet: Fleet) -> None:
         ).result()
     except Exception:  # pylint: disable=broad-exception-caught
         _esi_fleet_error_handling(fleet=fleet, error_key=Fleet.EsiError.NOT_FLEETBOSS)
-
-
-@shared_task
-def open_fleet(
-    character_id: int, motd: str, free_move: bool, name: str, groups: list
-) -> None:
-    """
-    Open a fleet from a fleet in EVE Online
-
-    :param character_id: The character ID of the fleet commander
-    :type character_id: int
-    :param motd: Message of the Day for the fleet
-    :type motd: str
-    :param free_move: Whether the fleet is free move or not
-    :type free_move: bool
-    :param name: Name of the fleet
-    :type name: str
-    :param groups: Groups that are allowed to access the fleet
-    :type groups: list[AuthGroup]
-    :return: None
-    :rtype: None
-    """
-
-    required_scopes = ["esi-fleets.read_fleet.v1", "esi-fleets.write_fleet.v1"]
-    token = Token.get_token(character_id=character_id, scopes=required_scopes)
-
-    fleet_result = esi.client.Fleets.get_characters_character_id_fleet(
-        character_id=token.character_id, token=token.valid_access_token()
-    ).result()
-
-    fleet_id = fleet_result.get("fleet_id")
-    fleet_role = fleet_result.get("role")
-
-    if not fleet_id or fleet_role != "fleet_commander":
-        return
-
-    fleet_commander = EveCharacter.objects.get(character_id=token.character_id)
-
-    fleet = Fleet(
-        fleet_id=fleet_id,
-        created_at=timezone.now(),
-        motd=motd,
-        is_free_move=free_move,
-        fleet_commander=fleet_commander,
-        name=name,
-    )
-    fleet.groups.set(groups)
-
-    esi.client.Fleets.put_fleets_fleet_id(
-        fleet_id=fleet_id,
-        token=token.valid_access_token(),
-        new_settings={"is_free_move": free_move, "motd": motd},
-    ).result()
 
 
 @shared_task
