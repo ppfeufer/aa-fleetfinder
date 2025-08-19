@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2025-08-04 22:06+0200\n"
+"POT-Creation-Date: 2025-08-19 17:07+0200\n"
 "PO-Revision-Date: 2025-04-28 07:24+0000\n"
 "Last-Translator: SiO4 <hohoit0078@gmail.com>\n"
 "Language-Team: Korean <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/ko/>\n"
@@ -70,7 +70,6 @@ msgid "Creation date and time"
 msgstr "생성 날짜 및 시간"
 
 #: fleetfinder/models.py:62
-#: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:37
 msgid "Fleet MOTD"
 msgstr "함대 공지 사항"
 
@@ -163,7 +162,7 @@ msgstr "이름"
 msgid "System"
 msgstr "시스템"
 
-#: fleetfinder/templates/fleetfinder/join-fleet.html:6 fleetfinder/views.py:90
+#: fleetfinder/templates/fleetfinder/join-fleet.html:6 fleetfinder/views.py:132
 #, fuzzy
 #| msgid "Join Fleet"
 msgid "Join fleet"
@@ -213,22 +212,38 @@ msgstr "번역가 팀에 참여하세요!"
 msgid "Available fleets"
 msgstr "참가 가능한 함대"
 
-#: fleetfinder/views.py:103
+#: fleetfinder/views.py:145
 #, fuzzy
 #| msgid "View Fleet Details"
 msgid "View fleet details"
 msgstr "함대 세부 내용 보기"
 
-#: fleetfinder/views.py:112
+#: fleetfinder/views.py:154
 #, fuzzy
 #| msgid "Edit Fleet Advert"
 msgid "Edit fleet advert"
 msgstr "함대 광고 수정"
 
-#: fleetfinder/views.py:276
-#, python-brace-format
-msgid "<h4>Error!</h4><p>ESI returned the following error: {esi_error_message}</p>"
+#: fleetfinder/views.py:201
+#, fuzzy, python-brace-format
+#| msgid "<h4>Error!</h4><p>ESI returned the following error: {esi_error_message}</p>"
+msgid "<h4>Error!</h4><p>There was an error creating the fleet: {error_detail}</p>"
 msgstr "<h4>오류!</h4><p>ESI가 다음 오류를 출력함:{esi_error_message}</p>"
+
+#: fleetfinder/views.py:241
+msgid "<h4>Error!</h4><p>Fleet does not exist or is no longer available.</p>"
+msgstr ""
+
+#: fleetfinder/views.py:395
+#, fuzzy, python-brace-format
+#| msgid "<h4>Error!</h4><p>ESI returned the following error: {esi_error_message}</p>"
+msgid "<h4>Error!</h4><p>ESI returned the following error: {esi_error}</p>"
+msgstr "<h4>오류!</h4><p>ESI가 다음 오류를 출력함:{esi_error_message}</p>"
+
+#: fleetfinder/views.py:403
+#, python-brace-format
+msgid "<h4>Error!</h4><p>There was an error creating the fleet: {ex}</p>"
+msgstr ""
 
 #~ msgid "Toggle navigation"
 #~ msgstr "토글 메뉴"
