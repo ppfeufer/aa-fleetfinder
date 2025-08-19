@@ -33,16 +33,16 @@
         </p>
     </div>
 
-    <div class="mb-3">
-        <label for="motd" class="control-label">{% translate "Fleet MOTD" %}</label>
+{#    <div class="mb-3">#}
+{#        <label for="motd" class="control-label">{% translate "Fleet MOTD" %}</label>#}
+{##}
+{#        <div>#}
+{#            <textarea class="form-control" name="motd" id="motd" rows="10">{% if motd %}{{ motd }}{% endif %}</textarea>#}
+{#        </div>#}
+{#    </div>#}
 
-        <div>
-            <textarea class="form-control" name="motd" id="motd" rows="10">{% if motd %}{{ motd }}{% endif %}</textarea>
-        </div>
-    </div>
-
     <div class="mb-3">
-        <input type="checkbox" style="margin-right: 5px;" class="form-check-input" name="free_move" id="free_move" {% if is_free_move %}checked{% endif %}>
+        <input type="checkbox" style="margin-right: 5px;" class="form-check-input" name="free_move" id="free_move" {% if fleet.is_free_move %}checked{% endif %}>
         <label for="free_move" class="form-check-label">{% translate "Enable free move" %}</label>
     </div>
 

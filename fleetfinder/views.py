@@ -238,6 +238,8 @@ def edit_fleet(request, fleet_id):
         "fleet": fleet,
     }
 
+    logger.debug("Context for fleet edit: %s", context)
+
     logger.info(msg=f"Fleet {fleet_id} edit view by {request.user}")
 
     return render(
@@ -299,21 +301,25 @@ def save_fleet(request):
     """
 
     def _edit_or_create_fleet(
-        character_id: int, motd: str, free_move: bool, name: str, groups: list
+        character_id: int,
+        free_move: bool,
+        name: str,
+        groups: list,
+        motd: str = None,  # pylint: disable=unused-argument
     ) -> None:
         """
         Edit or create a fleet from a fleet in EVE Online
 
         :param character_id: The character ID of the fleet commander
         :type character_id: int
-        :param motd: Message of the Day for the fleet
-        :type motd: str
         :param free_move: Whether the fleet is free move or not
         :type free_move: bool
         :param name: Name of the fleet
         :type name: str
         :param groups: Groups that are allowed to access the fleet
         :type groups: list[AuthGroup]
+        :param motd: Message of the Day for the fleet
+        :type motd: str
         :return: None
         :rtype: None
         """
@@ -325,23 +331,29 @@ def save_fleet(request):
         fleet_commander = EveCharacter.objects.get(character_id=character_id)
         fleet_id = fleet_result.get("fleet_id")
 
-        fleet, created = Fleet.objects.get_or_create(  # pylint: disable=unused-variable
+        fleet, created = Fleet.objects.get_or_create(
             fleet_id=fleet_id,
             defaults={
                 "created_at": timezone.now(),
-                "motd": motd,
+                # "motd": motd,
                 "is_free_move": free_move,
                 "fleet_commander": fleet_commander,
                 "name": name,
             },
         )
 
+        if not created:
+            fleet.is_free_move = free_move
+            fleet.name = name
+            fleet.save()
+
         fleet.groups.set(groups)
 
         esi.client.Fleets.put_fleets_fleet_id(
             fleet_id=fleet_id,
             token=token.valid_access_token(),
-            new_settings={"is_free_move": free_move, "motd": motd},
+            # new_settings={"is_free_move": free_move, "motd": motd},
+            new_settings={"is_free_move": free_move},
         ).result()
 
     if request.method != "POST":
@@ -351,10 +363,12 @@ def save_fleet(request):
     form_data = {
         "character_id": int(request.POST["character_id"]),
         "free_move": request.POST.get("free_move") == "on",
-        "motd": request.POST.get("motd", ""),
+        # "motd": request.POST.get("motd", ""),
         "name": request.POST.get("name", ""),
         "groups": request.POST.getlist("groups", []),
     }
+
+    logger.debug(f"Form data for fleet creation: {form_data}")
 
     try:
         _edit_or_create_fleet(**form_data)

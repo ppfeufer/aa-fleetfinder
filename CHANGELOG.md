@@ -37,7 +37,7 @@ Section Order:
 
 ### Fixed
 
-- FC can't see own fleet when not in selected group(s)
+- FC can't see their own fleet when not in selected group(s)
 
 ### Changed
 
@@ -47,7 +47,11 @@ Section Order:
 - `tasks.send_fleet_invitation` refactored
 - `tasks.check_fleet_adverts` refactored
 - `tasks.get_fleet_composition` refactored
-- Fleet creation logic refactored and better error handling added
+- Fleet creation logic refactored, and better error handling added
+
+### Removed
+
+- MOTD from fleet details form, as it cannot be formatted properly and might delete the ingame MOTD when not set
 
 ## [2.6.0] - 2025-08-14
 
