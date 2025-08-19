@@ -229,7 +229,22 @@ def edit_fleet(request, fleet_id):
     :return:
     """
 
-    fleet = Fleet.objects.get(fleet_id=fleet_id)
+    try:
+        fleet = Fleet.objects.get(fleet_id=fleet_id)
+    except Fleet.DoesNotExist:
+        logger.debug(f"Fleet with ID {fleet_id} does not exist.")
+
+        messages.error(
+            request,
+            mark_safe(
+                _(
+                    "<h4>Error!</h4><p>Fleet does not exist or is no longer available.</p>"
+                )
+            ),
+        )
+
+        return redirect("fleetfinder:dashboard")
+
     auth_groups = AuthGroup.objects.filter(internal=False)
 
     context = {

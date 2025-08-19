@@ -147,10 +147,13 @@ def _get_fleet_aggregate(fleet_infos):
     for member in fleet_infos:
         type_ = member.get("ship_type_name")
 
-        if type_ in counts:
-            counts[type_] += 1
-        else:
-            counts[type_] = 1
+        if type_ and isinstance(type_, str) and type_.strip():
+            type_ = type_.strip()  # Normalize ship type name
+
+            if type_ in counts:
+                counts[type_] += 1
+            else:
+                counts[type_] = 1
 
     return counts
 
