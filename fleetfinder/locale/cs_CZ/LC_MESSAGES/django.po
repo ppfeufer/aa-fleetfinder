@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2025-08-04 22:06+0200\n"
+"POT-Creation-Date: 2025-08-19 17:07+0200\n"
 "PO-Revision-Date: 2024-07-10 14:26+0000\n"
 "Last-Translator: Dadas Aideron <dadas.aideron@gmail.com>\n"
 "Language-Team: Czech <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/cs/>\n"
@@ -67,7 +67,6 @@ msgid "Creation date and time"
 msgstr ""
 
 #: fleetfinder/models.py:62
-#: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:37
 msgid "Fleet MOTD"
 msgstr ""
 
@@ -156,7 +155,7 @@ msgstr ""
 msgid "System"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/join-fleet.html:6 fleetfinder/views.py:90
+#: fleetfinder/templates/fleetfinder/join-fleet.html:6 fleetfinder/views.py:132
 msgid "Join fleet"
 msgstr ""
 
@@ -196,15 +195,29 @@ msgstr "Připoj se k našemu týmu překladatelů!"
 msgid "Available fleets"
 msgstr ""
 
-#: fleetfinder/views.py:103
+#: fleetfinder/views.py:145
 msgid "View fleet details"
 msgstr ""
 
-#: fleetfinder/views.py:112
+#: fleetfinder/views.py:154
 msgid "Edit fleet advert"
 msgstr ""
 
-#: fleetfinder/views.py:276
+#: fleetfinder/views.py:201
 #, python-brace-format
-msgid "<h4>Error!</h4><p>ESI returned the following error: {esi_error_message}</p>"
+msgid "<h4>Error!</h4><p>There was an error creating the fleet: {error_detail}</p>"
+msgstr ""
+
+#: fleetfinder/views.py:241
+msgid "<h4>Error!</h4><p>Fleet does not exist or is no longer available.</p>"
+msgstr ""
+
+#: fleetfinder/views.py:395
+#, python-brace-format
+msgid "<h4>Error!</h4><p>ESI returned the following error: {esi_error}</p>"
+msgstr ""
+
+#: fleetfinder/views.py:403
+#, python-brace-format
+msgid "<h4>Error!</h4><p>There was an error creating the fleet: {ex}</p>"
 msgstr ""
