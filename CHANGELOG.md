@@ -35,6 +35,8 @@ Section Order:
 ### Security
 -->
 
+## [2.6.1] - 2025-08-19
+
 ### Fixed
 
 - FC can't see their own fleet when not in selected group(s)

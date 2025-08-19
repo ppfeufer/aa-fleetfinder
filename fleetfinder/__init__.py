@@ -5,7 +5,7 @@ Initialize the app
 # Django
 from django.utils.translation import gettext_lazy as _
 
-__version__ = "2.6.0"
+__version__ = "2.6.1"
 __title__ = _("Fleet Finder")
 __verbose_name__ = "Fleet Finder for Alliance Auth"
 
