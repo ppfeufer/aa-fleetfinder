@@ -390,8 +390,9 @@ def save_fleet(request):
     except HTTPNotFound as ex:
         logger.debug(f"ESI returned 404 for fleet creation: {ex}", exc_info=True)
 
+        esi_error = ex.swagger_result.get("error", "Unknown error")
         error_message = _(
-            f"<h4>Error!</h4><p>ESI returned the following error: {ex.swagger_result['error']}</p>"
+            f"<h4>Error!</h4><p>ESI returned the following error: {esi_error}</p>"
         )
 
         messages.error(request, mark_safe(error_message))
