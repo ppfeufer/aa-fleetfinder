@@ -14,7 +14,6 @@ from celery import shared_task
 from django.utils import timezone
 
 # Alliance Auth
-from allianceauth.eveonline.models import EveCharacter
 from allianceauth.services.hooks import get_extension_logger
 from allianceauth.services.tasks import QueueOnce
 from esi.models import Token
@@ -148,10 +147,13 @@ def _get_fleet_aggregate(fleet_infos):
     for member in fleet_infos:
         type_ = member.get("ship_type_name")
 
-        if type_ in counts:
-            counts[type_] += 1
-        else:
-            counts[type_] = 1
+        if type_ and isinstance(type_, str) and type_.strip():
+            type_ = type_.strip()  # Normalize ship type name
+
+            if type_ in counts:
+                counts[type_] += 1
+            else:
+                counts[type_] = 1
 
     return counts
 
@@ -187,110 +189,56 @@ def _check_for_esi_fleet(fleet: Fleet):
     return False
 
 
-def _process_fleet(fleet: Fleet):
+def _process_fleet(fleet: Fleet) -> None:
     """
     Processing a fleet
 
-    :param fleet:
-    :type fleet:
-    :return:
-    :rtype:
+    :param fleet: Fleet object to process
+    :type fleet: Fleet
+    :return: None
+    :rtype: None
     """
 
-    fleet_id = fleet.fleet_id
-    fleet_name = fleet.name
-    fleet_commander = fleet.fleet_commander
-
     logger.info(
-        f'Processing information for fleet "{fleet_name}" '
-        f"of {fleet_commander} (ESI ID: {fleet_id})"
+        f'Processing information for fleet "{fleet.name}" '
+        f"of {fleet.fleet_commander} (ESI ID: {fleet.fleet_id})"
     )
 
     # Check if there is a fleet
     esi_fleet = _check_for_esi_fleet(fleet=fleet)
-    if esi_fleet and fleet.fleet_id == esi_fleet["fleet"]["fleet_id"]:
-        try:
-            fleet_from_esi = esi.client.Fleets.get_characters_character_id_fleet(
-                character_id=fleet.fleet_commander.character_id,
-                token=esi_fleet["token"].valid_access_token(),
-            ).result()
-        except HTTPNotFound:
-            _esi_fleet_error_handling(
-                fleet=fleet, error_key=Fleet.EsiError.NOT_IN_FLEET
-            )
-        except Exception:  # pylint: disable=broad-exception-caught
-            _esi_fleet_error_handling(fleet=fleet, error_key=Fleet.EsiError.NO_FLEET)
 
-        # We have a valid fleet result from ESI
-        else:
-            if fleet_id == fleet_from_esi["fleet_id"]:
-                # Check if we deal with the fleet boss here
-                try:
-                    _ = esi.client.Fleets.get_fleets_fleet_id_members(
-                        fleet_id=fleet_from_esi["fleet_id"],
-                        token=esi_fleet["token"].valid_access_token(),
-                    ).result()
-                except Exception:  # pylint: disable=broad-exception-caught
-                    _esi_fleet_error_handling(
-                        fleet=fleet, error_key=Fleet.EsiError.NOT_FLEETBOSS
-                    )
-            else:
-                _esi_fleet_error_handling(
-                    fleet=fleet, error_key=Fleet.EsiError.FC_CHANGED_FLEET
-                )
-
-
-@shared_task
-def open_fleet(character_id, motd, free_move, name, groups):
-    """
-    Open a fleet
-
-    :param character_id:
-    :param motd:
-    :param free_move:
-    :param name:
-    :param groups:
-    :return:
-    """
-
-    required_scopes = ["esi-fleets.read_fleet.v1", "esi-fleets.write_fleet.v1"]
-    token = Token.get_token(character_id=character_id, scopes=required_scopes)
-
-    fleet_result = esi.client.Fleets.get_characters_character_id_fleet(
-        character_id=token.character_id, token=token.valid_access_token()
-    ).result()
-    fleet_id = fleet_result.pop("fleet_id")
-    fleet_role = fleet_result.pop("role")
-
-    if fleet_id is None or fleet_role is None or fleet_role != "fleet_commander":
+    if not esi_fleet:
         return
 
-    fleet_commander = EveCharacter.objects.get(character_id=token.character_id)
+    # Fleet IDs don't match, FC changed fleets
+    if fleet.fleet_id != esi_fleet["fleet"]["fleet_id"]:
+        _esi_fleet_error_handling(
+            fleet=fleet, error_key=Fleet.EsiError.FC_CHANGED_FLEET
+        )
+        return
 
-    fleet = Fleet(
-        fleet_id=fleet_id,
-        created_at=timezone.now(),
-        motd=motd,
-        is_free_move=free_move,
-        fleet_commander=fleet_commander,
-        name=name,
-    )
-    fleet.save()
-    fleet.groups.set(groups)
-
-    esi_fleet = {"is_free_move": free_move, "motd": motd}
-    esi.client.Fleets.put_fleets_fleet_id(
-        fleet_id=fleet_id, token=token.valid_access_token(), new_settings=esi_fleet
-    ).result()
+    # Check if we deal with the fleet boss here
+    try:
+        _ = esi.client.Fleets.get_fleets_fleet_id_members(
+            fleet_id=fleet.fleet_id,
+            token=esi_fleet["token"].valid_access_token(),
+        ).result()
+    except Exception:  # pylint: disable=broad-exception-caught
+        _esi_fleet_error_handling(fleet=fleet, error_key=Fleet.EsiError.NOT_FLEETBOSS)
 
 
 @shared_task
-def send_fleet_invitation(character_ids, fleet_id):
+def send_fleet_invitation(fleet_id: int, character_ids: list) -> None:
     """
-    Send a fleet invitation through the eve client
+    Send fleet invitations to characters through ESI
+    This task sends fleet invitations to a list of character IDs using the ESI API.
 
-    :param character_ids:
-    :param fleet_id:
+    :param fleet_id: The ID of the fleet to which invitations are sent
+    :type fleet_id: int
+    :param character_ids: List of character IDs to invite to the fleet
+    :type character_ids: list[int]
+    :return: None
+    :rtype: None
     """
 
     required_scopes = ["esi-fleets.write_fleet.v1"]
@@ -298,95 +246,118 @@ def send_fleet_invitation(character_ids, fleet_id):
     fleet_commander_token = Token.get_token(
         character_id=fleet.fleet_commander.character_id, scopes=required_scopes
     )
-    _processes = []
 
     with ThreadPoolExecutor(max_workers=50) as ex:
-        for _character_id in character_ids:
-            _processes.append(
-                ex.submit(
-                    _send_invitation,
-                    character_id=_character_id,
-                    fleet_commander_token=fleet_commander_token,
-                    fleet_id=fleet_id,
-                )
+        futures = [
+            ex.submit(
+                _send_invitation,
+                character_id=character_id,
+                fleet_commander_token=fleet_commander_token,
+                fleet_id=fleet_id,
             )
+            for character_id in character_ids
+        ]
 
-    for item in as_completed(_processes):
-        _ = item.result()
+        for future in as_completed(futures):
+            future.result()  # This will raise any exceptions that occurred
 
 
 @shared_task(**{**TASK_DEFAULT_KWARGS}, **{"base": QueueOnce})
-def check_fleet_adverts():
+def check_fleet_adverts() -> None:
     """
-    Scheduled task :: Check for fleets adverts
+    Check all registered fleets and process them
+
+    :return: None
+    :rtype: None
     """
 
     fleets = Fleet.objects.all()
-    fleet_count = fleets.count()
 
-    processing_text = "Processing..." if fleet_count > 0 else "Nothing to do..."
+    if not fleets.exists():
+        logger.info("No registered fleets found. Nothing to do...")
 
-    logger.info(msg=f"{fleet_count} registered fleets found. {processing_text}")
+        return
 
-    if fleet_count > 0:
-        # Abort if ESI seems to be offline or above the error limit
-        if not fetch_esi_status().is_ok:
-            logger.warning(
-                msg="ESI doesn't seem to be available at this time. Aborting."
-            )
+    logger.info(f"Processing {fleets.count()} registered fleets...")
 
-            return
+    # Abort if ESI seems to be offline or above the error limit
+    if not fetch_esi_status().is_ok:
+        logger.warning("ESI doesn't seem to be available at this time. Aborting.")
 
-        for fleet in fleets:
-            _process_fleet(fleet=fleet)
+        return
+
+    for fleet in fleets:
+        _process_fleet(fleet=fleet)
 
 
 @shared_task
-def get_fleet_composition(fleet_id):
+def get_fleet_composition(fleet_id: int) -> FleetViewAggregate | None:
     """
-    Getting the fleet composition
+    Get the composition of a fleet by its ID
+    This task retrieves the composition of a fleet using its ESI ID.
 
-    :param fleet_id:
-    :return:
+    :param fleet_id: The ESI ID of the fleet to retrieve
+    :type fleet_id:  int
+    :return: FleetViewAggregate containing fleet members and aggregate data
+    :rtype: FleetViewAggregate | None
     """
 
-    required_scopes = ["esi-fleets.read_fleet.v1", "esi-fleets.write_fleet.v1"]
-    fleet = Fleet.objects.get(fleet_id=fleet_id)
-    token = Token.get_token(
-        character_id=fleet.fleet_commander.character_id, scopes=required_scopes
+    try:
+        fleet = Fleet.objects.get(fleet_id=fleet_id)
+    except Fleet.DoesNotExist:
+        logger.error(f"Fleet with ID {fleet_id} not found")
+
+        return None
+
+    logger.info(
+        f'Getting fleet composition for fleet "{fleet.name}" '
+        f"of {fleet.fleet_commander.character_name} (ESI ID: {fleet_id})"
     )
-    fleet_infos = esi.client.Fleets.get_fleets_fleet_id_members(
-        fleet_id=fleet_id, token=token.valid_access_token()
-    ).result()
 
-    characters = {}
-    systems = {}
-    ship_type = {}
+    required_scopes = ["esi-fleets.read_fleet.v1"]
 
-    for member in fleet_infos:
-        characters[member["character_id"]] = ""
-        systems[member["solar_system_id"]] = ""
-        ship_type[member["ship_type_id"]] = ""
-
-    ids = []
-    ids.extend(list(characters.keys()))
-    ids.extend(list(systems.keys()))
-    ids.extend(list(ship_type.keys()))
-
-    ids_to_name = esi.client.Universe.post_universe_names(ids=ids).result()
-
-    for member in fleet_infos:
-        index_character = [x["id"] for x in ids_to_name].index(member["character_id"])
-        member["character_name"] = ids_to_name[index_character]["name"]
-
-        index_solar_system = [x["id"] for x in ids_to_name].index(
-            member["solar_system_id"]
+    try:
+        token = Token.get_token(
+            character_id=fleet.fleet_commander.character_id, scopes=required_scopes
         )
-        member["solar_system_name"] = ids_to_name[index_solar_system]["name"]
 
-        index_ship_type = [x["id"] for x in ids_to_name].index(member["ship_type_id"])
-        member["ship_type_name"] = ids_to_name[index_ship_type]["name"]
+        fleet_infos = esi.client.Fleets.get_fleets_fleet_id_members(
+            fleet_id=fleet_id, token=token.valid_access_token()
+        ).result()
 
-    aggregate = _get_fleet_aggregate(fleet_infos=fleet_infos)
+        # Get all unique IDs and fetch names in one call
+        all_ids = {
+            item_id
+            for member in fleet_infos
+            for item_id in [
+                member["character_id"],
+                member["solar_system_id"],
+                member["ship_type_id"],
+            ]
+        }
 
-    return FleetViewAggregate(fleet=fleet_infos, aggregate=aggregate)
+        ids_to_name = esi.client.Universe.post_universe_names(
+            ids=list(all_ids)
+        ).result()
+
+        # Create a lookup dictionary for names
+        name_lookup = {item["id"]: item["name"] for item in ids_to_name}
+
+        # Add names to fleet members
+        for member in fleet_infos:
+            member.update(
+                {
+                    "character_name": name_lookup[member["character_id"]],
+                    "solar_system_name": name_lookup[member["solar_system_id"]],
+                    "ship_type_name": name_lookup[member["ship_type_id"]],
+                }
+            )
+
+        aggregate = _get_fleet_aggregate(fleet_infos=fleet_infos)
+
+        return FleetViewAggregate(fleet=fleet_infos, aggregate=aggregate)
+
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error(f"Failed to get fleet composition for fleet {fleet_id}: {e}")
+
+        return None
