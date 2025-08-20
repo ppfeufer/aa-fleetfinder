@@ -169,7 +169,7 @@ def ajax_dashboard(request) -> JsonResponse:  # pylint: disable=too-many-locals
                 f">{button_edit_icon}</a>"
             )
 
-        buttons_action = f"{button_join} {button_details} {button_edit}"
+        buttons_action = f"{button_join}{button_details}{button_edit}"
 
         data.append(
             {
@@ -180,9 +180,6 @@ def ajax_dashboard(request) -> JsonResponse:  # pylint: disable=too-many-locals
                 "fleet_name": fleet.name,
                 "created_at": fleet.created_at,
                 "actions": buttons_action,
-                "join": button_join,
-                "details": button_details,
-                "edit": button_edit,
             }
         )
 
