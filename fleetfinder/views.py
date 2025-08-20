@@ -13,6 +13,7 @@ from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.functional import Promise
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
@@ -101,6 +102,54 @@ def ajax_dashboard(request) -> JsonResponse:  # pylint: disable=too-many-locals
     :return:
     """
 
+    def _create_button_style_link(
+        url: str, fa_icon_class: str, btn_title: str | Promise, btn_modifier_class: str
+    ) -> str:
+        """
+        Helper function to create a button HTML string
+        This function generates an HTML anchor tag styled as a button with an icon.
+
+        :param url: The URL the button should link to
+        :type url: str
+        :param fa_icon_class: The Font Awesome class for the icon to be displayed
+        :type fa_icon_class: str
+        :param btn_title: The title attribute for the button, typically a translation string
+        :type btn_title: str | Promise
+        :param btn_modifier_class: The Bootstrap modifier class for the button styling
+        :type btn_modifier_class: str
+        :return: An HTML string representing the button
+        :rtype: str
+        """
+
+        return (
+            f'<a href="{url}" class="btn btn-sm {btn_modifier_class}" '
+            f'data-bs-tooltip="aa-fleetfinder" title="{btn_title}">'
+            f'<i class="{fa_icon_class}"></i></a>'
+        )
+
+    def _get_fleet_commander_information(fleet: Fleet) -> tuple[str, str]:
+        """
+        Helper function to get the fleet commander's HTML representation
+        This function retrieves the fleet commander's name and portrait URL,
+        and returns an HTML string with the portrait image and name.
+
+        :param fleet: The Fleet object containing the fleet commander's information
+        :type fleet: Fleet
+        :return: A tuple containing the HTML string for the fleet commander and the name for sorting
+        :rtype: tuple[str, str]
+        """
+
+        commander_name = fleet.fleet_commander.character_name
+        portrait_url = character_portrait_url(
+            character_id=fleet.fleet_commander.character_id, size=32
+        )
+        portrait_img = (
+            '<img class="rounded eve-character-portrait" '
+            f'src="{portrait_url}" alt="{commander_name}" loading="lazy">'
+        )
+
+        return portrait_img + commander_name, commander_name
+
     data = []
     groups = request.user.groups.all()
     user_characters = get_all_characters_from_user(user=request.user)
@@ -114,47 +163,39 @@ def ajax_dashboard(request) -> JsonResponse:  # pylint: disable=too-many-locals
         .order_by("name")
     )
 
+    can_manage_fleets = request.user.has_perm("fleetfinder.manage_fleets")
+
     for fleet in fleets:
-        fleet_commander_name = fleet.fleet_commander.character_name
-        fleet_commander_portrait_url = character_portrait_url(
-            character_id=fleet.fleet_commander.character_id, size=32
-        )
-        fleet_commander_portrait = (
-            '<img class="rounded eve-character-portrait" '
-            f'src="{fleet_commander_portrait_url}" '
-            f'alt="{fleet_commander_name}" loading="lazy">'
-        )
-        fleet_commander_html = fleet_commander_portrait + fleet_commander_name
-
-        button_join_url = reverse(
-            viewname="fleetfinder:join_fleet", args=[fleet.fleet_id]
-        )
-        button_join_text = _("Join fleet")
-        button_join = (
-            f'<a href="{button_join_url}" '
-            f'class="btn btn-sm btn-primary">{button_join_text}</a>'
+        fleet_commander_html, fleet_commander_name = _get_fleet_commander_information(
+            fleet
         )
 
-        button_details = ""
-        button_edit = ""
-
-        if request.user.has_perm(perm="fleetfinder.manage_fleets"):
-            button_details_url = reverse(
-                viewname="fleetfinder:fleet_details", args=[fleet.fleet_id]
+        # Create buttons
+        buttons = [
+            _create_button_style_link(
+                reverse("fleetfinder:join_fleet", args=[fleet.fleet_id]),
+                "fa-solid fa-right-to-bracket",
+                _("Join fleet"),
+                "btn-success",
             )
-            button_details_text = _("View fleet details")
-            button_details = (
-                f'<a href="{button_details_url}" '
-                f'class="btn btn-sm btn-primary">{button_details_text}</a>'
-            )
+        ]
 
-            button_edit_url = reverse(
-                viewname="fleetfinder:edit_fleet", args=[fleet.fleet_id]
-            )
-            button_edit_text = _("Edit fleet advert")
-            button_edit = (
-                f'<a href="{button_edit_url}" '
-                f'class="btn btn-sm btn-primary">{button_edit_text}</a>'
+        if can_manage_fleets:
+            buttons.extend(
+                [
+                    _create_button_style_link(
+                        reverse("fleetfinder:fleet_details", args=[fleet.fleet_id]),
+                        "fa-solid fa-eye",
+                        _("View fleet details"),
+                        "btn-info",
+                    ),
+                    _create_button_style_link(
+                        reverse("fleetfinder:edit_fleet", args=[fleet.fleet_id]),
+                        "fa-solid fa-pen-to-square",
+                        _("Edit fleet advert"),
+                        "btn-warning",
+                    ),
+                ]
             )
 
         data.append(
@@ -165,9 +206,7 @@ def ajax_dashboard(request) -> JsonResponse:  # pylint: disable=too-many-locals
                 },
                 "fleet_name": fleet.name,
                 "created_at": fleet.created_at,
-                "join": button_join,
-                "details": button_details,
-                "edit": button_edit,
+                "actions": "".join(buttons),
             }
         )
 

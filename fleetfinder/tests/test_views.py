@@ -101,14 +101,14 @@ class TestAjaxDashboardView(FleetfinderTestViews):
     It should also filter fleets based on the user's groups.
     """
 
-    # python
     @patch("fleetfinder.views.get_all_characters_from_user")
-    def test_renders_dashboard_with_fleet_data(self, mock_get_characters):
+    def test_renders_dashboard_with_fleet_data_with_basic_access(
+        self, mock_get_characters
+    ):
         """
-        Test that the ajax_dashboard view renders the dashboard with fleet data.
+        Test that the ajax_dashboard view renders the dashboard with fleet data
+        when the user has basic access permissions.
 
-        :param mock_portrait_url:
-        :type mock_portrait_url:
         :param mock_get_characters:
         :type mock_get_characters:
         :return:
@@ -124,9 +124,10 @@ class TestAjaxDashboardView(FleetfinderTestViews):
 
         self.client.force_login(self.user_with_basic_acces_perms)
         url = reverse("fleetfinder:ajax_dashboard")
+        join_url = reverse("fleetfinder:join_fleet", args=[self.fleet_id])
         response = self.client.get(url)
 
-        expected_resonse = [
+        expected_response = [
             {
                 "fleet_commander": {
                     "html": '<img class="rounded eve-character-portrait" src="https://images.evetech.net/characters/1000/portrait?size=32" alt="Jean Luc Picard" loading="lazy">Jean Luc Picard',
@@ -134,16 +135,63 @@ class TestAjaxDashboardView(FleetfinderTestViews):
                 },
                 "fleet_name": "Starfleet",
                 "created_at": dt_to_iso(self.fleet_created_at),
-                "join": '<a href="/fleetfinder/fleet/12345/join/" class="btn btn-sm btn-primary">Join fleet</a>',
-                "details": "",
-                "edit": "",
+                "actions": f'<a href="{join_url}" class="btn btn-sm btn-success" data-bs-tooltip="aa-fleetfinder" title="Join fleet"><i class="fa-solid fa-right-to-bracket"></i></a>',
             }
         ]
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertIn("Starfleet", response.json()[0]["fleet_name"])
         self.assertIn("Jean Luc Picard", response.json()[0]["fleet_commander"]["html"])
-        self.assertEqual(response.json(), expected_resonse)
+        self.assertEqual(response.json(), expected_response)
+
+    @patch("fleetfinder.views.get_all_characters_from_user")
+    def test_renders_dashboard_with_fleet_data_with_manage_access(
+        self, mock_get_characters
+    ):
+        """
+        Test that the ajax_dashboard view renders the dashboard with fleet data
+        when the user has manage access permissions.
+
+        :param mock_get_characters:
+        :type mock_get_characters:
+        :return:
+        :rtype:
+        """
+
+        mock_get_characters.return_value = [
+            self.user_with_manage_perms.profile.main_character
+        ]
+
+        fleet = self.fleet
+        fleet.groups.set([])
+
+        self.client.force_login(self.user_with_manage_perms)
+        url = reverse("fleetfinder:ajax_dashboard")
+        join_url = reverse("fleetfinder:join_fleet", args=[self.fleet_id])
+        details_url = reverse("fleetfinder:fleet_details", args=[self.fleet_id])
+        edit_url = reverse("fleetfinder:edit_fleet", args=[self.fleet_id])
+        response = self.client.get(url)
+
+        expected_response = [
+            {
+                "fleet_commander": {
+                    "html": '<img class="rounded eve-character-portrait" src="https://images.evetech.net/characters/1000/portrait?size=32" alt="Jean Luc Picard" loading="lazy">Jean Luc Picard',
+                    "sort": "Jean Luc Picard",
+                },
+                "fleet_name": "Starfleet",
+                "created_at": dt_to_iso(self.fleet_created_at),
+                "actions": (
+                    f'<a href="{join_url}" class="btn btn-sm btn-success" data-bs-tooltip="aa-fleetfinder" title="Join fleet"><i class="fa-solid fa-right-to-bracket"></i></a>'
+                    f'<a href="{details_url}" class="btn btn-sm btn-info" data-bs-tooltip="aa-fleetfinder" title="View fleet details"><i class="fa-solid fa-eye"></i></a>'
+                    f'<a href="{edit_url}" class="btn btn-sm btn-warning" data-bs-tooltip="aa-fleetfinder" title="Edit fleet advert"><i class="fa-solid fa-pen-to-square"></i></a>'
+                ),
+            }
+        ]
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertIn("Starfleet", response.json()[0]["fleet_name"])
+        self.assertIn("Jean Luc Picard", response.json()[0]["fleet_commander"]["html"])
+        self.assertEqual(response.json(), expected_response)
 
     @patch("fleetfinder.views.get_all_characters_from_user")
     def test_returns_empty_data_when_no_fleets_available(self, mock_get_characters):
@@ -171,6 +219,15 @@ class TestAjaxDashboardView(FleetfinderTestViews):
 
     @patch("fleetfinder.views.get_all_characters_from_user")
     def test_filters_fleets_by_user_groups(self, mock_get_characters):
+        """
+        Test that the ajax_dashboard view filters fleets based on the user's groups.
+
+        :param mock_get_characters:
+        :type mock_get_characters:
+        :return:
+        :rtype:
+        """
+
         mock_get_characters.return_value = [
             self.user_with_manage_perms.profile.main_character
         ]
