@@ -38,20 +38,33 @@
 {% block extra_javascript %}
     {% include "bundles/datatables-js-bs5.html" %}
     {% include "bundles/moment-js.html" with locale=True %}
+    {% include "fleetfinder/bundles/js/fleetfinder-js.html" %}
 
     {% get_datatables_language_static LANGUAGE_CODE as DT_LANG_PATH %}
 
     <script>
+        /* global fetchGet, fleetfinderBootstrapTooltip, DataTable */
+        'use strict';
+
         $(document).ready(() => {
             const DATETIME_FORMAT = 'YYYY-MM-DD, HH:mm';
             const table_fleet_overview = $('#table_available-fleets');
+            let dataTable = null;
 
             /**
-             * Initialize the datatable for fleet overview
+             * Initialize or update the datatable.
+             * If the table already exists, it will be updated with new data.
+             * If it does not exist, a new DataTable will be created.
+             *
+             * @param {Object} data - The fleet data to populate the table.
              */
-            fetchGet({url: '{% url "fleetfinder:ajax_dashboard" %}'})
-                .then((data) => {
-                    table_fleet_overview.DataTable({
+            const initializeOrUpdateTable = (data) => {
+                if (dataTable) {
+                    // Update existing table
+                    dataTable.clear().rows.add(data).draw();
+                } else {
+                    // Initialize new table
+                    dataTable = table_fleet_overview.DataTable({
                         language: {
                             url: '{{ DT_LANG_PATH }}'
                         },
@@ -88,70 +101,28 @@
                         order: [[0, 'asc']],
                         paging: false
                     });
-                })
-                .then(() => {
-                    // Initialize Bootstrap tooltips
-                    document.querySelectorAll(`#table_available-fleets [data-bs-tooltip="aa-fleetfinder"]`)
-                        .forEach((tooltipTriggerEl) => {
-                            new bootstrap.Tooltip(tooltipTriggerEl);
-                        });
-                })
-                .catch((error) => {
-                    console.error('Error fetching fleet data:', error);
-                });
-
-            /**
-             * Refresh the datatable information every 30 seconds
-             */
-            const intervalReloadDatatable = 30000; // ms
-            let expectedReloadDatatable = Date.now() + intervalReloadDatatable;
-
-            /**
-             * reload datatable "fleetfinderFleetsTable"
-             */
-            const reloadDataTable = () => {
-                const dt = Date.now() - expectedReloadDatatable; // The drift (positive for overshooting)
-
-                if (dt > intervalReloadDatatable) {
-                    // Something awful happened. Maybe the browser (tab) was inactive?
-                    // Possibly special handling to avoid futile "catch up" run
-                    console.log('Something went wrong, reloading page ...');
-
-                    window.location.replace(
-                        window.location.pathname + window.location.search + window.location.hash
-                    );
                 }
 
-                fetchGet({url: '{% url "fleetfinder:ajax_dashboard" %}'})
-                    .then((newData) => {
-                        const dataTable = table_fleet_overview.DataTable();
-
-                        dataTable.clear().rows.add(newData).draw();
-                    })
-                    .then(() => {
-                        // Initialize Bootstrap tooltips
-                        document.querySelectorAll(`#table_available-fleets [data-bs-tooltip="aa-fleetfinder"]`)
-                            .forEach((tooltipTriggerEl) => {
-                                new bootstrap.Tooltip(tooltipTriggerEl);
-                            });
-                    })
-                    .catch((error) => {
-                        console.error('Error fetching updated data:', error);
-                    });
-
-                expectedReloadDatatable += intervalReloadDatatable;
-
-                // Take drift into account
-                setTimeout(
-                    reloadDataTable,
-                    Math.max(0, intervalReloadDatatable - dt)
-                );
+                // Initialize Bootstrap tooltips
+                fleetfinderBootstrapTooltip({selector: '#table_available-fleets'});
             };
 
-            setTimeout(
-                reloadDataTable,
-                intervalReloadDatatable
-            );
+            /**
+             * Fetch and update fleet data
+             */
+            const fetchFleetData = () => {
+                fetchGet({url: '{% url "fleetfinder:ajax_dashboard" %}'})
+                    .then(initializeOrUpdateTable)
+                    .catch((error) => {
+                        console.error('Error fetching fleet data:', error);
+                    });
+            };
+
+            // Initial load
+            fetchFleetData();
+
+            // Refresh every 30 seconds
+            setInterval(fetchFleetData, 30000);
         });
     </script>
 {% endblock %}
