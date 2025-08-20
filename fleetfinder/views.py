@@ -13,6 +13,7 @@ from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.functional import Promise
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
@@ -101,39 +102,41 @@ def ajax_dashboard(request) -> JsonResponse:  # pylint: disable=too-many-locals
     :return:
     """
 
-    def _create_button(url, icon_class, text, btn_class):
+    def _create_button(
+        url: str, icon_class: str, title: str | Promise, btn_class: str
+    ) -> str:
         """
         Helper function to create a button HTML string
         This function generates an HTML anchor tag styled as a button with an icon.
 
-        :param url:
-        :type url:
-        :param icon_class:
-        :type icon_class:
-        :param text:
-        :type text:
-        :param btn_class:
-        :type btn_class:
-        :return:
-        :rtype:
+        :param url: The URL the button should link to
+        :type url: str
+        :param icon_class: The Font Awesome class for the icon to be displayed
+        :type icon_class: str
+        :param title: The title attribute for the button, typically a translation string
+        :type title: str | Promise
+        :param btn_class: The modifier class for the button styling
+        :type btn_class: str
+        :return: An HTML string representing the button
+        :rtype: str
         """
 
         return (
             f'<a href="{url}" class="btn btn-sm {btn_class}" '
-            f'data-bs-tooltip="aa-fleetfinder" title="{text}">'
+            f'data-bs-tooltip="aa-fleetfinder" title="{title}">'
             f'<i class="{icon_class}"></i></a>'
         )
 
-    def _get_fleet_commander_html(fleet):
+    def _get_fleet_commander_html(fleet: Fleet) -> tuple:
         """
         Helper function to get the fleet commander's HTML representation
         This function retrieves the fleet commander's name and portrait URL,
         and returns an HTML string with the portrait image and name.
 
-        :param fleet:
-        :type fleet:
-        :return:
-        :rtype:
+        :param fleet: The Fleet object containing the fleet commander's information
+        :type fleet: Fleet
+        :return: A tuple containing the HTML string for the fleet commander and the name for sorting
+        :rtype: tuple
         """
 
         commander_name = fleet.fleet_commander.character_name
