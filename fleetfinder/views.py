@@ -102,8 +102,8 @@ def ajax_dashboard(request) -> JsonResponse:  # pylint: disable=too-many-locals
     :return:
     """
 
-    def _create_button(
-        url: str, icon_class: str, title: str | Promise, btn_class: str
+    def _create_button_style_link(
+        url: str, fa_icon_class: str, btn_title: str | Promise, btn_modifier_class: str
     ) -> str:
         """
         Helper function to create a button HTML string
@@ -111,23 +111,23 @@ def ajax_dashboard(request) -> JsonResponse:  # pylint: disable=too-many-locals
 
         :param url: The URL the button should link to
         :type url: str
-        :param icon_class: The Font Awesome class for the icon to be displayed
-        :type icon_class: str
-        :param title: The title attribute for the button, typically a translation string
-        :type title: str | Promise
-        :param btn_class: The modifier class for the button styling
-        :type btn_class: str
+        :param fa_icon_class: The Font Awesome class for the icon to be displayed
+        :type fa_icon_class: str
+        :param btn_title: The title attribute for the button, typically a translation string
+        :type btn_title: str | Promise
+        :param btn_modifier_class: The Bootstrap modifier class for the button styling
+        :type btn_modifier_class: str
         :return: An HTML string representing the button
         :rtype: str
         """
 
         return (
-            f'<a href="{url}" class="btn btn-sm {btn_class}" '
-            f'data-bs-tooltip="aa-fleetfinder" title="{title}">'
-            f'<i class="{icon_class}"></i></a>'
+            f'<a href="{url}" class="btn btn-sm {btn_modifier_class}" '
+            f'data-bs-tooltip="aa-fleetfinder" title="{btn_title}">'
+            f'<i class="{fa_icon_class}"></i></a>'
         )
 
-    def _get_fleet_commander_html(fleet: Fleet) -> tuple:
+    def _get_fleet_commander_information(fleet: Fleet) -> tuple[str, str]:
         """
         Helper function to get the fleet commander's HTML representation
         This function retrieves the fleet commander's name and portrait URL,
@@ -136,7 +136,7 @@ def ajax_dashboard(request) -> JsonResponse:  # pylint: disable=too-many-locals
         :param fleet: The Fleet object containing the fleet commander's information
         :type fleet: Fleet
         :return: A tuple containing the HTML string for the fleet commander and the name for sorting
-        :rtype: tuple
+        :rtype: tuple[str, str]
         """
 
         commander_name = fleet.fleet_commander.character_name
@@ -166,11 +166,13 @@ def ajax_dashboard(request) -> JsonResponse:  # pylint: disable=too-many-locals
     can_manage_fleets = request.user.has_perm("fleetfinder.manage_fleets")
 
     for fleet in fleets:
-        fleet_commander_html, fleet_commander_name = _get_fleet_commander_html(fleet)
+        fleet_commander_html, fleet_commander_name = _get_fleet_commander_information(
+            fleet
+        )
 
         # Create buttons
         buttons = [
-            _create_button(
+            _create_button_style_link(
                 reverse("fleetfinder:join_fleet", args=[fleet.fleet_id]),
                 "fa-solid fa-right-to-bracket",
                 _("Join fleet"),
@@ -181,13 +183,13 @@ def ajax_dashboard(request) -> JsonResponse:  # pylint: disable=too-many-locals
         if can_manage_fleets:
             buttons.extend(
                 [
-                    _create_button(
+                    _create_button_style_link(
                         reverse("fleetfinder:fleet_details", args=[fleet.fleet_id]),
                         "fa-solid fa-eye",
                         _("View fleet details"),
                         "btn-info",
                     ),
-                    _create_button(
+                    _create_button_style_link(
                         reverse("fleetfinder:edit_fleet", args=[fleet.fleet_id]),
                         "fa-solid fa-pen-to-square",
                         _("Edit fleet advert"),
