@@ -37,6 +37,7 @@ Section Order:
 
 ### Changed
 
+- `views.ajax_dashboard` refactored
 - Dashboard buttons to Font Awesome icons
 - Dashboard JS refactored
 
