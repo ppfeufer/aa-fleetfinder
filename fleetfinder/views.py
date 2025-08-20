@@ -129,10 +129,14 @@ def ajax_dashboard(request) -> JsonResponse:  # pylint: disable=too-many-locals
         button_join_url = reverse(
             viewname="fleetfinder:join_fleet", args=[fleet.fleet_id]
         )
+        button_join_icon = '<i class="fa-solid fa-right-to-bracket"></i>'
         button_join_text = _("Join fleet")
         button_join = (
             f'<a href="{button_join_url}" '
-            f'class="btn btn-sm btn-primary">{button_join_text}</a>'
+            'class="btn btn-sm btn-success" '
+            'data-bs-tooltip="aa-fleetfinder" '
+            f'title="{button_join_text}"'
+            f">{button_join_icon}</a>"
         )
 
         button_details = ""
@@ -142,20 +146,30 @@ def ajax_dashboard(request) -> JsonResponse:  # pylint: disable=too-many-locals
             button_details_url = reverse(
                 viewname="fleetfinder:fleet_details", args=[fleet.fleet_id]
             )
+            button_details_icon = '<i class="fa-solid fa-eye"></i>'
             button_details_text = _("View fleet details")
             button_details = (
                 f'<a href="{button_details_url}" '
-                f'class="btn btn-sm btn-primary">{button_details_text}</a>'
+                'class="btn btn-sm btn-info" '
+                'data-bs-tooltip="aa-fleetfinder" '
+                f'title="{button_details_text}"'
+                f">{button_details_icon}</a>"
             )
 
             button_edit_url = reverse(
                 viewname="fleetfinder:edit_fleet", args=[fleet.fleet_id]
             )
+            button_edit_icon = '<i class="fa-solid fa-pen-to-square"></i>'
             button_edit_text = _("Edit fleet advert")
             button_edit = (
                 f'<a href="{button_edit_url}" '
-                f'class="btn btn-sm btn-primary">{button_edit_text}</a>'
+                'class="btn btn-sm btn-warning" '
+                'data-bs-tooltip="aa-fleetfinder" '
+                f'title="{button_edit_text}"'
+                f">{button_edit_icon}</a>"
             )
+
+        buttons_action = f"{button_join} {button_details} {button_edit}"
 
         data.append(
             {
@@ -165,6 +179,7 @@ def ajax_dashboard(request) -> JsonResponse:  # pylint: disable=too-many-locals
                 },
                 "fleet_name": fleet.name,
                 "created_at": fleet.created_at,
+                "actions": buttons_action,
                 "join": button_join,
                 "details": button_details,
                 "edit": button_edit,

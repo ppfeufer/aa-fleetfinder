@@ -19,12 +19,7 @@
                             <th>{% translate "Fleet commander" %}</th>
                             <th>{% translate "Fleet name" %}</th>
                             <th>{% translate "Created at" %}</th>
-                            <th>{% translate "Join" %}</th>
-
-                            {% if perms.fleetfinder.manage_fleets %}
-                                <th>{% translate "Details" %}</th>
-                                <th>{% translate "Edit" %}</th>
-                            {% endif %}
+                            <th class="text-end"><!-- {% translate "Join" %} --></th>
                         </tr>
                     </thead>
 
@@ -69,15 +64,16 @@
                                     sort: 'sort'
                                 }
                             },
-                            {data: 'fleet_name'},
+                            {
+                                data: 'fleet_name'
+                            },
                             {
                                 data: 'created_at',
                             },
-                            {data: 'join'},
-                            {% if perms.fleetfinder.manage_fleets %}
-                                {data: 'details'},
-                                {data: 'edit'},
-                            {% endif %}
+                            {
+                                data: 'actions',
+                                className: 'text-end',
+                            },
                         ],
                         columnDefs: [
                             {
@@ -88,16 +84,17 @@
                                 orderable: false,
                                 targets: [3]
                             },
-                            {% if perms.fleetfinder.manage_fleets %}
-                                {
-                                    orderable: false,
-                                    targets: [4, 5]
-                                },
-                            {% endif %}
                         ],
                         order: [[0, 'asc']],
                         paging: false
                     });
+                })
+                .then(() => {
+                    // Initialize Bootstrap tooltips
+                    document.querySelectorAll(`#table_available-fleets [data-bs-tooltip="aa-fleetfinder"]`)
+                        .forEach((tooltipTriggerEl) => {
+                            new bootstrap.Tooltip(tooltipTriggerEl);
+                        });
                 })
                 .catch((error) => {
                     console.error('Error fetching fleet data:', error);
@@ -130,6 +127,13 @@
                         const dataTable = table_fleet_overview.DataTable();
 
                         dataTable.clear().rows.add(newData).draw();
+                    })
+                    .then(() => {
+                        // Initialize Bootstrap tooltips
+                        document.querySelectorAll(`#table_available-fleets [data-bs-tooltip="aa-fleetfinder"]`)
+                            .forEach((tooltipTriggerEl) => {
+                                new bootstrap.Tooltip(tooltipTriggerEl);
+                            });
                     })
                     .catch((error) => {
                         console.error('Error fetching updated data:', error);

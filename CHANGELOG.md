@@ -35,6 +35,10 @@ Section Order:
 ### Security
 -->
 
+### Changed
+
+- Dashboard buttons to Font Awesome icons
+
 ## [2.6.1] - 2025-08-19
 
 ### Fixed
