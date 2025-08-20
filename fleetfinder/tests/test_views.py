@@ -135,7 +135,7 @@ class TestAjaxDashboardView(FleetfinderTestViews):
                 },
                 "fleet_name": "Starfleet",
                 "created_at": dt_to_iso(self.fleet_created_at),
-                "actions": f'<a href="{join_url}" class="btn btn-sm btn-success" data-bs-tooltip="aa-fleetfinder" title="Join fleet"><i class="fa-solid fa-right-to-bracket"></i></a>',
+                "actions": f'<a href="{join_url}" class="btn btn-sm btn-success ms-1" data-bs-tooltip="aa-fleetfinder" title="Join fleet"><i class="fa-solid fa-right-to-bracket"></i></a>',
             }
         ]
 
@@ -181,9 +181,9 @@ class TestAjaxDashboardView(FleetfinderTestViews):
                 "fleet_name": "Starfleet",
                 "created_at": dt_to_iso(self.fleet_created_at),
                 "actions": (
-                    f'<a href="{join_url}" class="btn btn-sm btn-success" data-bs-tooltip="aa-fleetfinder" title="Join fleet"><i class="fa-solid fa-right-to-bracket"></i></a>'
-                    f'<a href="{details_url}" class="btn btn-sm btn-info" data-bs-tooltip="aa-fleetfinder" title="View fleet details"><i class="fa-solid fa-eye"></i></a>'
-                    f'<a href="{edit_url}" class="btn btn-sm btn-warning" data-bs-tooltip="aa-fleetfinder" title="Edit fleet advert"><i class="fa-solid fa-pen-to-square"></i></a>'
+                    f'<a href="{join_url}" class="btn btn-sm btn-success ms-1" data-bs-tooltip="aa-fleetfinder" title="Join fleet"><i class="fa-solid fa-right-to-bracket"></i></a>'
+                    f'<a href="{details_url}" class="btn btn-sm btn-info ms-1" data-bs-tooltip="aa-fleetfinder" title="View fleet details"><i class="fa-solid fa-eye"></i></a>'
+                    f'<a href="{edit_url}" class="btn btn-sm btn-warning ms-1" data-bs-tooltip="aa-fleetfinder" title="Edit fleet advert"><i class="fa-solid fa-pen-to-square"></i></a>'
                 ),
             }
         ]
