@@ -343,13 +343,16 @@ def get_fleet_composition(fleet_id: int) -> FleetViewAggregate | None:
         # Create a lookup dictionary for names
         name_lookup = {item["id"]: item["name"] for item in ids_to_name}
 
-        # Add names to fleet members
+        # Add additional information to each fleet member
         for member in fleet_infos:
+            is_fleet_boss = member["character_id"] == fleet.fleet_commander.character_id
+
             member.update(
                 {
                     "character_name": name_lookup[member["character_id"]],
                     "solar_system_name": name_lookup[member["solar_system_id"]],
                     "ship_type_name": name_lookup[member["ship_type_id"]],
+                    "is_fleet_boss": is_fleet_boss,
                 }
             )
 
