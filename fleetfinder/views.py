@@ -122,7 +122,7 @@ def ajax_dashboard(request) -> JsonResponse:  # pylint: disable=too-many-locals
         """
 
         return (
-            f'<a href="{url}" class="btn btn-sm {btn_modifier_class}" '
+            f'<a href="{url}" class="btn btn-sm {btn_modifier_class} ms-1" '
             f'data-bs-tooltip="aa-fleetfinder" title="{btn_title}">'
             f'<i class="{fa_icon_class}"></i></a>'
         )
