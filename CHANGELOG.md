@@ -37,6 +37,7 @@ Section Order:
 
 ### Added
 
+- Ability to kick a fleet member
 - Fleet boss detection
 
 ### Fixed
