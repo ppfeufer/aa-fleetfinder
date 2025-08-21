@@ -75,7 +75,15 @@
     <script>
         $(document).ready(() => {
             const table_fleet_members = $('#table_fleet_members');
-            const tabe_fleet_composition = $('#table_fleet_composition');
+            const table_fleet_composition = $('#table_fleet_composition');
+
+            const dataTableConfig = {
+                language: {
+                    url: '{{ DT_LANG_PATH }}'
+                },
+                paging: false,
+                destroy: true
+            };
 
             const populateDatatables = () => {
                 fetchGet({
@@ -83,11 +91,7 @@
                 })
                 .then((data) => {
                     table_fleet_members.DataTable({
-                        language: {
-                            url: '{{ DT_LANG_PATH }}'
-                        },
-                        destroy: true,
-                        paging: false,
+                        ...dataTableConfig,
                         data: data.fleet_member,
                         columns: [
                             {data: 'character_name'},
@@ -96,12 +100,8 @@
                         ]
                     });
 
-                    tabe_fleet_composition.DataTable({
-                        language: {
-                            url: '{{ DT_LANG_PATH }}'
-                        },
-                        destroy: true,
-                        paging: false,
+                    table_fleet_composition.DataTable({
+                        ...dataTableConfig,
                         data: data.fleet_composition,
                         columns: [
                             {data: 'ship_type_name'},
@@ -115,25 +115,9 @@
                 });
             };
 
-            table_fleet_members.DataTable({
-                language: {
-                    url: '{{ DT_LANG_PATH }}'
-                },
-                paging: false,
-            });
-
-            tabe_fleet_composition.DataTable({
-                language: {
-                    url: '{{ DT_LANG_PATH }}'
-                },
-                paging: false,
-            });
-
             populateDatatables();
 
-            setInterval(function () {
-                populateDatatables();
-            }, 30000);
+            setInterval(populateDatatables, 30000);
         });
     </script>
 {% endblock %}

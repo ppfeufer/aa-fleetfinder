@@ -35,11 +35,17 @@ Section Order:
 ### Security
 -->
 
+### Added
+
+- Fleet boss detection
+
 ### Changed
 
+- Resolve IDs to names in chunks of a maximum of 500
 - `views.ajax_dashboard` refactored
 - Dashboard buttons to Font Awesome icons
 - Dashboard JS refactored
+- Fleet details JS refactored
 
 ## [2.6.1] - 2025-08-19
 

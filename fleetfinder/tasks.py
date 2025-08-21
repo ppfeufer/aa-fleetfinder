@@ -291,7 +291,9 @@ def check_fleet_adverts() -> None:
 
 
 @shared_task
-def get_fleet_composition(fleet_id: int) -> FleetViewAggregate | None:
+def get_fleet_composition(  # pylint: disable=too-many-locals
+    fleet_id: int,
+) -> FleetViewAggregate | None:
     """
     Get the composition of a fleet by its ID
     This task retrieves the composition of a fleet using its ESI ID.
@@ -336,20 +338,34 @@ def get_fleet_composition(fleet_id: int) -> FleetViewAggregate | None:
             ]
         }
 
-        ids_to_name = esi.client.Universe.post_universe_names(
-            ids=list(all_ids)
-        ).result()
+        logger.debug(
+            f"Found {len(all_ids)} unique IDs to fetch names for in fleet {fleet_id}"
+        )
+
+        # Process IDs in chunks to avoid ESI limits
+        chunk_size = 500
+        ids_to_name = []
+        all_ids_list = list(all_ids)
+
+        for i in range(0, len(all_ids_list), chunk_size):
+            chunk = all_ids_list[i : i + chunk_size]
+            chunk_result = esi.client.Universe.post_universe_names(ids=chunk).result()
+
+            ids_to_name.extend(chunk_result)
 
         # Create a lookup dictionary for names
         name_lookup = {item["id"]: item["name"] for item in ids_to_name}
 
-        # Add names to fleet members
+        # Add additional information to each fleet member
         for member in fleet_infos:
+            is_fleet_boss = member["character_id"] == fleet.fleet_commander.character_id
+
             member.update(
                 {
                     "character_name": name_lookup[member["character_id"]],
                     "solar_system_name": name_lookup[member["solar_system_id"]],
                     "ship_type_name": name_lookup[member["ship_type_id"]],
+                    "is_fleet_boss": is_fleet_boss,
                 }
             )
 
