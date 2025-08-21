@@ -37,6 +37,7 @@ Section Order:
 
 ### Added
 
+- A little explanation to the fleet invite form
 - Ability to kick a fleet member
 - Fleet boss detection
 
