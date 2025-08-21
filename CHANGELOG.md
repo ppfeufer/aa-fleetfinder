@@ -35,6 +35,8 @@ Section Order:
 ### Security
 -->
 
+## [2.7.0] - 2025-08-21
+
 ### Added
 
 - A little explanation to the fleet invite form
@@ -52,6 +54,7 @@ Section Order:
 - Dashboard buttons to Font Awesome icons
 - Dashboard JS refactored
 - Fleet details JS refactored
+- Translations updated
 
 ## [2.6.1] - 2025-08-19
 
