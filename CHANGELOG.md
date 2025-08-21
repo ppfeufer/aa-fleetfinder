@@ -37,7 +37,7 @@ Section Order:
 
 ### Changed
 
-- Resolve IDs to names in chunks of maximal 500
+- Resolve IDs to names in chunks of a maximum of 500
 - `views.ajax_dashboard` refactored
 - Dashboard buttons to Font Awesome icons
 - Dashboard JS refactored
