@@ -39,6 +39,10 @@ Section Order:
 
 - Fleet boss detection
 
+### Fixed
+
+- Slim Select field styling
+
 ### Changed
 
 - Resolve IDs to names in chunks of a maximum of 500
