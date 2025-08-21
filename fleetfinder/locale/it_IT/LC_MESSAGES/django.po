@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2025-08-19 17:07+0200\n"
+"POT-Creation-Date: 2025-08-21 15:11+0200\n"
 "PO-Revision-Date: 2024-12-22 21:15+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: Italian <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/it/>\n"
@@ -114,14 +114,6 @@ msgstr ""
 msgid "Join"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/dashboard.html:25
-msgid "Details"
-msgstr ""
-
-#: fleetfinder/templates/fleetfinder/dashboard.html:26
-msgid "Edit"
-msgstr ""
-
 #: fleetfinder/templates/fleetfinder/edit-fleet.html:6
 #: fleetfinder/templates/fleetfinder/edit-fleet.html:14
 msgid "Edit fleet"
@@ -156,7 +148,24 @@ msgstr ""
 msgid "System"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/join-fleet.html:6 fleetfinder/views.py:132
+#: fleetfinder/templates/fleetfinder/fleet-details.html:53
+msgid "Action"
+msgstr ""
+
+#: fleetfinder/templates/fleetfinder/fleet-details.html:79
+msgid "Fleet boss"
+msgstr ""
+
+#: fleetfinder/templates/fleetfinder/fleet-details.html:80
+#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:10
+msgid "Kick member from fleet"
+msgstr ""
+
+#: fleetfinder/templates/fleetfinder/fleet-details.html:81
+msgid "An unknown error occurred."
+msgstr ""
+
+#: fleetfinder/templates/fleetfinder/join-fleet.html:6 fleetfinder/views.py:182
 msgid "Join fleet"
 msgstr ""
 
@@ -164,12 +173,44 @@ msgstr ""
 msgid "Fleet invitation"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/join-fleet.html:25
-msgid "Select the characters to invite"
+#: fleetfinder/templates/fleetfinder/join-fleet.html:22
+msgid "Please ensure you don't have any CSPA charges set on your characters, as this will prevent fleet invites from being sent."
+msgstr ""
+
+#: fleetfinder/templates/fleetfinder/join-fleet.html:24
+msgid "You can select multiple characters to invite them all at once."
+msgstr ""
+
+#: fleetfinder/templates/fleetfinder/join-fleet.html:28
+msgid "The selected characters will receive a fleet invite in-game, which they can accept to join the fleet."
 msgstr ""
 
 #: fleetfinder/templates/fleetfinder/join-fleet.html:35
+msgid "Please select the characters you want to invite:"
+msgstr ""
+
+#: fleetfinder/templates/fleetfinder/join-fleet.html:45
 msgid "Send fleet invites"
+msgstr ""
+
+#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:13
+msgid "Close"
+msgstr ""
+
+#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:18
+msgid "Are you sure you want to kick this member from the fleet?"
+msgstr ""
+
+#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:27
+msgid "Error"
+msgstr ""
+
+#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:36
+msgid "Cancel"
+msgstr ""
+
+#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:41
+msgid "Confirm"
 msgstr ""
 
 #: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:15
@@ -196,29 +237,49 @@ msgstr ""
 msgid "Available fleets"
 msgstr ""
 
-#: fleetfinder/views.py:145
+#: fleetfinder/views.py:193
 msgid "View fleet details"
 msgstr ""
 
-#: fleetfinder/views.py:154
+#: fleetfinder/views.py:199
 msgid "Edit fleet advert"
 msgstr ""
 
-#: fleetfinder/views.py:201
+#: fleetfinder/views.py:244
 #, python-brace-format
 msgid "<h4>Error!</h4><p>There was an error creating the fleet: {error_detail}</p>"
 msgstr ""
 
-#: fleetfinder/views.py:241
+#: fleetfinder/views.py:284
 msgid "<h4>Error!</h4><p>Fleet does not exist or is no longer available.</p>"
 msgstr ""
 
-#: fleetfinder/views.py:395
+#: fleetfinder/views.py:438
 #, python-brace-format
 msgid "<h4>Error!</h4><p>ESI returned the following error: {esi_error}</p>"
 msgstr ""
 
-#: fleetfinder/views.py:403
+#: fleetfinder/views.py:446
 #, python-brace-format
 msgid "<h4>Error!</h4><p>There was an error creating the fleet: {ex}</p>"
+msgstr ""
+
+#: fleetfinder/views.py:517
+msgid "Method not allowed"
+msgstr ""
+
+#: fleetfinder/views.py:527
+msgid "Member ID required"
+msgstr ""
+
+#: fleetfinder/views.py:546
+msgid "Fleet not found"
+msgstr ""
+
+#: fleetfinder/views.py:550
+msgid "Invalid request data"
+msgstr ""
+
+#: fleetfinder/views.py:554
+msgid "Member not found in fleet"
 msgstr ""
