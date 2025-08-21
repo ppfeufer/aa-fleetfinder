@@ -35,6 +35,10 @@ Section Order:
 ### Security
 -->
 
+### Added
+
+- Fleet boss detection
+
 ### Changed
 
 - Resolve IDs to names in chunks of a maximum of 500
