@@ -34,6 +34,11 @@ urlpatterns = [
                     view=views.ajax_fleet_details,
                     name="ajax_fleet_details",
                 ),
+                path(
+                    route="fleet/<int:fleet_id>/member/kick/",
+                    view=views.ajax_fleet_kick_member,
+                    name="ajax_fleet_kick_member",
+                ),
             ]
         ),
     ),

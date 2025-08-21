@@ -2,12 +2,16 @@
 Views
 """
 
+# Standard Library
+import json
+
 # Third Party
 from bravado.exception import HTTPNotFound
 
 # Django
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
+from django.core.handlers.wsgi import WSGIRequest
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
@@ -472,8 +476,7 @@ def fleet_details(request, fleet_id):
 @login_required()
 @permission_required(perm="fleetfinder.manage_fleets")
 def ajax_fleet_details(
-    request,  # pylint: disable=unused-argument
-    fleet_id,
+    request, fleet_id  # pylint: disable=unused-argument
 ) -> JsonResponse:
     """
     Ajax :: Fleet Details
@@ -493,3 +496,60 @@ def ajax_fleet_details(
     }
 
     return JsonResponse(data=data, safe=False)
+
+
+@login_required()
+@permission_required(perm="fleetfinder.manage_fleets")
+def ajax_fleet_kick_member(request: WSGIRequest, fleet_id: int) -> JsonResponse:
+    """
+    Ajax :: Kick member from fleet
+
+    :param request: WSGIRequest object containing the request data
+    :type request: WSGIRequest
+    :param fleet_id: The ID of the fleet from which to kick a member
+    :type fleet_id: int
+    :return: JsonResponse indicating success or failure of the operation
+    :rtype: JsonResponse
+    """
+
+    if request.method != "POST":
+        return JsonResponse(
+            data={"success": False, "error": _("Method not allowed")}, status=405
+        )
+
+    try:
+        fleet = Fleet.objects.get(fleet_id=fleet_id)
+        data = json.loads(request.body)
+        member_id = data.get("memberId")
+
+        if not member_id:
+            return JsonResponse(
+                data={"success": False, "error": _("Member ID required")}, status=400
+            )
+
+        logger.debug(f"Request data for kicking member: {data}")
+
+        token = Token.get_token(
+            character_id=fleet.fleet_commander.character_id,
+            scopes=["esi-fleets.write_fleet.v1"],
+        )
+
+        esi.client.Fleets.delete_fleets_fleet_id_members_member_id(
+            fleet_id=fleet_id,
+            member_id=member_id,
+            token=token.valid_access_token(),
+        ).result()
+
+        return JsonResponse(data={"success": True}, status=200)
+    except Fleet.DoesNotExist:
+        return JsonResponse(
+            data={"success": False, "error": _("Fleet not found")}, status=404
+        )
+    except (json.JSONDecodeError, ValueError):
+        return JsonResponse(
+            data={"success": False, "error": _("Invalid request data")}, status=400
+        )
+    except HTTPNotFound:
+        return JsonResponse(
+            data={"success": False, "error": _("Member not found in fleet")}, status=404
+        )

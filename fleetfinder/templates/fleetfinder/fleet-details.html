@@ -61,6 +61,8 @@
             </div>
         </div>
     </div>
+
+    {% include "fleetfinder/modals/kick-fleet-member.html" %}
 {% endblock %}
 
 {% block extra_css %}
@@ -79,8 +81,11 @@
 
     <script>
         $(document).ready(() => {
+            /* DataTables
+            ------------------------------------------------------------------------- */
             const table_fleet_members = $('#table_fleet_members');
             const table_fleet_composition = $('#table_fleet_composition');
+            const urlKickFleetMember = '{% url "fleetfinder:ajax_fleet_kick_member" fleet_id %}';
 
             const dataTableConfig = {
                 language: {
@@ -112,14 +117,18 @@
                                 render: (data, type, row) => {
                                     return row.is_fleet_boss
                                         ? ''
-                                        : `<button type="button" class="btn btn-sm btn-danger" data-link="/foobar" data-bs-tooltip="aa-fleetfinder" title="{{ l10nKickMemberFromFleet|escapejs }}"><i class="fa-solid fa-user-minus"></i></button>`;
+                                        : `<button type="button" class="btn btn-sm btn-danger" data-link="${urlKickFleetMember}" data-character-id="${row.character_id}" data-character-name="${row.character_name}" data-bs-toggle="modal" data-bs-target="#kick-fleet-member" data-bs-tooltip="aa-fleetfinder" title="{{ l10nKickMemberFromFleet|escapejs }}"><i class="fa-solid fa-user-minus"></i></button>`;
                                 },
                                 orderable: false,
                                 searchable: false,
                                 width: '50px',
                                 className: 'text-end'
                             }
-                        ]
+                        ],
+                        createdRow: (row, data, rowIndex) => {
+                            $(row).attr('data-row-id', rowIndex);
+                            $(row).attr('data-character-id', data.character_id);
+                        }
                     });
 
                     table_fleet_composition.DataTable({
@@ -144,6 +153,69 @@
             populateDatatables();
 
             setInterval(populateDatatables, 30000);
+
+            /* Modals
+            ------------------------------------------------------------------------- */
+            // Handle the kick fleet member modal
+            $('#kick-fleet-member')
+                .on('show.bs.modal', (event) => {
+                    const button = $(event.relatedTarget); // Button that triggered the modal
+                    const characterId = button.data('character-id'); // Extract character ID
+                    const characterName = button.data('character-name'); // Extract character name
+                    const link = button.data('link'); // Extract kick link
+                    const csrfToken = '{{ csrf_token }}';
+
+                    console.log('Kick member link:', link);
+                    console.log('Character ID:', characterId);
+                    console.log('Character Name:', characterName);
+                    console.log('CSRF Token:', csrfToken);
+
+                    // Populate the modal content
+                    $('#kick-fleet-member .modal-body #kick-fleet-member-character-name')
+                        .text(characterName);
+
+                    $('#kick-fleet-member .modal-footer #modal-button-confirm-kick-fleet-member')
+                        .on('click', () => {
+                            fetchPost({
+                                url: link,
+                                csrfToken: csrfToken,
+                                payload: {
+                                    memberId: characterId
+                                },
+                                responseIsJson: true
+                            }).then((data) => {
+                                console.log('Data:', data);
+
+                                if (data.success) {
+                                    // Refresh the tables
+                                    populateDatatables();
+
+                                    // Close the modal after kicking the member
+                                    $('#kick-fleet-member').modal('hide');
+                                } else {
+                                    // Show error message
+                                    $('#kick-fleet-member .modal-body .modal-kick-fleet-member-error')
+                                        .removeClass('d-none')
+                                        .find('.modal-kick-fleet-member-error-message')
+                                        .text(data.error || '{% translate "An unknown error occurred." %}');
+                                }
+                            }).catch((error) => {
+                                console.error('Error fetching kick fleet member data:', error);
+                            });
+                        });
+                })
+                .on('hide.bs.modal', () => {
+                    console.log('Kick fleet member modal closed');
+                    // Reset the modal content if needed
+                    $('#kick-fleet-member .modal-body #kick-fleet-member-character-name')
+                        .empty();
+
+                    // Reset the error message
+                    $('#kick-fleet-member .modal-body .modal-kick-fleet-member-error')
+                        .addClass('d-none')
+                        .find('.modal-kick-fleet-member-error-message')
+                        .empty();
+                });
         });
     </script>
 {% endblock %}
