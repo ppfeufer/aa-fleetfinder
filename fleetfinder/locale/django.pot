@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.6.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2025-08-21 14:13+0200\n"
+"POT-Creation-Date: 2025-08-21 14:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -163,7 +163,7 @@ msgstr ""
 msgid "Kick member from fleet"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:200
+#: fleetfinder/templates/fleetfinder/fleet-details.html:81
 msgid "An unknown error occurred."
 msgstr ""
 
