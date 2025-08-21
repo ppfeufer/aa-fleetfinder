@@ -50,6 +50,7 @@
                                     <th>{% translate "Name" %}</th>
                                     <th>{% translate "Ship class" %}</th>
                                     <th>{% translate "System" %}</th>
+                                    <th><!-- {% translate "Action" %} --></th>
                                 </tr>
                             </thead>
 
@@ -69,8 +70,12 @@
 
 {% block extra_javascript %}
     {% include "bundles/datatables-js-bs5.html" %}
+    {% include "fleetfinder/bundles/js/fleetfinder-js.html" %}
 
     {% get_datatables_language_static LANGUAGE_CODE as DT_LANG_PATH %}
+
+    {% translate "Fleet boss" as l10nFleetBoss %}
+    {% translate "Kick member from fleet" as l10nKickMemberFromFleet %}
 
     <script>
         $(document).ready(() => {
@@ -94,9 +99,26 @@
                         ...dataTableConfig,
                         data: data.fleet_member,
                         columns: [
-                            {data: 'character_name'},
+                            {
+                                render: (data, type, row) => {
+                                    return row.is_fleet_boss
+                                        ? `${row.character_name} <sup data-bs-tooltip="aa-fleetfinder" title="{{ l10nFleetBoss|escapejs }}"><small><i class="fa-solid fa-star"></i></small></sup>`
+                                        : row.character_name;
+                                }
+                            },
                             {data: 'ship_type_name'},
-                            {data: 'solar_system_name'}
+                            {data: 'solar_system_name'},
+                            {
+                                render: (data, type, row) => {
+                                    return row.is_fleet_boss
+                                        ? ''
+                                        : `<button type="button" class="btn btn-sm btn-danger" data-link="/foobar" data-bs-tooltip="aa-fleetfinder" title="{{ l10nKickMemberFromFleet|escapejs }}"><i class="fa-solid fa-user-minus"></i></button>`;
+                                },
+                                orderable: false,
+                                searchable: false,
+                                width: '50px',
+                                className: 'text-end'
+                            }
                         ]
                     });
 
@@ -109,6 +131,10 @@
                         ],
                         order: [[1, 'desc']]
                     });
+                })
+                .then(() => {
+                    // Initialize tooltips for the kick buttons
+                    fleetfinderBootstrapTooltip({selector: '#table_fleet_members'});
                 })
                 .catch((error) => {
                     console.error('Error fetching fleet details:', error);
