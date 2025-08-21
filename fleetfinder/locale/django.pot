@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.6.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2025-08-21 14:45+0200\n"
+"POT-Creation-Date: 2025-08-21 14:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -175,11 +175,27 @@ msgstr ""
 msgid "Fleet invitation"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/join-fleet.html:25
-msgid "Select the characters to invite"
+#: fleetfinder/templates/fleetfinder/join-fleet.html:22
+msgid ""
+"Please ensure you don't have any CSPA charges set on your characters, as "
+"this will prevent fleet invites from being sent."
+msgstr ""
+
+#: fleetfinder/templates/fleetfinder/join-fleet.html:24
+msgid "You can select multiple characters to invite them all at once."
+msgstr ""
+
+#: fleetfinder/templates/fleetfinder/join-fleet.html:28
+msgid ""
+"The selected characters will receive a fleet invite in-game, which they can "
+"accept to join the fleet."
 msgstr ""
 
 #: fleetfinder/templates/fleetfinder/join-fleet.html:35
+msgid "Please select the characters you want to invite:"
+msgstr ""
+
+#: fleetfinder/templates/fleetfinder/join-fleet.html:45
 msgid "Send fleet invites"
 msgstr ""
 
