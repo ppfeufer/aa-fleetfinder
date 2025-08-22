@@ -35,6 +35,10 @@ Section Order:
 ### Security
 -->
 
+### Changed
+
+- Set chunk size for ESI calls to `Universe.post_universe_names` to 1000 to match the limit for this endpoint
+
 ## [2.7.0] - 2025-08-21
 
 ### Added
