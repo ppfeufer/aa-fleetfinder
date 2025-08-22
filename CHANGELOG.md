@@ -42,7 +42,8 @@ Section Order:
 
 ### Changed
 
-- Set chunk size for ESI calls to `Universe.post_universe_names` to 1000 to match the limit for this endpoint
+- Set chunk size for ESI calls to `Universe.post_universe_names` to 1000 to match the
+  limit for this endpoint (Thanks to @cvweiss (Squizz Caphinator) for pointing this out)
 
 ## [2.7.0] - 2025-08-21
 
