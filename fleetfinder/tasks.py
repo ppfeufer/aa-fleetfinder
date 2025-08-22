@@ -342,8 +342,14 @@ def get_fleet_composition(  # pylint: disable=too-many-locals
             f"Found {len(all_ids)} unique IDs to fetch names for in fleet {fleet_id}"
         )
 
-        # Process IDs in chunks to avoid ESI limits
-        chunk_size = 500
+        # Process IDs in chunks of 1000 to avoid ESI limits.
+        # ESI has a limit of 1000 IDs per request, so we will chunk the requests,
+        # even though there is a theoretical limit of 768 unique IDs per fleet,
+        # so we never should hit the ESI limit.
+        # But to be on the safe side, we will chunk the requests in case CCP decides
+        # to change the fleet limit in the future, we will use a chunk size of 1000,
+        # which is the maximum allowed by ESI for the `post_universe_names` endpoint.
+        chunk_size = 1000
         ids_to_name = []
         all_ids_list = list(all_ids)
 
