@@ -37,6 +37,7 @@ Section Order:
 
 ### Added
 
+- Header to fleet details view (Fleet name and FC name)
 - More error handling in fleet details view
 
 ### Changed

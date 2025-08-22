@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.7.0\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2025-08-22 09:29+0200\n"
+"POT-Creation-Date: 2025-08-22 10:06+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -125,45 +125,45 @@ msgstr ""
 msgid "Fleet details"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:18
+#: fleetfinder/templates/fleetfinder/fleet-details.html:20
 msgid "Fleet composition"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:27
-#: fleetfinder/templates/fleetfinder/fleet-details.html:53
+#: fleetfinder/templates/fleetfinder/fleet-details.html:29
+#: fleetfinder/templates/fleetfinder/fleet-details.html:55
 msgid "Ship class"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:28
+#: fleetfinder/templates/fleetfinder/fleet-details.html:30
 msgid "Count"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:43
+#: fleetfinder/templates/fleetfinder/fleet-details.html:45
 msgid "Fleet members"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:52
+#: fleetfinder/templates/fleetfinder/fleet-details.html:54
 msgid "Name"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:54
+#: fleetfinder/templates/fleetfinder/fleet-details.html:56
 msgid "System"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:55
+#: fleetfinder/templates/fleetfinder/fleet-details.html:57
 msgid "Action"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:81
+#: fleetfinder/templates/fleetfinder/fleet-details.html:83
 msgid "Fleet boss"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:82
+#: fleetfinder/templates/fleetfinder/fleet-details.html:84
 #: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:10
 msgid "Kick member from fleet"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:83
+#: fleetfinder/templates/fleetfinder/fleet-details.html:85
 msgid "An unknown error occurred."
 msgstr ""
 
