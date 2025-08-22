@@ -8,6 +8,8 @@
 {% endblock %}
 
 {% block aa_fleetfinder_body %}
+    {% include "framework/header/page-header.html" with title=fleet.name subtitle=fleet.fleet_commander.character_name %}
+
     <div class="alert alert-warning d-none" id="fleetfinder-fleet-details-warning"></div>
 
     <div class="row">
