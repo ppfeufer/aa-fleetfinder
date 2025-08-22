@@ -306,10 +306,10 @@ def get_fleet_composition(  # pylint: disable=too-many-locals
 
     try:
         fleet = Fleet.objects.get(fleet_id=fleet_id)
-    except Fleet.DoesNotExist:
+    except Fleet.DoesNotExist as exc:
         logger.error(f"Fleet with ID {fleet_id} not found")
 
-        return None
+        raise Fleet.DoesNotExist(f"Fleet with ID {fleet_id} not found.") from exc
 
     logger.info(
         f'Getting fleet composition for fleet "{fleet.name}" '
@@ -382,4 +382,6 @@ def get_fleet_composition(  # pylint: disable=too-many-locals
     except Exception as e:  # pylint: disable=broad-exception-caught
         logger.error(f"Failed to get fleet composition for fleet {fleet_id}: {e}")
 
-        return None
+        raise RuntimeError(
+            f"Failed to get fleet composition for fleet {fleet_id} : {str(e)}"
+        ) from e

@@ -462,9 +462,25 @@ def fleet_details(request, fleet_id):
     :return:
     """
 
-    context = {"fleet_id": fleet_id}
+    try:
+        fleet = Fleet.objects.get(fleet_id=fleet_id)
+    except Fleet.DoesNotExist:
+        logger.debug(f"Fleet with ID {fleet_id} does not exist.")
 
-    logger.info(msg=f"Fleet {fleet_id} details view called by {request.user}")
+        messages.error(
+            request,
+            mark_safe(
+                _(
+                    "<h4>Error!</h4><p>Fleet does not exist or is no longer available.</p>"
+                )
+            ),
+        )
+
+        return redirect("fleetfinder:dashboard")
+
+    context = {"fleet": fleet}
+
+    logger.info(msg=f"Fleet {fleet.fleet_id} details view called by {request.user}")
 
     return render(
         request=request,
@@ -485,7 +501,20 @@ def ajax_fleet_details(
     :param fleet_id:
     """
 
-    fleet = get_fleet_composition(fleet_id)
+    try:
+        fleet = get_fleet_composition(fleet_id)
+    except Fleet.DoesNotExist:
+        logger.debug(f"Fleet with ID {fleet_id} does not exist.")
+
+        return JsonResponse(
+            data={"error": _(f"Fleet with ID {fleet_id} does not exist.")}, safe=False
+        )
+    except RuntimeError as ex:
+        logger.debug(f"Error retrieving fleet composition: {ex}", exc_info=True)
+
+        return JsonResponse(
+            data={"error": _(f"Error retrieving fleet composition: {ex}")}, safe=False
+        )
 
     data = {
         "fleet_member": list(fleet.fleet),

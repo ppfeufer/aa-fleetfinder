@@ -8,6 +8,8 @@
 {% endblock %}
 
 {% block aa_fleetfinder_body %}
+    <div class="alert alert-warning d-none" id="fleetfinder-fleet-details-warning"></div>
+
     <div class="row">
         <div class="col-lg-6 col-lg-push-6">
             <div class="card card-primary">
@@ -84,11 +86,17 @@
         $(document).ready(() => {
             /* DataTables
             ------------------------------------------------------------------------- */
-            const table_fleet_members = $('#table_fleet_members');
-            const table_fleet_composition = $('#table_fleet_composition');
+            const elements = {
+                tableFleetMembers: $('#table_fleet_members'),
+                tableFleetComposition: $('#table_fleet_composition'),
+                kickFleetMemberModal: $('#kick-fleet-member'),
+                kickFleetMemberCharacterName: $('#kick-fleet-member-character-name'),
+                modalButtonConfirmKickFleetMember: $('#modal-button-confirm-kick-fleet-member'),
+                warning: $('#fleetfinder-fleet-details-warning')
+            };
             const url = {
-                kickFleetMember: '{% url "fleetfinder:ajax_fleet_kick_member" fleet_id %}',
-                fleetDetails: '{% url "fleetfinder:ajax_fleet_details" fleet_id %}'
+                kickFleetMember: '{% url "fleetfinder:ajax_fleet_kick_member" fleet.fleet_id %}',
+                fleetDetails: '{% url "fleetfinder:ajax_fleet_details" fleet.fleet_id %}'
             };
             const dataTableConfig = {
                 language: {
@@ -103,7 +111,15 @@
                     url: url.fleetDetails,
                 })
                 .then((data) => {
-                    table_fleet_members.DataTable({
+                    if (data.error) {
+                        elements.warning.removeClass('d-none').text(data.error);
+
+                        return;
+                    }
+
+                    elements.warning.addClass('d-none');
+
+                    elements.tableFleetMembers.DataTable({
                         ...dataTableConfig,
                         data: data.fleet_member,
                         columns: [
@@ -147,7 +163,7 @@
                         }
                     });
 
-                    table_fleet_composition.DataTable({
+                    elements.tableFleetComposition.DataTable({
                         ...dataTableConfig,
                         data: data.fleet_composition,
                         columns: [
@@ -173,7 +189,7 @@
             /* Modals
             ------------------------------------------------------------------------- */
             // Handle the kick fleet member modal
-            $('#kick-fleet-member')
+            elements.kickFleetMemberModal
                 .on('show.bs.modal', (event) => {
                     const button = $(event.relatedTarget);
                     const characterId = button.data('character-id');
