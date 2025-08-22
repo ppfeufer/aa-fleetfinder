@@ -402,6 +402,21 @@ class TestFleetDetailsView(FleetfinderTestViews):
 
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
 
+    def test_fleet_redirects_to_dashboard_if_not_found(self):
+        """
+        Test that the fleet_details view redirects to the dashboard if the fleet does not exist.
+
+        :return:
+        :rtype:
+        """
+
+        self.client.force_login(self.user_with_manage_perms)
+
+        response = self.client.get(reverse("fleetfinder:fleet_details", args=[123]))
+
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertEqual(response.url, reverse("fleetfinder:dashboard"))
+
 
 class TestAjaxFleetDetailsView(FleetfinderTestViews):
     """
@@ -471,3 +486,51 @@ class TestAjaxFleetDetailsView(FleetfinderTestViews):
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(json.loads(response.content), expected_fleet_composition)
+
+    @patch("fleetfinder.views.get_fleet_composition")
+    def test_returns_error_when_fleet_does_not_exist(self, mock_get_fleet_composition):
+        """
+        Test that the ajax_fleet_details view returns an error when the fleet does not exist.
+
+        :param mock_get_fleet_composition:
+        :type mock_get_fleet_composition:
+        :return:
+        :rtype:
+        """
+
+        mock_get_fleet_composition.side_effect = Fleet.DoesNotExist
+
+        self.client.force_login(user=self.user_with_manage_perms)
+
+        url = reverse("fleetfinder:ajax_fleet_details", args=[123])
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertJSONEqual(
+            response.content,
+            {"error": "Fleet with ID 123 does not exist."},
+        )
+
+    @patch("fleetfinder.views.get_fleet_composition")
+    def test_returns_error_when_runtime_error_occurs(self, mock_get_fleet_composition):
+        """
+        Test that the ajax_fleet_details view returns an error when a runtime error occurs.
+
+        :param mock_get_fleet_composition:
+        :type mock_get_fleet_composition:
+        :return:
+        :rtype:
+        """
+
+        mock_get_fleet_composition.side_effect = RuntimeError("Unexpected error")
+
+        self.client.force_login(user=self.user_with_manage_perms)
+
+        url = reverse("fleetfinder:ajax_fleet_details", args=[123])
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertJSONEqual(
+            response.content,
+            {"error": "Error retrieving fleet composition: Unexpected error"},
+        )

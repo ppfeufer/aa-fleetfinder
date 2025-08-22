@@ -35,6 +35,10 @@ Section Order:
 ### Security
 -->
 
+### Added
+
+- More error handling in fleet details view
+
 ### Changed
 
 - Set chunk size for ESI calls to `Universe.post_universe_names` to 1000 to match the limit for this endpoint
