@@ -23,7 +23,7 @@
 
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-striped table-hover table-vertical-middle w-100" id="table_fleet_composition">
+                        <table class="table table-striped table-hover table-vertical-middle w-100" id="table-fleet-composition">
                             <thead>
                                 <tr>
                                     <th>{% translate "Ship class" %}</th>
@@ -48,7 +48,7 @@
 
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-striped table-hover table-vertical-middle w-100" id="table_fleet_members">
+                        <table class="table table-striped table-hover table-vertical-middle w-100" id="table-fleet-members">
                             <thead>
                                 <tr>
                                     <th>{% translate "Name" %}</th>
@@ -76,173 +76,27 @@
 
 {% block extra_javascript %}
     {% include "bundles/datatables-js-bs5.html" %}
-    {% include "fleetfinder/bundles/js/fleetfinder-js.html" %}
-
-    {% get_datatables_language_static LANGUAGE_CODE as DT_LANG_PATH %}
 
     {% translate "Fleet boss" as l10nFleetBoss %}
     {% translate "Kick member from fleet" as l10nKickMemberFromFleet %}
     {% translate "An unknown error occurred." as l10nUnknownError %}
 
     <script>
-        $(document).ready(() => {
-            /* DataTables
-            ------------------------------------------------------------------------- */
-            const elements = {
-                tableFleetMembers: $('#table_fleet_members'),
-                tableFleetComposition: $('#table_fleet_composition'),
-                kickFleetMemberModal: $('#kick-fleet-member'),
-                kickFleetMemberCharacterName: $('#kick-fleet-member-character-name'),
-                modalButtonConfirmKickFleetMember: $('#modal-button-confirm-kick-fleet-member'),
-                warning: $('#fleetfinder-fleet-details-warning')
-            };
-            const url = {
-                kickFleetMember: '{% url "fleetfinder:ajax_fleet_kick_member" fleet.fleet_id %}',
-                fleetDetails: '{% url "fleetfinder:ajax_fleet_details" fleet.fleet_id %}'
-            };
-            const dataTableConfig = {
-                language: {
-                    url: '{{ DT_LANG_PATH }}'
-                },
-                paging: false,
-                destroy: true
-            };
-
-            const populateDatatables = () => {
-                fetchGet({
-                    url: url.fleetDetails,
-                })
-                .then((data) => {
-                    if (data.error) {
-                        elements.warning.removeClass('d-none').text(data.error);
-
-                        return;
-                    }
-
-                    elements.warning.addClass('d-none');
-
-                    elements.tableFleetMembers.DataTable({
-                        ...dataTableConfig,
-                        data: data.fleet_member,
-                        columns: [
-                            {
-                                render: (data, type, row) => {
-                                    const fwIcon = '<i class="fa-solid fa-star"></i>';
-
-                                    return row.is_fleet_boss
-                                        ? `${row.character_name} <sup data-bs-tooltip="aa-fleetfinder" title="{{ l10nFleetBoss|escapejs }}"><small>${fwIcon}</small></sup>`
-                                        : row.character_name;
-                                }
-                            },
-                            {data: 'ship_type_name'},
-                            {data: 'solar_system_name'},
-                            {
-                                render: (data, type, row) => {
-                                    const fwIcon = '<i class="fa-solid fa-user-minus"></i>';
-                                    const dataAttributes = Object.entries({
-                                        'data-character-id': row.character_id,
-                                        'data-character-name': row.character_name,
-                                        'data-bs-toggle': 'modal',
-                                        'data-bs-target': '#kick-fleet-member',
-                                        'data-bs-tooltip': 'aa-fleetfinder'
-                                    }).map(([key, value]) => {
-                                        return `${key}="${value}"`;
-                                    }).join(' ');
-
-                                    return row.is_fleet_boss
-                                        ? ''
-                                        : `<button type="button" class="btn btn-sm btn-danger" ${dataAttributes} title="{{ l10nKickMemberFromFleet|escapejs }}">${fwIcon}</button>`;
-                                },
-                                orderable: false,
-                                searchable: false,
-                                width: '50px',
-                                className: 'text-end'
-                            }
-                        ],
-                        createdRow: (row, data, rowIndex) => {
-                            $(row).attr('data-row-id', rowIndex);
-                            $(row).attr('data-character-id', data.character_id);
-                        }
-                    });
-
-                    elements.tableFleetComposition.DataTable({
-                        ...dataTableConfig,
-                        data: data.fleet_composition,
-                        columns: [
-                            {data: 'ship_type_name'},
-                            {data: 'number', className: 'text-right', width: '100px'}
-                        ],
-                        order: [[1, 'desc']]
-                    });
-                })
-                .then(() => {
-                    // Initialize tooltips for the kick buttons
-                    fleetfinderBootstrapTooltip({selector: '#table_fleet_members'});
-                })
-                .catch((error) => {
-                    console.error('Error fetching fleet details:', error);
-                });
-            };
-
-            populateDatatables();
-
-            setInterval(populateDatatables, 30000);
-
-            /* Modals
-            ------------------------------------------------------------------------- */
-            // Handle the kick fleet member modal
-            elements.kickFleetMemberModal
-                .on('show.bs.modal', (event) => {
-                    const button = $(event.relatedTarget);
-                    const characterId = button.data('character-id');
-                    const characterName = button.data('character-name');
-                    const link = url.kickFleetMember;
-                    const csrfToken = '{{ csrf_token }}';
-
-                    // Populate the modal content
-                    $('#kick-fleet-member-character-name').text(characterName);
-
-                    $('#modal-button-confirm-kick-fleet-member')
-                        // Remove any previous click handlers to avoid multiple bindings
-                        .off('click.kickMember')
-                        // Bind the click event for the confirmation button
-                        .on('click.kickMember', () => {
-                        fetchPost({
-                            url: link,
-                            csrfToken: csrfToken,
-                            payload: {
-                                memberId: characterId
-                            },
-                            responseIsJson: true
-                        })
-                        .then((data) => {
-                            if (data.success) {
-                                populateDatatables();
-
-                                $('#kick-fleet-member').modal('hide');
-                            } else {
-                                $('#kick-fleet-member .modal-kick-fleet-member-error')
-                                    .removeClass('d-none')
-                                    .find('.modal-kick-fleet-member-error-message')
-                                    .text(data.error || '{{ l10nUnknownError|escapejs }}');
-                            }
-                        })
-                        .catch((error) => {
-                            console.error('Error kicking fleet member:', error);
-                        });
-                    });
-                })
-                .on('hide.bs.modal', () => {
-                    // Reset modal content
-                    $('#kick-fleet-member-character-name').empty();
-                    $('#kick-fleet-member .modal-kick-fleet-member-error')
-                        .addClass('d-none')
-                        .find('.modal-kick-fleet-member-error-message')
-                        .empty();
-
-                    // Clean up event handler
-                    $('#modal-button-confirm-kick-fleet-member').off('click.kickMember');
-                });
-        });
+        const aaFleetFinderSettingsOverride = {
+            dataTables: {
+                url: {
+                    fleetDetails: '{% url "fleetfinder:ajax_fleet_details" fleet.fleet_id %}',
+                    kickFleetMember: '{% url "fleetfinder:ajax_fleet_kick_member" fleet.fleet_id %}'
+                }
+            },
+            l10n: {
+                fleetBoss: '{{ l10nFleetBoss|escapejs }}',
+                kickMemberFromFleet: '{{ l10nKickMemberFromFleet|escapejs }}',
+                unknownError: '{{ l10nUnknownError|escapejs }}'
+            },
+            csrfToken: '{{ csrf_token }}'
+        };
     </script>
+
+    {% include "fleetfinder/bundles/js/fleetfinder-js.html" with view="fleet-details" %}
 {% endblock %}
