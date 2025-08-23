@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2025-08-21 15:11+0200\n"
+"POT-Creation-Date: 2025-08-23 16:51+0200\n"
 "PO-Revision-Date: 2024-07-10 14:26+0000\n"
 "Last-Translator: Dadas Aideron <dadas.aideron@gmail.com>\n"
 "Language-Team: Czech <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/cs/>\n"
@@ -18,8 +18,8 @@ msgstr ""
 "X-Generator: Weblate 5.6.2\n"
 
 #: fleetfinder/__init__.py:9 fleetfinder/models.py:24
-#: fleetfinder/templates/fleetfinder/base.html:6
-#: fleetfinder/templates/fleetfinder/base.html:10
+#: fleetfinder/templates/fleetfinder/base.html:7
+#: fleetfinder/templates/fleetfinder/base.html:11
 #: fleetfinder/templates/fleetfinder/create-fleet.html:7
 #: fleetfinder/templates/fleetfinder/edit-fleet.html:7
 #: fleetfinder/templates/fleetfinder/fleet-details.html:7
@@ -122,45 +122,45 @@ msgstr ""
 msgid "Fleet details"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:16
+#: fleetfinder/templates/fleetfinder/fleet-details.html:20
 msgid "Fleet composition"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:25
-#: fleetfinder/templates/fleetfinder/fleet-details.html:51
+#: fleetfinder/templates/fleetfinder/fleet-details.html:29
+#: fleetfinder/templates/fleetfinder/fleet-details.html:55
 msgid "Ship class"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:26
+#: fleetfinder/templates/fleetfinder/fleet-details.html:30
 msgid "Count"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:41
+#: fleetfinder/templates/fleetfinder/fleet-details.html:45
 msgid "Fleet members"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:50
+#: fleetfinder/templates/fleetfinder/fleet-details.html:54
 msgid "Name"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:52
+#: fleetfinder/templates/fleetfinder/fleet-details.html:56
 msgid "System"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:53
+#: fleetfinder/templates/fleetfinder/fleet-details.html:57
 msgid "Action"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:79
+#: fleetfinder/templates/fleetfinder/fleet-details.html:80
 msgid "Fleet boss"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:80
+#: fleetfinder/templates/fleetfinder/fleet-details.html:81
 #: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:10
 msgid "Kick member from fleet"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:81
+#: fleetfinder/templates/fleetfinder/fleet-details.html:82
 msgid "An unknown error occurred."
 msgstr ""
 
@@ -249,7 +249,7 @@ msgstr ""
 msgid "<h4>Error!</h4><p>There was an error creating the fleet: {error_detail}</p>"
 msgstr ""
 
-#: fleetfinder/views.py:284
+#: fleetfinder/views.py:284 fleetfinder/views.py:474
 msgid "<h4>Error!</h4><p>Fleet does not exist or is no longer available.</p>"
 msgstr ""
 
@@ -263,23 +263,33 @@ msgstr ""
 msgid "<h4>Error!</h4><p>There was an error creating the fleet: {ex}</p>"
 msgstr ""
 
-#: fleetfinder/views.py:517
-msgid "Method not allowed"
+#: fleetfinder/views.py:510
+#, python-brace-format
+msgid "Fleet with ID {fleet_id} does not exist."
 msgstr ""
 
-#: fleetfinder/views.py:527
-msgid "Member ID required"
+#: fleetfinder/views.py:516
+#, python-brace-format
+msgid "Error retrieving fleet composition: {ex}"
 msgstr ""
 
 #: fleetfinder/views.py:546
+msgid "Method not allowed"
+msgstr ""
+
+#: fleetfinder/views.py:556
+msgid "Member ID required"
+msgstr ""
+
+#: fleetfinder/views.py:575
 msgid "Fleet not found"
 msgstr ""
 
-#: fleetfinder/views.py:550
+#: fleetfinder/views.py:579
 msgid "Invalid request data"
 msgstr ""
 
-#: fleetfinder/views.py:554
+#: fleetfinder/views.py:583
 msgid "Member not found in fleet"
 msgstr ""
 
