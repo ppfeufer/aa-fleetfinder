@@ -42,6 +42,7 @@ Section Order:
 
 ### Changed
 
+- Inline JavaScript moved to separate files
 - Switch to Terser for JavaScript compression
 - Set chunk size for ESI calls to `Universe.post_universe_names` to 1000 to match the
   limit for this endpoint (Thanks to @cvweiss (Squizz Caphinator) for pointing this out)

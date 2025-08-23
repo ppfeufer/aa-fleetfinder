@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.7.0\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2025-08-22 10:06+0200\n"
+"POT-Creation-Date: 2025-08-23 16:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,8 +18,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: fleetfinder/__init__.py:9 fleetfinder/models.py:24
-#: fleetfinder/templates/fleetfinder/base.html:6
-#: fleetfinder/templates/fleetfinder/base.html:10
+#: fleetfinder/templates/fleetfinder/base.html:7
+#: fleetfinder/templates/fleetfinder/base.html:11
 #: fleetfinder/templates/fleetfinder/create-fleet.html:7
 #: fleetfinder/templates/fleetfinder/edit-fleet.html:7
 #: fleetfinder/templates/fleetfinder/fleet-details.html:7
@@ -154,16 +154,16 @@ msgstr ""
 msgid "Action"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:83
+#: fleetfinder/templates/fleetfinder/fleet-details.html:80
 msgid "Fleet boss"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:84
+#: fleetfinder/templates/fleetfinder/fleet-details.html:81
 #: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:10
 msgid "Kick member from fleet"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:85
+#: fleetfinder/templates/fleetfinder/fleet-details.html:82
 msgid "An unknown error occurred."
 msgstr ""
 
