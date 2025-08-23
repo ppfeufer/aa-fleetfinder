@@ -35,6 +35,8 @@ Section Order:
 ### Security
 -->
 
+## [2.7.1] - 2025-08-23
+
 ### Added
 
 - Header to fleet details view (Fleet name and FC name)
