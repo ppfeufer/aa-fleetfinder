@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2025-08-21 15:11+0200\n"
+"POT-Creation-Date: 2025-08-23 16:51+0200\n"
 "PO-Revision-Date: 2025-08-21 13:16+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: Ukrainian <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/uk/>\n"
@@ -22,8 +22,8 @@ msgstr ""
 "X-Generator: Weblate 5.13\n"
 
 #: fleetfinder/__init__.py:9 fleetfinder/models.py:24
-#: fleetfinder/templates/fleetfinder/base.html:6
-#: fleetfinder/templates/fleetfinder/base.html:10
+#: fleetfinder/templates/fleetfinder/base.html:7
+#: fleetfinder/templates/fleetfinder/base.html:11
 #: fleetfinder/templates/fleetfinder/create-fleet.html:7
 #: fleetfinder/templates/fleetfinder/edit-fleet.html:7
 #: fleetfinder/templates/fleetfinder/fleet-details.html:7
@@ -126,47 +126,47 @@ msgstr "Редагувати флот"
 msgid "Fleet details"
 msgstr "Деталі флоту"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:16
+#: fleetfinder/templates/fleetfinder/fleet-details.html:20
 msgid "Fleet composition"
 msgstr "Композиція флоту"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:25
-#: fleetfinder/templates/fleetfinder/fleet-details.html:51
+#: fleetfinder/templates/fleetfinder/fleet-details.html:29
+#: fleetfinder/templates/fleetfinder/fleet-details.html:55
 msgid "Ship class"
 msgstr "Клас корабля"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:26
+#: fleetfinder/templates/fleetfinder/fleet-details.html:30
 msgid "Count"
 msgstr "Кількість"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:41
+#: fleetfinder/templates/fleetfinder/fleet-details.html:45
 msgid "Fleet members"
 msgstr "Члени флоту"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:50
+#: fleetfinder/templates/fleetfinder/fleet-details.html:54
 msgid "Name"
 msgstr "Назва"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:52
+#: fleetfinder/templates/fleetfinder/fleet-details.html:56
 msgid "System"
 msgstr "Система"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:53
+#: fleetfinder/templates/fleetfinder/fleet-details.html:57
 msgid "Action"
 msgstr "Дія"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:79
+#: fleetfinder/templates/fleetfinder/fleet-details.html:80
 #, fuzzy
 #| msgid "Fleet members"
 msgid "Fleet boss"
 msgstr "Члени флоту"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:80
+#: fleetfinder/templates/fleetfinder/fleet-details.html:81
 #: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:10
 msgid "Kick member from fleet"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:81
+#: fleetfinder/templates/fleetfinder/fleet-details.html:82
 msgid "An unknown error occurred."
 msgstr ""
 
@@ -260,7 +260,7 @@ msgstr "Редагувати оголошення флоту"
 msgid "<h4>Error!</h4><p>There was an error creating the fleet: {error_detail}</p>"
 msgstr "<h4>Помилка!</h4><p>ESI повернув помилку: {esi_error_message}</p>"
 
-#: fleetfinder/views.py:284
+#: fleetfinder/views.py:284 fleetfinder/views.py:474
 msgid "<h4>Error!</h4><p>Fleet does not exist or is no longer available.</p>"
 msgstr ""
 
@@ -275,25 +275,35 @@ msgstr "<h4>Помилка!</h4><p>ESI повернув помилку: {esi_err
 msgid "<h4>Error!</h4><p>There was an error creating the fleet: {ex}</p>"
 msgstr ""
 
-#: fleetfinder/views.py:517
-msgid "Method not allowed"
+#: fleetfinder/views.py:510
+#, python-brace-format
+msgid "Fleet with ID {fleet_id} does not exist."
 msgstr ""
 
-#: fleetfinder/views.py:527
-msgid "Member ID required"
+#: fleetfinder/views.py:516
+#, python-brace-format
+msgid "Error retrieving fleet composition: {ex}"
 msgstr ""
 
 #: fleetfinder/views.py:546
+msgid "Method not allowed"
+msgstr ""
+
+#: fleetfinder/views.py:556
+msgid "Member ID required"
+msgstr ""
+
+#: fleetfinder/views.py:575
 #, fuzzy
 #| msgid "Fleet invitation"
 msgid "Fleet not found"
 msgstr "Запрошення флоту"
 
-#: fleetfinder/views.py:550
+#: fleetfinder/views.py:579
 msgid "Invalid request data"
 msgstr ""
 
-#: fleetfinder/views.py:554
+#: fleetfinder/views.py:583
 msgid "Member not found in fleet"
 msgstr ""
 
