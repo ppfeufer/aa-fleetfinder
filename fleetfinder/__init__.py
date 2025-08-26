@@ -9,6 +9,8 @@ __version__ = "2.7.2"
 __title__ = _("Fleet Finder")
 __verbose_name__ = "Fleet Finder for Alliance Auth"
 
+__esi_compatibility_date__ = "2025-08-26"
+
 __package_name__ = "aa-fleetfinder"
 __app_name__ = "fleetfinder"
 __app_name_verbose__ = "AA Fleet Finder"

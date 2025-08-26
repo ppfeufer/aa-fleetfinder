@@ -64,10 +64,8 @@ def _send_invitation(character_id, fleet_commander_token, fleet_id):
 
     invitation = {"character_id": character_id, "role": "squad_member"}
 
-    esi.client.Fleets.post_fleets_fleet_id_members(
-        fleet_id=fleet_id,
-        token=fleet_commander_token.valid_access_token(),
-        invitation=invitation,
+    esi.client.Fleets.PostFleetsFleetIdMembers(
+        fleet_id=fleet_id, token=fleet_commander_token, invitation=invitation
     ).result()
 
 
@@ -175,9 +173,8 @@ def _check_for_esi_fleet(fleet: Fleet):
         fleet_commander_id = fleet.fleet_commander.character_id
         esi_token = Token.get_token(fleet_commander_id, required_scopes)
 
-        fleet_from_esi = esi.client.Fleets.get_characters_character_id_fleet(
-            character_id=fleet_commander_id,
-            token=esi_token.valid_access_token(),
+        fleet_from_esi = esi.client.Fleets.GetCharactersCharacterIdFleet(
+            character_id=fleet_commander_id, token=esi_token
         ).result()
 
         return {"fleet": fleet_from_esi, "token": esi_token}
@@ -219,9 +216,8 @@ def _process_fleet(fleet: Fleet) -> None:
 
     # Check if we deal with the fleet boss here
     try:
-        _ = esi.client.Fleets.get_fleets_fleet_id_members(
-            fleet_id=fleet.fleet_id,
-            token=esi_fleet["token"].valid_access_token(),
+        _ = esi.client.Fleets.GetFleetsFleetIdMembers(
+            fleet_id=fleet.fleet_id, token=esi_fleet["token"]
         ).result()
     except Exception:  # pylint: disable=broad-exception-caught
         _esi_fleet_error_handling(fleet=fleet, error_key=Fleet.EsiError.NOT_FLEETBOSS)
@@ -323,8 +319,8 @@ def get_fleet_composition(  # pylint: disable=too-many-locals
             character_id=fleet.fleet_commander.character_id, scopes=required_scopes
         )
 
-        fleet_infos = esi.client.Fleets.get_fleets_fleet_id_members(
-            fleet_id=fleet_id, token=token.valid_access_token()
+        fleet_infos = esi.client.Fleets.GetFleetsFleetIdMembers(
+            fleet_id=fleet_id, token=token
         ).result()
 
         # Get all unique IDs and fetch names in one call
@@ -355,7 +351,7 @@ def get_fleet_composition(  # pylint: disable=too-many-locals
 
         for i in range(0, len(all_ids_list), chunk_size):
             chunk = all_ids_list[i : i + chunk_size]
-            chunk_result = esi.client.Universe.post_universe_names(ids=chunk).result()
+            chunk_result = esi.client.Universe.PostUniverseNames(ids=chunk).result()
 
             ids_to_name.extend(chunk_result)
 

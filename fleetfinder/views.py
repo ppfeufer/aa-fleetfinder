@@ -29,6 +29,7 @@ from allianceauth.groupmanagement.models import AuthGroup
 from allianceauth.services.hooks import get_extension_logger
 from esi.decorators import token_required
 from esi.models import Token
+from esi.openapi_clients import EsiOperation
 
 # Alliance Auth (External Libs)
 from app_utils.logging import LoggerAddTag
@@ -44,7 +45,7 @@ logger = LoggerAddTag(my_logger=get_extension_logger(name=__name__), prefix=__ti
 
 @login_required()
 @permission_required(perm="fleetfinder.access_fleetfinder")
-def _get_and_validate_fleet(token: Token, character_id: int) -> tuple:
+def _get_and_validate_fleet(token: Token, character_id: int) -> EsiOperation:
     """
     Get fleet information and validate fleet commander permissions
 
@@ -52,24 +53,37 @@ def _get_and_validate_fleet(token: Token, character_id: int) -> tuple:
     :type token: Token
     :param character_id: The character ID of the fleet commander
     :type character_id: int
-    :return: Tuple containing the fleet result, fleet commander, and fleet ID
-    :rtype: tuple
+    :return: Fleet information from ESI
+    :rtype: GetCharactersCharacterIdFleetOperation
     """
 
-    fleet_result = esi.client.Fleets.get_characters_character_id_fleet(
-        character_id=token.character_id, token=token.valid_access_token()
-    ).result()
+    try:
+        fleet_result = esi.client.Fleets.GetCharactersCharacterIdFleet(
+            character_id=token.character_id,
+            token=token,
+        ).result()
+    except HTTPNotFound as ex:
+        logger.debug(f"ESI returned 404 for fleet retrieval: {ex}", exc_info=True)
+
+        raise ValueError("Fleet not found") from ex
+    except Exception as ex:
+        logger.debug(f"Error retrieving fleet from ESI: {ex}", exc_info=True)
+
+        raise RuntimeError(f"Error retrieving fleet from ESI: {ex}") from ex
 
     logger.debug(f"Fleet result: {fleet_result}")
 
-    fleet_commander = EveCharacter.objects.get(character_id=token.character_id)
-    fleet_id = fleet_result.get("fleet_id")
-    fleet_boss_id = fleet_result.get("fleet_boss_id")
+    fleet_id = fleet_result.fleet_id
+    fleet_boss_id = fleet_result.fleet_boss_id
 
     if not fleet_id:
+        fleet_commander = EveCharacter.objects.get(character_id=token.character_id)
+
         raise ValueError(f"No fleet found for {fleet_commander.character_name}")
 
     if fleet_boss_id != character_id:
+        fleet_commander = EveCharacter.objects.get(character_id=token.character_id)
+
         raise ValueError(f"{fleet_commander.character_name} is not the fleet boss")
 
     return fleet_result
@@ -387,7 +401,7 @@ def save_fleet(request):
 
         fleet_result = _get_and_validate_fleet(token, character_id)
         fleet_commander = EveCharacter.objects.get(character_id=character_id)
-        fleet_id = fleet_result.get("fleet_id")
+        fleet_id = fleet_result.fleet_id
 
         fleet, created = Fleet.objects.get_or_create(
             fleet_id=fleet_id,
@@ -407,11 +421,11 @@ def save_fleet(request):
 
         fleet.groups.set(groups)
 
-        esi.client.Fleets.put_fleets_fleet_id(
+        esi.client.Fleets.PutFleetsFleetId(
             fleet_id=fleet_id,
-            token=token.valid_access_token(),
-            # new_settings={"is_free_move": free_move, "motd": motd},
-            new_settings={"is_free_move": free_move},
+            token=token,
+            # body={"is_free_move": free_move, "motd": motd},
+            body={"is_free_move": free_move},
         ).result()
 
     if request.method != "POST":
@@ -563,10 +577,10 @@ def ajax_fleet_kick_member(request: WSGIRequest, fleet_id: int) -> JsonResponse:
             scopes=["esi-fleets.write_fleet.v1"],
         )
 
-        esi.client.Fleets.delete_fleets_fleet_id_members_member_id(
+        esi.client.Fleets.DeleteFleetsFleetIdMembersMemberId(
             fleet_id=fleet_id,
             member_id=member_id,
-            token=token.valid_access_token(),
+            token=token,
         ).result()
 
         return JsonResponse(data={"success": True}, status=200)
