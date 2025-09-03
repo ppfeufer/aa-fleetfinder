@@ -1,5 +1,21 @@
 # Make targets for Django projects
 
+# List of languages to create translation files for
+django_locales = \
+	--locale cs_CZ \
+	--locale de \
+	--locale es \
+	--locale fr_FR \
+	--locale it_IT \
+	--locale ja \
+	--locale ko_KR \
+	--locale nl_NL \
+	--locale pl_PL \
+	--locale ru \
+	--locale sk \
+	--locale uk \
+	--locale zh_Hans
+
 # Create or update translation template (.pot file)
 .PHONY: pot
 pot: check-python-venv
@@ -39,20 +55,7 @@ add_translation: check-python-venv
 .PHONY: translations
 translations: check-python-venv
 	@echo "Creating or updating translation files"
-	@django-admin makemessages \
-		--locale cs_CZ \
-		--locale de \
-		--locale es \
-		--locale fr_FR \
-		--locale it_IT \
-		--locale ja \
-		--locale ko_KR \
-		--locale nl_NL \
-		--locale pl_PL \
-		--locale ru \
-		--locale sk \
-		--locale uk \
-		--locale zh_Hans \
+	@django-admin makemessages $(django_locales) \
 		--keep-pot \
 		--ignore 'build/*' \
 		--ignore 'node_modules/*' \
@@ -77,20 +80,7 @@ translations: check-python-venv
 .PHONY: compile_translations
 compile_translations: check-python-venv
 	@echo "Compiling translation files"
-	@django-admin compilemessages \
-		--locale cs_CZ \
-		--locale de \
-		--locale es \
-		--locale fr_FR \
-		--locale it_IT \
-		--locale ja \
-		--locale ko_KR \
-		--locale nl_NL \
-		--locale pl_PL \
-		--locale ru \
-		--locale sk \
-		--locale uk \
-		--locale zh_Hans
+	@django-admin compilemessages $(django_locales)
 
 # Migrate all database changes
 .PHONY: migrate
