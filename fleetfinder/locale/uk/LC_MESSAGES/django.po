@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
 "POT-Creation-Date: 2025-08-23 16:51+0200\n"
-"PO-Revision-Date: 2025-08-21 13:16+0000\n"
-"Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
+"PO-Revision-Date: 2025-08-27 20:43+0000\n"
+"Last-Translator: s0k0l -_- <salarysalo@gmail.com>\n"
 "Language-Team: Ukrainian <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
@@ -156,19 +156,17 @@ msgid "Action"
 msgstr "Дія"
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:80
-#, fuzzy
-#| msgid "Fleet members"
 msgid "Fleet boss"
-msgstr "Члени флоту"
+msgstr "Командир флоту"
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:81
 #: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:10
 msgid "Kick member from fleet"
-msgstr ""
+msgstr "Кікнути пілота з флоту"
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:82
 msgid "An unknown error occurred."
-msgstr ""
+msgstr "Невідома помилка."
 
 #: fleetfinder/templates/fleetfinder/join-fleet.html:6 fleetfinder/views.py:182
 msgid "Join fleet"
@@ -180,23 +178,19 @@ msgstr "Запрошення флоту"
 
 #: fleetfinder/templates/fleetfinder/join-fleet.html:22
 msgid "Please ensure you don't have any CSPA charges set on your characters, as this will prevent fleet invites from being sent."
-msgstr ""
+msgstr "Будь ласка впевніться, що у вас нема CSPA на ваших чарах, оскільки це перешкоджатиме надсиланню Вам інвайтів."
 
 #: fleetfinder/templates/fleetfinder/join-fleet.html:24
-#, fuzzy
-#| msgid "Select the characters to invite"
 msgid "You can select multiple characters to invite them all at once."
-msgstr "Вибрати персонажа для запрошення"
+msgstr "Ви можете обрати декілька персонажів та запросити їх одразу."
 
 #: fleetfinder/templates/fleetfinder/join-fleet.html:28
 msgid "The selected characters will receive a fleet invite in-game, which they can accept to join the fleet."
-msgstr ""
+msgstr "Обраний персонаж отримає інвайт у флот в грі, який доєднає його до флоту."
 
 #: fleetfinder/templates/fleetfinder/join-fleet.html:35
-#, fuzzy
-#| msgid "Select the characters to invite"
 msgid "Please select the characters you want to invite:"
-msgstr "Вибрати персонажа для запрошення"
+msgstr "Будь ласка, оберіть персонажів, яких хочете запросити:"
 
 #: fleetfinder/templates/fleetfinder/join-fleet.html:45
 msgid "Send fleet invites"
@@ -208,11 +202,11 @@ msgstr "Закрити"
 
 #: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:18
 msgid "Are you sure you want to kick this member from the fleet?"
-msgstr ""
+msgstr "Ви дійсно хочете кікнути цього пілота з флоту?"
 
 #: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:27
 msgid "Error"
-msgstr ""
+msgstr "Помилочка"
 
 #: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:36
 msgid "Cancel"
@@ -255,57 +249,53 @@ msgid "Edit fleet advert"
 msgstr "Редагувати оголошення флоту"
 
 #: fleetfinder/views.py:244
-#, fuzzy, python-brace-format
-#| msgid "<h4>Error!</h4><p>ESI returned the following error: {esi_error_message}</p>"
+#, python-brace-format
 msgid "<h4>Error!</h4><p>There was an error creating the fleet: {error_detail}</p>"
-msgstr "<h4>Помилка!</h4><p>ESI повернув помилку: {esi_error_message}</p>"
+msgstr "<h4>Помилка!</h4><p>Помилка створення флоту: {error_detail}</p>"
 
 #: fleetfinder/views.py:284 fleetfinder/views.py:474
 msgid "<h4>Error!</h4><p>Fleet does not exist or is no longer available.</p>"
-msgstr ""
+msgstr "<h4>Помилка!</h4><p>Флот не існує або більше не доступний.</p>"
 
 #: fleetfinder/views.py:438
-#, fuzzy, python-brace-format
-#| msgid "<h4>Error!</h4><p>ESI returned the following error: {esi_error_message}</p>"
+#, python-brace-format
 msgid "<h4>Error!</h4><p>ESI returned the following error: {esi_error}</p>"
-msgstr "<h4>Помилка!</h4><p>ESI повернув помилку: {esi_error_message}</p>"
+msgstr "<h4>Помилка!</h4><p>ESI повернув помилку: {esi_error}</p>"
 
 #: fleetfinder/views.py:446
 #, python-brace-format
 msgid "<h4>Error!</h4><p>There was an error creating the fleet: {ex}</p>"
-msgstr ""
+msgstr "<h4>Помилка!</h4><p>Помилка створення флоту: {ex}</p>"
 
 #: fleetfinder/views.py:510
 #, python-brace-format
 msgid "Fleet with ID {fleet_id} does not exist."
-msgstr ""
+msgstr "Флот з цим ID {fleet_id} не існує."
 
 #: fleetfinder/views.py:516
 #, python-brace-format
 msgid "Error retrieving fleet composition: {ex}"
-msgstr ""
+msgstr "Помилка отримання композиції флоту: {ex}"
 
 #: fleetfinder/views.py:546
 msgid "Method not allowed"
-msgstr ""
+msgstr "Метод не дозволено"
 
 #: fleetfinder/views.py:556
 msgid "Member ID required"
-msgstr ""
+msgstr "Треба ID пілота"
 
 #: fleetfinder/views.py:575
-#, fuzzy
-#| msgid "Fleet invitation"
 msgid "Fleet not found"
-msgstr "Запрошення флоту"
+msgstr "Флот не знайдено"
 
 #: fleetfinder/views.py:579
 msgid "Invalid request data"
-msgstr ""
+msgstr "Не коректний запит"
 
 #: fleetfinder/views.py:583
 msgid "Member not found in fleet"
-msgstr ""
+msgstr "Пілот не знайдений у флоті"
 
 #~ msgid "Details"
 #~ msgstr "Деталі"
