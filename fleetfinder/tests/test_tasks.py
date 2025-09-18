@@ -34,7 +34,7 @@ class TestGetFleetAggregate(TestCase):
 
         result = _get_fleet_aggregate(fleet_infos)
 
-        assert result == {"Cruiser": 2, "Battleship": 1}
+        self.assertEqual(result, {"Cruiser": 2, "Battleship": 1})
 
     def test_returns_empty_dict_for_empty_fleet_infos(self):
         """
@@ -48,7 +48,7 @@ class TestGetFleetAggregate(TestCase):
 
         result = _get_fleet_aggregate(fleet_infos)
 
-        assert result == {}
+        self.assertEqual(result, {})
 
     def test_returns_only_valid_ship_type_names(self):
         """
@@ -68,7 +68,7 @@ class TestGetFleetAggregate(TestCase):
 
         result = _get_fleet_aggregate(fleet_infos)
 
-        assert result == {"Cruiser": 1, "Battleship": 1}
+        self.assertEqual(result, {"Cruiser": 1, "Battleship": 1})
 
 
 class TestCheckFleetAdvert(TestCase):
