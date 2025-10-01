@@ -2,8 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/)
-and this project adheres to [Semantic Versioning](http://semver.org/).
+The format is based on [Keep a Changelog] and this project adheres to [Semantic Versioning].
 
 <!--
 GitHub MD Syntax:
@@ -34,6 +33,8 @@ Section Order:
 ### Removed
 ### Security
 -->
+
+<!-- Your changes go here -->
 
 ## [2.7.1] - 2025-08-23
 
@@ -522,7 +523,7 @@ Section Order:
 
 ## [0.1.0-alpha.1] - 2020-12-30
 
-App forked from [Dreadbomb/aa-fleet](https://github.com/Dreadbomb/aa-fleet)
+App forked from [Dreadbomb/aa-fleet]
 
 ### Fixed
 
@@ -538,3 +539,60 @@ App forked from [Dreadbomb/aa-fleet](https://github.com/Dreadbomb/aa-fleet)
 - Automatic page reload in fleet details view deactivated (was causing troubles)
 - Datatable for dashboard configured properly
 - Migrations reset
+
+<!-- Links to be updated upon release -->
+
+[0.1.0-alpha.1]: https://github.com/ppfeufer/aa-fleetfinder/commits/v0.1.0-alpha.1 "v0.1.0-alpha.1"
+[0.1.0-alpha.10]: https://github.com/ppfeufer/aa-fleetfinder/compare/v0.1.0-alpha.6...v0.1.0-alpha.10 "v0.1.0-alpha.10"
+[0.1.0-alpha.11]: https://github.com/ppfeufer/aa-fleetfinder/compare/v0.1.0-alpha.10...v0.1.0-alpha.11 "v0.1.0-alpha.11"
+[0.1.0-alpha.12]: https://github.com/ppfeufer/aa-fleetfinder/compare/v0.1.0-alpha.11...v0.1.0-alpha.12 "v0.1.0-alpha.12"
+[0.1.0-alpha.13]: https://github.com/ppfeufer/aa-fleetfinder/compare/v0.1.0-alpha.12...v0.1.0-alpha.13 "v0.1.0-alpha.13"
+[0.1.0-alpha.14]: https://github.com/ppfeufer/aa-fleetfinder/compare/v0.1.0-alpha.13...v0.1.0-alpha.14 "v0.1.0-alpha.14"
+[0.1.0-alpha.15]: https://github.com/ppfeufer/aa-fleetfinder/compare/v0.1.0-alpha.9...v0.1.0-alpha.15 "v0.1.0-alpha.15"
+[0.1.0-alpha.16]: https://github.com/ppfeufer/aa-fleetfinder/compare/v0.1.0-alpha.15...v0.1.0-alpha.16 "v0.1.0-alpha.16"
+[0.1.0-alpha.17]: https://github.com/ppfeufer/aa-fleetfinder/compare/v0.1.0-alpha.16...v0.1.0-alpha.17 "v0.1.0-alpha.17"
+[0.1.0-alpha.18]: https://github.com/ppfeufer/aa-fleetfinder/compare/v0.1.0-alpha.17...v0.1.0-alpha.18 "v0.1.0-alpha.18"
+[0.1.0-alpha.19]: https://github.com/ppfeufer/aa-fleetfinder/compare/v0.1.0-alpha.18...v0.1.0-alpha.19 "v0.1.0-alpha.19"
+[0.1.0-alpha.2]: https://github.com/ppfeufer/aa-fleetfinder/compare/v0.1.0-alpha.1...v0.1.0-alpha.2 "v0.1.0-alpha.2"
+[0.1.0-alpha.20]: https://github.com/ppfeufer/aa-fleetfinder/compare/v0.1.0-alpha.19...v0.1.0-alpha.20 "v0.1.0-alpha.20"
+[0.1.0-alpha.3]: https://github.com/ppfeufer/aa-fleetfinder/compare/v0.1.0-alpha.2...v0.1.0-alpha.3 "v0.1.0-alpha.3"
+[0.1.0-alpha.4]: https://github.com/ppfeufer/aa-fleetfinder/compare/v0.1.0-alpha.3...v0.1.0-alpha.4 "v0.1.0-alpha.4"
+[0.1.0-alpha.5]: https://github.com/ppfeufer/aa-fleetfinder/compare/v0.1.0-alpha.4...v0.1.0-alpha.5 "v0.1.0-alpha.5"
+[0.1.0-alpha.6]: https://github.com/ppfeufer/aa-fleetfinder/compare/v0.1.0-alpha.5...v0.1.0-alpha.6 "v0.1.0-alpha.6"
+[0.1.0-alpha.7]: https://github.com/ppfeufer/aa-fleetfinder/commits/v0.1.0-alpha.7 "v0.1.0-alpha.7"
+[0.1.0-alpha.8]: https://github.com/ppfeufer/aa-fleetfinder/compare/v0.1.0-alpha.7...v0.1.0-alpha.8 "v0.1.0-alpha.8"
+[0.1.0-alpha.9]: https://github.com/ppfeufer/aa-fleetfinder/compare/v0.1.0-alpha.8...v0.1.0-alpha.9 "v0.1.0-alpha.9"
+[1.0.0]: https://github.com/ppfeufer/aa-fleetfinder/compare/v1.0.0-beta.1...v1.0.0 "v1.0.0"
+[1.0.0-beta.1]: https://github.com/ppfeufer/aa-fleetfinder/compare/v0.1.0-alpha.20...v1.0.0-beta.1 "v1.0.0-beta.1"
+[1.1.0]: https://github.com/ppfeufer/aa-fleetfinder/compare/v1.0.0...v1.1.0 "v1.1.0"
+[1.2.0]: https://github.com/ppfeufer/aa-fleetfinder/compare/v1.1.0...v1.2.0 "v1.2.0"
+[1.3.0]: https://github.com/ppfeufer/aa-fleetfinder/compare/v1.2.0...v1.3.0 "v1.3.0"
+[1.3.1]: https://github.com/ppfeufer/aa-fleetfinder/compare/v1.3.0...v1.3.1 "v1.3.1"
+[1.3.2]: https://github.com/ppfeufer/aa-fleetfinder/compare/v1.3.1...v1.3.2 "v1.3.2"
+[1.4.0]: https://github.com/ppfeufer/aa-fleetfinder/compare/v1.3.2...v1.4.0 "v1.4.0"
+[1.5.0]: https://github.com/ppfeufer/aa-fleetfinder/compare/v1.4.0...v1.5.0 "v1.5.0"
+[1.5.1]: https://github.com/ppfeufer/aa-fleetfinder/compare/v1.5.0...v1.5.1 "v1.5.1"
+[1.5.2]: https://github.com/ppfeufer/aa-fleetfinder/compare/v1.5.1...v1.5.2 "v1.5.2"
+[2.0.0]: https://github.com/ppfeufer/aa-fleetfinder/compare/v1.5.2...v2.0.0 "v2.0.0"
+[2.0.0-beta.1]: https://github.com/ppfeufer/aa-fleetfinder/compare/v1.5.2...v2.0.0-beta.1 "v2.0.0-beta.1"
+[2.0.1]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.0.0...v2.0.1 "v2.0.1"
+[2.1.0]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.0.1...v2.1.0 "v2.1.0"
+[2.2.0]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.1.0...v2.2.0 "v2.2.0"
+[2.2.1]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.2.0...v2.2.1 "v2.2.1"
+[2.2.2]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.2.1...v2.2.2 "v2.2.2"
+[2.3.0]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.2.2...v2.3.0 "v2.3.0"
+[2.3.1]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.3.0...v2.3.1 "v2.3.1"
+[2.3.2]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.3.1...v2.3.2 "v2.3.2"
+[2.3.3]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.3.2...v2.3.3 "v2.3.3"
+[2.3.4]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.3.3...v2.3.4 "v2.3.4"
+[2.4.0]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.3.4...v2.4.0 "v2.4.0"
+[2.5.0]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.4.0...v2.5.0 "v2.5.0"
+[2.5.1]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.5.0...v2.5.1 "v2.5.1"
+[2.6.0]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.5.1...v2.6.0 "v2.6.0"
+[2.6.1]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.6.0...v2.6.1 "v2.6.1"
+[2.7.0]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.6.1...v2.7.0 "v2.7.0"
+[2.7.1]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.7.0...v2.7.1 "v2.7.1"
+[dreadbomb/aa-fleet]: https://github.com/Dreadbomb/aa-fleet "Dreadbomb/aa-fleet"
+[in development]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.7.1...HEAD "In Development"
+[keep a changelog]: http://keepachangelog.com/ "Keep a Changelog"
+[semantic versioning]: http://semver.org/ "Semantic Versioning"
