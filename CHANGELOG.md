@@ -36,6 +36,12 @@ Section Order:
 
 <!-- Your changes go here -->
 
+## [2.7.2] - 2025-10-07
+
+### Changed
+
+- Translations updated
+
 ## [2.7.1] - 2025-08-23
 
 ### Added
@@ -592,7 +598,8 @@ App forked from [Dreadbomb/aa-fleet]
 [2.6.1]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.6.0...v2.6.1 "v2.6.1"
 [2.7.0]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.6.1...v2.7.0 "v2.7.0"
 [2.7.1]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.7.0...v2.7.1 "v2.7.1"
+[2.7.2]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.7.1...v2.7.2 "v2.7.2"
 [dreadbomb/aa-fleet]: https://github.com/Dreadbomb/aa-fleet "Dreadbomb/aa-fleet"
-[in development]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.7.1...HEAD "In Development"
+[in development]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.7.2...HEAD "In Development"
 [keep a changelog]: http://keepachangelog.com/ "Keep a Changelog"
 [semantic versioning]: http://semver.org/ "Semantic Versioning"
