@@ -77,22 +77,16 @@ class TestCheckFleetAdvert(TestCase):
     """
 
     @patch("fleetfinder.models.Fleet.objects.all")
-    @patch("fleetfinder.tasks.fetch_esi_status")
-    def test_processes_registered_fleets_when_available(
-        self, mock_fetch_esi_status, mock_fleet_objects
-    ):
+    def test_processes_registered_fleets_when_available(self, mock_fleet_objects):
         """
         Test that check_fleet_adverts processes registered fleets when ESI is available.
 
-        :param mock_fetch_esi_status:
-        :type mock_fetch_esi_status:
         :param mock_fleet_objects:
         :type mock_fleet_objects:
         :return:
         :rtype:
         """
 
-        mock_fetch_esi_status.return_value.is_ok = True
         mock_fleet_objects.return_value.exists.return_value = True
         mock_fleet_objects.return_value.count.return_value = 2
         mock_fleet_objects.return_value.__iter__.return_value = iter([Mock(), Mock()])
@@ -100,41 +94,20 @@ class TestCheckFleetAdvert(TestCase):
         check_fleet_adverts()
 
         mock_fleet_objects.return_value.__iter__.assert_called_once()
-        mock_fetch_esi_status.assert_called_once()
 
     @patch("fleetfinder.models.Fleet.objects.all")
-    @patch("fleetfinder.tasks.fetch_esi_status")
-    def test_logs_no_registered_fleets_when_none_exist(
-        self, mock_fetch_esi_status, mock_fleet_objects
-    ):
+    def test_logs_no_registered_fleets_when_none_exist(self, mock_fleet_objects):
         """
         Test that check_fleet_adverts logs a message when no registered fleets exist.
 
-        :param mock_fetch_esi_status:
-        :type mock_fetch_esi_status:
         :param mock_fleet_objects:
         :type mock_fleet_objects:
         :return:
         :rtype:
         """
 
-        mock_fetch_esi_status.return_value.is_ok = True
         mock_fleet_objects.return_value.exists.return_value = False
 
         check_fleet_adverts()
 
         mock_fleet_objects.return_value.exists.assert_called_once()
-        mock_fetch_esi_status.assert_not_called()
-
-    @patch("fleetfinder.models.Fleet.objects.all")
-    @patch("fleetfinder.tasks.fetch_esi_status")
-    def test_aborts_processing_when_esi_is_unavailable(
-        self, mock_fetch_esi_status, mock_fleet_objects
-    ):
-        mock_fetch_esi_status.return_value.is_ok = False
-        mock_fleet_objects.return_value.exists.return_value = True
-
-        check_fleet_adverts()
-
-        mock_fetch_esi_status.assert_called_once()
-        mock_fleet_objects.return_value.__iter__.assert_not_called()

@@ -19,7 +19,6 @@ from allianceauth.services.tasks import QueueOnce
 from esi.models import Token
 
 # Alliance Auth (External Libs)
-from app_utils.esi import fetch_esi_status
 from app_utils.logging import LoggerAddTag
 
 # AA Fleet Finder
@@ -359,11 +358,6 @@ def check_fleet_adverts() -> None:
 
     # Log the number of fleets to be processed
     logger.info(f"Processing {fleets.count()} registered fleets...")
-
-    # Abort if ESI is offline or above the error limit
-    if not fetch_esi_status().is_ok:
-        logger.warning("ESI doesn't seem to be available at this time. Aborting.")
-        return
 
     # Process each fleet individually
     for fleet in fleets:
