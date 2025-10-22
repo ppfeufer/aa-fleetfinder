@@ -3,13 +3,14 @@ Test the settings
 """
 
 # Django
-from django.test import TestCase, override_settings
+from django.test import override_settings
 
 # AA Fleet Finder
 from fleetfinder.app_settings import debug_enabled
+from fleetfinder.tests import BaseTestCase
 
 
-class TestSettings(TestCase):
+class TestSettings(BaseTestCase):
     """
     Test the settings
     """

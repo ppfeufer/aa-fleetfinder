@@ -3,7 +3,6 @@ Tests for the fleetfinder.tasks module.
 """
 
 # Standard Library
-from unittest import TestCase
 from unittest.mock import Mock, patch
 
 # AA Fleet Finder
@@ -11,9 +10,10 @@ from fleetfinder.tasks import (
     _get_fleet_aggregate,
     check_fleet_adverts,
 )
+from fleetfinder.tests import BaseTestCase
 
 
-class TestGetFleetAggregate(TestCase):
+class TestGetFleetAggregate(BaseTestCase):
     """
     Tests for the _get_fleet_aggregate function.
     """
@@ -71,7 +71,7 @@ class TestGetFleetAggregate(TestCase):
         self.assertEqual(result, {"Cruiser": 1, "Battleship": 1})
 
 
-class TestCheckFleetAdvert(TestCase):
+class TestCheckFleetAdvert(BaseTestCase):
     """
     Tests for the check_fleet_adverts function.
     """

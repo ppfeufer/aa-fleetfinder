@@ -10,7 +10,6 @@ from unittest.mock import Mock, patch
 
 # Django
 from django.contrib.auth.models import Group
-from django.test import TestCase
 from django.urls import reverse
 from django.utils.datetime_safe import datetime
 from django.utils.timezone import now
@@ -23,6 +22,7 @@ from app_utils.testing import create_fake_user
 
 # AA Fleet Finder
 from fleetfinder.models import Fleet
+from fleetfinder.tests import BaseTestCase
 
 
 def dt_to_iso(dt: datetime) -> str:
@@ -48,7 +48,7 @@ def dt_to_iso(dt: datetime) -> str:
     return r
 
 
-class FleetfinderTestViews(TestCase):
+class FleetfinderTestViews(BaseTestCase):
     """
     Base test case for Fleet Finder views.
     This class sets up the necessary users and fleet ID for testing.

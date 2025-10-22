@@ -7,14 +7,14 @@ from http import HTTPStatus
 
 # Django
 from django.contrib.auth.models import Group
-from django.test import TestCase
 from django.urls import reverse
 
 # AA Fleet Finder
+from fleetfinder.tests import BaseTestCase
 from fleetfinder.tests.utils import create_fake_user
 
 
-class TestAccess(TestCase):
+class TestAccess(BaseTestCase):
     """
     Testing module access
     """
