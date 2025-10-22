@@ -14,6 +14,5 @@ __esi_compatibility_date__ = "2025-08-26"
 __package_name__ = "aa-fleetfinder"
 __app_name__ = "fleetfinder"
 __app_name_verbose__ = "AA Fleet Finder"
-__app_name_useragent__ = "AA-Fleet-Finder"
 
 __github_url__ = f"https://github.com/ppfeufer/{__package_name__}"
