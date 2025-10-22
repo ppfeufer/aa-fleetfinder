@@ -1157,7 +1157,10 @@ class TestAjaxFleetKickMemberView(FleetfinderTestViews):
         self.assertEqual(response.status_code, 500)
         self.assertEqual(
             json.loads(response.content),
-            {"success": False, "error": "ESI error occurred"},
+            {
+                "success": False,
+                "error": "An ESI error occurred: <HTTPClientError 500 {} {}>",
+            },
         )
 
     def test_successfully_kicks_member_from_fleet(self):
