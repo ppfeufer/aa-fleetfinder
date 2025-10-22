@@ -4,9 +4,7 @@ Views
 
 # Standard Library
 import json
-
-# Third Party
-from bravado.exception import HTTPNotFound
+from http import HTTPStatus
 
 # Django
 from django.contrib import messages
@@ -28,6 +26,7 @@ from allianceauth.framework.api.user import get_all_characters_from_user
 from allianceauth.groupmanagement.models import AuthGroup
 from allianceauth.services.hooks import get_extension_logger
 from esi.decorators import token_required
+from esi.exceptions import HTTPClientError
 from esi.models import Token
 from esi.openapi_clients import EsiOperation
 
@@ -61,9 +60,9 @@ def _get_and_validate_fleet(token: Token, character_id: int) -> EsiOperation:
         fleet_result = esi.client.Fleets.GetCharactersCharacterIdFleet(
             character_id=token.character_id,
             token=token,
-        ).result()
-    except HTTPNotFound as ex:
-        logger.debug(f"ESI returned 404 for fleet retrieval: {ex}", exc_info=True)
+        ).result(force_refresh=True)
+    except HTTPClientError as ex:
+        logger.debug(f"ESI fleet cannot be retrieved: {ex}", exc_info=True)
 
         raise ValueError("Fleet not found") from ex
     except Exception as ex:
@@ -246,13 +245,10 @@ def create_fleet(request, token):
     # Validate the token and check if the character is in a fleet and is the fleet boss
     try:
         _get_and_validate_fleet(token, token.character_id)
-    except (HTTPNotFound, ValueError) as ex:
+    except (HTTPClientError, ValueError) as ex:
         logger.debug(f"Error during fleet creation: {ex}", exc_info=True)
 
-        if isinstance(ex, HTTPNotFound):
-            error_detail = ex.swagger_result["error"]
-        else:
-            error_detail = str(ex)
+        error_detail = str(ex)
 
         error_message = _(
             f"<h4>Error!</h4><p>There was an error creating the fleet: {error_detail}</p>"
@@ -426,7 +422,7 @@ def save_fleet(request):
             token=token,
             # body={"is_free_move": free_move, "motd": motd},
             body={"is_free_move": free_move},
-        ).result()
+        ).result(force_refresh=True)
 
     if request.method != "POST":
         return redirect("fleetfinder:dashboard")
@@ -444,10 +440,10 @@ def save_fleet(request):
 
     try:
         _edit_or_create_fleet(**form_data)
-    except HTTPNotFound as ex:
+    except HTTPClientError as ex:
         logger.debug(f"ESI returned 404 for fleet creation: {ex}", exc_info=True)
 
-        esi_error = ex.swagger_result.get("error", "Unknown error")
+        esi_error = str(ex)
         error_message = _(
             f"<h4>Error!</h4><p>ESI returned the following error: {esi_error}</p>"
         )
@@ -543,7 +539,9 @@ def ajax_fleet_details(
 
 @login_required()
 @permission_required(perm="fleetfinder.manage_fleets")
-def ajax_fleet_kick_member(request: WSGIRequest, fleet_id: int) -> JsonResponse:
+def ajax_fleet_kick_member(  # pylint: disable=too-many-return-statements
+    request: WSGIRequest, fleet_id: int
+) -> JsonResponse:
     """
     Ajax :: Kick member from fleet
 
@@ -557,7 +555,8 @@ def ajax_fleet_kick_member(request: WSGIRequest, fleet_id: int) -> JsonResponse:
 
     if request.method != "POST":
         return JsonResponse(
-            data={"success": False, "error": _("Method not allowed")}, status=405
+            data={"success": False, "error": _("Method not allowed")},
+            status=HTTPStatus.METHOD_NOT_ALLOWED,
         )
 
     try:
@@ -567,7 +566,8 @@ def ajax_fleet_kick_member(request: WSGIRequest, fleet_id: int) -> JsonResponse:
 
         if not member_id:
             return JsonResponse(
-                data={"success": False, "error": _("Member ID required")}, status=400
+                data={"success": False, "error": _("Member ID required")},
+                status=HTTPStatus.BAD_REQUEST,
             )
 
         logger.debug(f"Request data for kicking member: {data}")
@@ -581,18 +581,29 @@ def ajax_fleet_kick_member(request: WSGIRequest, fleet_id: int) -> JsonResponse:
             fleet_id=fleet_id,
             member_id=member_id,
             token=token,
-        ).result()
+        ).result(force_refresh=True)
 
-        return JsonResponse(data={"success": True}, status=200)
+        return JsonResponse(data={"success": True}, status=HTTPStatus.OK)
     except Fleet.DoesNotExist:
         return JsonResponse(
-            data={"success": False, "error": _("Fleet not found")}, status=404
+            data={"success": False, "error": _("Fleet not found")},
+            status=HTTPStatus.NOT_FOUND,
         )
     except (json.JSONDecodeError, ValueError):
         return JsonResponse(
-            data={"success": False, "error": _("Invalid request data")}, status=400
+            data={"success": False, "error": _("Invalid request data")},
+            status=HTTPStatus.BAD_REQUEST,
         )
-    except HTTPNotFound:
+    except HTTPClientError as ex:
+        if ex.status_code == HTTPStatus.NOT_FOUND:
+            return JsonResponse(
+                data={"success": False, "error": _("Member not found in fleet")},
+                status=HTTPStatus.NOT_FOUND,
+            )
+
+        logger.debug(f"ESI error while kicking member: {ex}", exc_info=True)
+
         return JsonResponse(
-            data={"success": False, "error": _("Member not found in fleet")}, status=404
+            data={"success": False, "error": _("ESI error occurred")},
+            status=ex.status_code,
         )

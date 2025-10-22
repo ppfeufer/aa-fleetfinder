@@ -17,7 +17,7 @@ from django.utils import timezone
 # Alliance Auth
 from allianceauth.services.hooks import get_extension_logger
 from allianceauth.services.tasks import QueueOnce
-from esi.exceptions import HTTPClientError, HTTPNotModified
+from esi.exceptions import HTTPClientError
 from esi.models import Token
 
 # Alliance Auth (External Libs)
@@ -232,16 +232,9 @@ def _check_for_esi_fleet(fleet: Fleet) -> dict | bool:
 
         fleet_from_esi = esi.client.Fleets.GetCharactersCharacterIdFleet(
             character_id=fleet_commander_id, token=esi_token
-        ).result()
+        ).result(force_refresh=True)
 
         return {"fleet": fleet_from_esi, "token": esi_token}
-    except HTTPNotModified:
-        logger.debug(
-            f'No changes for fleet "{fleet.name}" of {fleet.fleet_commander} '
-            f"(ESI ID: {fleet.fleet_id}), nothing to do."
-        )
-
-        return False
     except ContentTypeError:
         logger.debug(
             f'ESI returned gibberish for fleet "{fleet.name}" of {fleet.fleet_commander} '

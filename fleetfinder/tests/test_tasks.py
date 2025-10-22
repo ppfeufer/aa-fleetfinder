@@ -13,7 +13,7 @@ from aiopenapi3 import ContentTypeError
 from django.utils import timezone
 
 # Alliance Auth
-from esi.exceptions import HTTPClientError, HTTPNotModified
+from esi.exceptions import HTTPClientError
 
 # AA Fleet Finder
 from fleetfinder.models import Fleet
@@ -372,36 +372,6 @@ class TestHelperCheckForEsiFleet(BaseTestCase):
         self.assertIn("token", result)
         self.assertEqual(result["fleet"], mock_esi_fleet)
         self.assertEqual(result["token"], mock_token)
-
-    def test_returns_false_when_no_changes_detected(self):
-        """
-        Test that _check_for_esi_fleet returns False when no changes are detected.
-
-        :return:
-        :rtype:
-        """
-
-        mock_fleet = MagicMock()
-        mock_token = MagicMock()
-
-        # concrete response whose .result() raises an instance of HTTPNotModified
-        mock_response = MagicMock()
-        mock_response.result.side_effect = HTTPNotModified(304, {})
-
-        mock_client = MagicMock()
-        mock_client.Fleets.GetCharactersCharacterIdFleet.return_value = mock_response
-
-        with patch(
-            "fleetfinder.tasks.Token.get_token", return_value=mock_token
-        ) as mock_get_token:
-            with patch("fleetfinder.tasks.esi", Mock(client=mock_client)):
-                result = _check_for_esi_fleet(fleet=mock_fleet)
-
-        # assert the function explicitly returned False and the expected calls happened
-        self.assertIs(result, False)
-        mock_client.Fleets.GetCharactersCharacterIdFleet.assert_called_once()
-        mock_response.result.assert_called_once()
-        mock_get_token.assert_called_once()
 
     def test_returns_false_when_content_type_error_occurs(self):
         """
