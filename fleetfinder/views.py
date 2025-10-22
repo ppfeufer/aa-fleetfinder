@@ -62,13 +62,13 @@ def _get_and_validate_fleet(token: Token, character_id: int) -> EsiOperation:
             token=token,
         ).result(force_refresh=True)
     except HTTPClientError as ex:
-        logger.debug(f"ESI fleet cannot be retrieved: {ex}", exc_info=True)
+        logger.debug(f"ESI fleet cannot be retrieved: {str(ex)}", exc_info=True)
 
         raise ValueError("Fleet not found") from ex
     except Exception as ex:
-        logger.debug(f"Error retrieving fleet from ESI: {ex}", exc_info=True)
+        logger.debug(f"Error retrieving fleet from ESI: {str(ex)}", exc_info=True)
 
-        raise RuntimeError(f"Error retrieving fleet from ESI: {ex}") from ex
+        raise RuntimeError(f"Error retrieving fleet from ESI: {str(ex)}") from ex
 
     logger.debug(f"Fleet result: {fleet_result}")
 
@@ -246,15 +246,18 @@ def create_fleet(request, token):
     try:
         _get_and_validate_fleet(token, token.character_id)
     except (HTTPClientError, ValueError) as ex:
-        logger.debug(f"Error during fleet creation: {ex}", exc_info=True)
-
         error_detail = str(ex)
 
-        error_message = _(
-            f"<h4>Error!</h4><p>There was an error creating the fleet: {error_detail}</p>"
-        )
+        logger.debug(f"Error during fleet creation: {error_detail}", exc_info=True)
 
-        messages.error(request, mark_safe(error_message))
+        messages.error(
+            request,
+            mark_safe(
+                _(
+                    "<h4>Error!</h4><p>There was an error creating the fleet: {error_detail}</p>"
+                ).format(error_detail=error_detail)
+            ),
+        )
 
         return redirect("fleetfinder:dashboard")
 
@@ -306,8 +309,7 @@ def edit_fleet(request, fleet_id):
         "fleet": fleet,
     }
 
-    logger.debug("Context for fleet edit: %s", context)
-
+    logger.debug(f"Context for fleet edit: {context}")
     logger.info(msg=f"Fleet {fleet_id} edit view by {request.user}")
 
     return render(
@@ -441,22 +443,29 @@ def save_fleet(request):
     try:
         _edit_or_create_fleet(**form_data)
     except HTTPClientError as ex:
-        logger.debug(f"ESI returned 404 for fleet creation: {ex}", exc_info=True)
-
         esi_error = str(ex)
-        error_message = _(
-            f"<h4>Error!</h4><p>ESI returned the following error: {esi_error}</p>"
-        )
 
-        messages.error(request, mark_safe(error_message))
+        logger.debug(f"ESI returned 404 for fleet creation: {esi_error}", exc_info=True)
+
+        messages.error(
+            request,
+            mark_safe(
+                _(
+                    "<h4>Error!</h4><p>ESI returned the following error: {esi_error}</p>"
+                ).format(esi_error=esi_error)
+            ),
+        )
     except ValueError as ex:
         logger.debug(f"Value error during fleet creation: {ex}", exc_info=True)
 
-        error_message = _(
-            f"<h4>Error!</h4><p>There was an error creating the fleet: {ex}</p>"
+        messages.error(
+            request,
+            mark_safe(
+                _(
+                    "<h4>Error!</h4><p>There was an error creating the fleet: {ex}</p>"
+                ).format(ex=str(ex))
+            ),
         )
-
-        messages.error(request, mark_safe(error_message))
 
     return redirect("fleetfinder:dashboard")
 
@@ -517,13 +526,23 @@ def ajax_fleet_details(
         logger.debug(f"Fleet with ID {fleet_id} does not exist.")
 
         return JsonResponse(
-            data={"error": _(f"Fleet with ID {fleet_id} does not exist.")}, safe=False
+            data={
+                "error": _("Fleet with ID {fleet_id} does not exist.").format(
+                    fleet_id=fleet_id
+                )
+            },
+            safe=False,
         )
     except RuntimeError as ex:
-        logger.debug(f"Error retrieving fleet composition: {ex}", exc_info=True)
+        logger.debug(f"Error retrieving fleet composition: {str(ex)}", exc_info=True)
 
         return JsonResponse(
-            data={"error": _(f"Error retrieving fleet composition: {ex}")}, safe=False
+            data={
+                "error": _("Error retrieving fleet composition: {ex}").format(
+                    ex=str(ex)
+                )
+            },
+            safe=False,
         )
 
     data = {
@@ -601,9 +620,12 @@ def ajax_fleet_kick_member(  # pylint: disable=too-many-return-statements
                 status=HTTPStatus.NOT_FOUND,
             )
 
-        logger.debug(f"ESI error while kicking member: {ex}", exc_info=True)
+        logger.debug(f"ESI error while kicking member: {str(ex)}", exc_info=True)
 
         return JsonResponse(
-            data={"success": False, "error": _("ESI error occurred")},
+            data={
+                "success": False,
+                "error": _("An ESI error occurred: {ex}").format(ex=str(ex)),
+            },
             status=ex.status_code,
         )

@@ -36,6 +36,16 @@ Section Order:
 
 <!-- Your changes go here -->
 
+### Fixed
+
+- Django `makemessages` doesn't seem to recognise f-strings anymore
+
+### Changed
+
+- Switched to OpenAPI3 specification for ESI endpoints
+  - Set compatibility date to 2025-09-30 (September 30, 2025)
+- Set the maximum required Python version to 3.13
+
 ## [2.7.2] - 2025-10-07
 
 ### Changed

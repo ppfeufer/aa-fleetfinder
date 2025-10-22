@@ -6,10 +6,11 @@ Initialize the app
 from django.utils.translation import gettext_lazy as _
 
 __version__ = "2.7.2"
-__title__ = _("Fleet Finder")
+__title__ = "Fleet Finder"
+__title_translated__ = _("Fleet Finder")
 __verbose_name__ = "Fleet Finder for Alliance Auth"
 
-__esi_compatibility_date__ = "2025-08-26"
+__esi_compatibility_date__ = "2025-09-30"
 
 __package_name__ = "aa-fleetfinder"
 __app_name__ = "fleetfinder"

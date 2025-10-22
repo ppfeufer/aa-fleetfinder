@@ -470,6 +470,7 @@ def get_fleet_composition(fleet_id: int) -> FleetViewAggregate | None:
     except Fleet.DoesNotExist as exc:
         # Log and raise an error if the fleet does not exist
         logger.error(f"Fleet with ID {fleet_id} not found")
+
         raise Fleet.DoesNotExist(f"Fleet with ID {fleet_id} not found.") from exc
 
     # Log the start of fleet composition retrieval
