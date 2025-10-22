@@ -6,26 +6,34 @@ Test the views for the Fleet Finder application.
 import json
 from http import HTTPStatus
 from types import SimpleNamespace
-from unittest.mock import Mock, patch
+from unittest.mock import MagicMock, Mock, patch
 
 # Django
 from django.contrib.auth.models import Group
-from django.test import TestCase
 from django.urls import reverse
 from django.utils.datetime_safe import datetime
 from django.utils.timezone import now
 
 # Alliance Auth
 from allianceauth.groupmanagement.models import AuthGroup
+from esi.exceptions import HTTPClientError
 
 # Alliance Auth (External Libs)
 from app_utils.testing import create_fake_user
 
 # AA Fleet Finder
 from fleetfinder.models import Fleet
+from fleetfinder.tests import BaseTestCase
+from fleetfinder.views import (
+    _get_and_validate_fleet,
+    ajax_fleet_kick_member,
+    create_fleet,
+    join_fleet,
+    save_fleet,
+)
 
 
-def dt_to_iso(dt: datetime) -> str:
+def _dt_to_iso(dt: datetime) -> str:
     """
     Helper :: Convert a datetime object to ISO 8601 format.
 
@@ -48,7 +56,7 @@ def dt_to_iso(dt: datetime) -> str:
     return r
 
 
-class FleetfinderTestViews(TestCase):
+class FleetfinderTestViews(BaseTestCase):
     """
     Base test case for Fleet Finder views.
     This class sets up the necessary users and fleet ID for testing.
@@ -89,6 +97,145 @@ class FleetfinderTestViews(TestCase):
         cls.fleet.save()
 
         cls.fleet_id = 12345
+
+
+class TestHelperGetAndValidateFleet(FleetfinderTestViews):
+    """
+    Tests for the _get_and_validate_fleet helper function.
+    """
+
+    def test_retrieves_fleet_information_successfully(self):
+        """
+        Test that the _get_and_validate_fleet function retrieves fleet information successfully.
+
+        :return:
+        :rtype:
+        """
+
+        mock_token = MagicMock(character_id=12345)
+        mock_fleet_result = MagicMock(fleet_id=67890, fleet_boss_id=12345)
+        esi_stub = SimpleNamespace(
+            client=SimpleNamespace(
+                Fleets=SimpleNamespace(GetCharactersCharacterIdFleet=MagicMock())
+            )
+        )
+
+        with patch("fleetfinder.views.esi", new=esi_stub):
+            esi_stub.client.Fleets.GetCharactersCharacterIdFleet.return_value.result.return_value = (
+                mock_fleet_result
+            )
+            result = _get_and_validate_fleet(mock_token, 12345)
+
+        self.assertEqual(result, mock_fleet_result)
+
+    def test_raises_value_error_when_fleet_not_found(self):
+        """
+        Test that the _get_and_validate_fleet function raises a ValueError when fleet is not found.
+
+        :return:
+        :rtype:
+        """
+
+        mock_token = MagicMock(character_id=12345)
+        esi_stub = SimpleNamespace(
+            client=SimpleNamespace(
+                Fleets=SimpleNamespace(GetCharactersCharacterIdFleet=MagicMock())
+            )
+        )
+
+        with patch("fleetfinder.views.esi", new=esi_stub):
+            esi_stub.client.Fleets.GetCharactersCharacterIdFleet.side_effect = (
+                HTTPClientError(404, {}, {})
+            )
+
+            with self.assertRaises(ValueError) as context:
+                _get_and_validate_fleet(mock_token, 12345)
+
+        self.assertEqual(str(context.exception), "Fleet not found")
+
+    def test_raises_runtime_error_on_unexpected_exception(self):
+        """
+        Test that the _get_and_validate_fleet function raises a RuntimeError on unexpected exceptions.
+
+        :return:
+        :rtype:
+        """
+
+        mock_token = MagicMock(character_id=12345)
+        esi_stub = SimpleNamespace(
+            client=SimpleNamespace(
+                Fleets=SimpleNamespace(GetCharactersCharacterIdFleet=MagicMock())
+            )
+        )
+
+        with patch("fleetfinder.views.esi", new=esi_stub):
+            esi_stub.client.Fleets.GetCharactersCharacterIdFleet.side_effect = (
+                Exception("Unexpected error")
+            )
+
+            with self.assertRaises(RuntimeError) as context:
+                _get_and_validate_fleet(mock_token, 12345)
+
+        self.assertIn("Error retrieving fleet from ESI", str(context.exception))
+
+    def test_raises_value_error_when_fleet_id_is_missing(self):
+        """
+        Test that the _get_and_validate_fleet function raises a ValueError when fleet ID is missing.
+
+        :return:
+        :rtype:
+        """
+
+        mock_token = MagicMock(character_id=12345)
+        mock_fleet_result = MagicMock(fleet_id=None)
+        esi_stub = SimpleNamespace(
+            client=SimpleNamespace(
+                Fleets=SimpleNamespace(GetCharactersCharacterIdFleet=MagicMock())
+            )
+        )
+        with patch("fleetfinder.views.esi", new=esi_stub):
+            esi_stub.client.Fleets.GetCharactersCharacterIdFleet.return_value.result.return_value = (
+                mock_fleet_result
+            )
+            with patch(
+                "fleetfinder.views.EveCharacter.objects.get"
+            ) as mock_get_character:
+                mock_get_character.return_value.character_name = "Commander"
+                with self.assertRaises(ValueError) as context:
+                    _get_and_validate_fleet(mock_token, 12345)
+        self.assertIn("No fleet found for Commander", str(context.exception))
+
+    def test_raises_value_error_when_not_fleet_boss(self):
+        """
+        Test that the _get_and_validate_fleet function raises a ValueError when the user is not the fleet boss.
+
+        :return:
+        :rtype:
+        """
+
+        mock_token = MagicMock(character_id=12345)
+        mock_fleet_result = MagicMock(fleet_id=67890, fleet_boss_id=54321)
+
+        esi_stub = SimpleNamespace(
+            client=SimpleNamespace(
+                Fleets=SimpleNamespace(GetCharactersCharacterIdFleet=MagicMock())
+            )
+        )
+
+        with patch("fleetfinder.views.esi", new=esi_stub):
+            esi_stub.client.Fleets.GetCharactersCharacterIdFleet.return_value.result.return_value = (
+                mock_fleet_result
+            )
+
+            with patch(
+                "fleetfinder.views.EveCharacter.objects.get"
+            ) as mock_get_character:
+                mock_get_character.return_value.character_name = "Commander"
+
+                with self.assertRaises(ValueError) as context:
+                    _get_and_validate_fleet(mock_token, 12345)
+
+        self.assertIn("Commander is not the fleet boss", str(context.exception))
 
 
 class TestAjaxDashboardView(FleetfinderTestViews):
@@ -134,7 +281,7 @@ class TestAjaxDashboardView(FleetfinderTestViews):
                     "sort": "Jean Luc Picard",
                 },
                 "fleet_name": "Starfleet",
-                "created_at": dt_to_iso(self.fleet_created_at),
+                "created_at": _dt_to_iso(self.fleet_created_at),
                 "actions": f'<a href="{join_url}" class="btn btn-sm btn-success ms-1" data-bs-tooltip="aa-fleetfinder" title="Join fleet"><i class="fa-solid fa-right-to-bracket"></i></a>',
             }
         ]
@@ -179,7 +326,7 @@ class TestAjaxDashboardView(FleetfinderTestViews):
                     "sort": "Jean Luc Picard",
                 },
                 "fleet_name": "Starfleet",
-                "created_at": dt_to_iso(self.fleet_created_at),
+                "created_at": _dt_to_iso(self.fleet_created_at),
                 "actions": (
                     f'<a href="{join_url}" class="btn btn-sm btn-success ms-1" data-bs-tooltip="aa-fleetfinder" title="Join fleet"><i class="fa-solid fa-right-to-bracket"></i></a>'
                     f'<a href="{details_url}" class="btn btn-sm btn-info ms-1" data-bs-tooltip="aa-fleetfinder" title="View fleet details"><i class="fa-solid fa-eye"></i></a>'
@@ -246,6 +393,393 @@ class TestAjaxDashboardView(FleetfinderTestViews):
         self.assertIn("Starfleet", response.json()[0]["fleet_name"])
 
 
+class TestCreateFleetView(FleetfinderTestViews):
+    """
+    Test the create_fleet view in the Fleet Finder application.
+    This view is responsible for creating new fleet adverts.
+    """
+
+    def test_redirects_to_dashboard_when_token_validation_fails(self):
+        """
+        Test that the create_fleet view redirects to the dashboard when token validation fails.
+
+        :return:
+        :rtype:
+        """
+
+        mock_request = MagicMock(method="POST", user=MagicMock())
+        mock_request.session = MagicMock(
+            session_key="session123", exists=MagicMock(return_value=True)
+        )
+        mock_token = MagicMock(character_id=12345)
+
+        with patch("fleetfinder.views._get_and_validate_fleet") as mock_validate_fleet:
+            mock_validate_fleet.side_effect = ValueError("Invalid token")
+            view_func = create_fleet
+
+            while hasattr(view_func, "__wrapped__"):
+                view_func = view_func.__wrapped__
+
+            response = view_func(mock_request, mock_token)
+
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertEqual(response.url, reverse("fleetfinder:dashboard"))
+
+    def test_redirects_to_dashboard_on_get_request(self):
+        """
+        Test that the create_fleet view redirects to the dashboard on a GET request.
+
+        :return:
+        :rtype:
+        """
+
+        mock_request = MagicMock(method="GET", user=self.user_with_manage_perms)
+        mock_request.session = MagicMock(
+            session_key="session123", exists=MagicMock(return_value=True)
+        )
+        mock_token = MagicMock(character_id=12345)
+        with (
+            patch("fleetfinder.views._get_and_validate_fleet") as mock_validate_fleet,
+            patch("fleetfinder.views.AuthGroup.objects.filter") as mock_filter,
+        ):
+            mock_validate_fleet.return_value = MagicMock()
+            mock_filter.return_value = []
+            view_func = create_fleet
+            while hasattr(view_func, "__wrapped__"):
+                view_func = view_func.__wrapped__
+            response = view_func(mock_request, mock_token)
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertEqual(response.url, reverse("fleetfinder:dashboard"))
+
+    def test_renders_create_fleet_template_on_valid_post_request(self):
+        """
+        Test that the create_fleet view renders the create fleet template on a valid POST request.
+
+        :return:
+        :rtype:
+        """
+        mock_request = MagicMock(method="POST", user=MagicMock())
+        mock_request.session = MagicMock(
+            session_key="session123", exists=MagicMock(return_value=True)
+        )
+        mock_token = MagicMock(character_id=12345)
+        with (
+            patch("fleetfinder.views._get_and_validate_fleet") as mock_validate_fleet,
+            patch("fleetfinder.views.AuthGroup.objects.filter") as mock_filter,
+            patch("fleetfinder.views.render") as mock_render,
+        ):
+            mock_validate_fleet.return_value = MagicMock()
+            mock_filter.return_value = []
+            view_func = create_fleet
+            while hasattr(view_func, "__wrapped__"):
+                view_func = view_func.__wrapped__
+            view_func(mock_request, mock_token)
+            mock_render.assert_called_once_with(
+                request=mock_request,
+                template_name="fleetfinder/create-fleet.html",
+                context={"character_id": mock_token.character_id, "auth_groups": []},
+            )
+
+
+class TestJoinFleetView(FleetfinderTestViews):
+    """
+    Test the join_fleet view in the Fleet Finder application.
+    This view is responsible for allowing users to join a fleet.
+    It should redirect to the fleet details page after joining.
+    If the fleet does not exist, it should return a 404 status code.
+    """
+
+    def test_redirects_to_dashboard_if_fleet_not_found(self):
+        """
+        Test that the join_fleet view redirects to the dashboard if the fleet is not found.
+
+        :return:
+        :rtype:
+        """
+
+        mock_request = MagicMock(method="GET", user=MagicMock())
+        mock_request.user.groups.all.return_value = []
+
+        with patch("fleetfinder.views.Fleet.objects.filter") as mock_filter:
+            mock_filter.return_value.count.return_value = 0
+            response = join_fleet(mock_request, fleet_id=1)
+
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertEqual(response.url, reverse("fleetfinder:dashboard"))
+
+    def test_redirects_to_dashboard_on_post_and_sends_invitations(self):
+        """
+        Test that the join_fleet view redirects to the dashboard on a POST request and sends fleet invitations.
+
+        :return:
+        :rtype:
+        """
+
+        mock_request = MagicMock(method="POST", user=MagicMock())
+        mock_request.user.groups.all.return_value = []
+        mock_request.POST.getlist.return_value = [1001, 1002]
+
+        with (
+            patch("fleetfinder.views.Fleet.objects.filter") as mock_filter,
+            patch(
+                "fleetfinder.views.send_fleet_invitation.delay"
+            ) as mock_send_invitation,
+        ):
+            mock_filter.return_value.count.return_value = 1
+            response = join_fleet(mock_request, fleet_id=1)
+
+            mock_send_invitation.assert_called_once_with(
+                character_ids=[1001, 1002], fleet_id=1
+            )
+
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertEqual(response.url, reverse("fleetfinder:dashboard"))
+
+    def test_renders_join_fleet_template_with_characters_on_get(self):
+        """
+        Test that the join_fleet view renders the join fleet template with characters on a GET request.
+
+        :return:
+        :rtype:
+        """
+
+        mock_request = MagicMock(method="GET", user=MagicMock())
+        mock_request.user.groups.all.return_value = []
+        mock_request.user.__str__.return_value = "test_user"
+        mock_characters = [
+            MagicMock(character_name="Char1"),
+            MagicMock(character_name="Char2"),
+        ]
+
+        with (
+            patch("fleetfinder.views.Fleet.objects.filter") as mock_filter,
+            patch(
+                "fleetfinder.views.EveCharacter.objects.filter"
+            ) as mock_character_filter,
+            patch("fleetfinder.views.render") as mock_render,
+        ):
+            mock_filter.return_value.count.return_value = 1
+            mock_character_filter.return_value.select_related.return_value.order_by.return_value = (
+                mock_characters
+            )
+
+            join_fleet(mock_request, fleet_id=1)
+
+            mock_render.assert_called_once_with(
+                request=mock_request,
+                template_name="fleetfinder/join-fleet.html",
+                context={"characters": mock_characters},
+            )
+
+
+class TestSaveFleetView(FleetfinderTestViews):
+    """
+    Test the save_fleet view in the Fleet Finder application.
+    This view is responsible for saving fleet details.
+    It should redirect to the dashboard after saving.
+    """
+
+    def test_redirects_to_dashboard_if_request_method_is_not_post(self):
+        """
+        Test that the save_fleet view redirects to the dashboard if the request method is not POST.
+
+        :return:
+        :rtype:
+        """
+
+        mock_request = MagicMock(method="GET", user=MagicMock())
+        response = save_fleet(mock_request)
+
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertEqual(response.url, reverse("fleetfinder:dashboard"))
+
+    def test_creates_new_fleet_with_valid_data(self):
+        """
+        Test that the save_fleet view creates a new fleet with valid data.
+
+        :return:
+        :rtype:
+        """
+
+        mock_request = MagicMock(method="POST", user=MagicMock())
+        post_data = {
+            "character_id": "12345",
+            "free_move": "on",
+            "name": "Test Fleet",
+            "groups": ["1", "2"],
+        }
+        mock_request.POST = MagicMock()
+        mock_request.POST.get.side_effect = lambda k, default=None: post_data.get(
+            k, default
+        )
+        mock_request.POST.getlist.side_effect = lambda k, default=None: post_data.get(
+            k, default
+        )
+
+        esi_stub = SimpleNamespace(
+            client=SimpleNamespace(Fleets=SimpleNamespace(PutFleetsFleetId=MagicMock()))
+        )
+
+        with (
+            patch(
+                "fleetfinder.views.Fleet.objects.get_or_create"
+            ) as mock_get_or_create,
+            patch("fleetfinder.views.Token.get_token") as mock_get_token,
+            patch("fleetfinder.views._get_and_validate_fleet") as mock_validate_fleet,
+            patch("fleetfinder.views.EveCharacter.objects.get") as mock_eve_get,
+            patch("fleetfinder.views.esi", new=esi_stub),
+        ):
+            mock_get_or_create.return_value = (MagicMock(), True)
+            mock_get_token.return_value = MagicMock()
+            mock_validate_fleet.return_value = MagicMock(fleet_id=1)
+            mock_eve_get.return_value = MagicMock(
+                character_id=int(post_data["character_id"])
+            )
+            response = save_fleet(mock_request)
+
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertEqual(response.url, reverse("fleetfinder:dashboard"))
+
+    def test_updates_existing_fleet_with_valid_data(self):
+        """
+        Test that the save_fleet view updates an existing fleet with valid data.
+
+        :return:
+        :rtype:
+        """
+
+        mock_request = MagicMock(method="POST", user=MagicMock())
+        post_data = {
+            "character_id": "12345",
+            "free_move": "on",
+            "name": "Updated Fleet",
+            "groups": ["1", "2"],
+        }
+        mock_request.POST = MagicMock()
+        mock_request.POST.get.side_effect = lambda k, default=None: post_data.get(
+            k, default
+        )
+        mock_request.POST.getlist.side_effect = lambda k, default=None: post_data.get(
+            k, default
+        )
+
+        mock_fleet = MagicMock()
+        esi_stub = SimpleNamespace(
+            client=SimpleNamespace(Fleets=SimpleNamespace(PutFleetsFleetId=MagicMock()))
+        )
+
+        with (
+            patch(
+                "fleetfinder.views.Fleet.objects.get_or_create"
+            ) as mock_get_or_create,
+            patch("fleetfinder.views.Token.get_token") as mock_get_token,
+            patch("fleetfinder.views._get_and_validate_fleet") as mock_validate_fleet,
+            patch("fleetfinder.views.EveCharacter.objects.get") as mock_eve_get,
+            patch("fleetfinder.views.esi", new=esi_stub),
+        ):
+            mock_get_or_create.return_value = (mock_fleet, False)
+            mock_get_token.return_value = MagicMock()
+            mock_validate_fleet.return_value = MagicMock(fleet_id=1)
+            mock_eve_get.return_value = MagicMock(
+                character_id=int(post_data["character_id"])
+            )
+            response = save_fleet(mock_request)
+            mock_fleet.save.assert_called_once()
+
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertEqual(response.url, reverse("fleetfinder:dashboard"))
+
+    def test_handles_http_client_error_during_fleet_creation(self):
+        """
+        Test that the save_fleet view handles HTTPClientError during fleet creation.
+
+        :return:
+        :rtype:
+        """
+
+        mock_request = MagicMock(method="POST", user=MagicMock())
+        post_data = {
+            "character_id": "12345",
+            "free_move": "on",
+            "name": "Test Fleet",
+            "groups": ["1", "2"],
+        }
+        mock_request.POST = MagicMock()
+        mock_request.POST.get.side_effect = lambda k, default=None: post_data.get(
+            k, default
+        )
+        mock_request.POST.getlist.side_effect = lambda k, default=None: post_data.get(
+            k, default
+        )
+
+        esi_stub = SimpleNamespace(
+            client=SimpleNamespace(Fleets=SimpleNamespace(PutFleetsFleetId=MagicMock()))
+        )
+
+        with (
+            patch("fleetfinder.views.Token.get_token") as mock_get_token,
+            patch("fleetfinder.views._get_and_validate_fleet") as mock_validate_fleet,
+            patch("fleetfinder.views.messages.error") as mock_messages,
+            patch("fleetfinder.views.EveCharacter.objects.get") as mock_eve_get,
+            patch("fleetfinder.views.esi", new=esi_stub),
+        ):
+            mock_get_token.return_value = MagicMock()
+            mock_validate_fleet.side_effect = HTTPClientError(400, {}, {})
+            mock_eve_get.return_value = MagicMock(
+                character_id=int(post_data["character_id"])
+            )
+            response = save_fleet(mock_request)
+            mock_messages.assert_called_once()
+
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertEqual(response.url, reverse("fleetfinder:dashboard"))
+
+    def test_handles_value_error_during_fleet_creation(self):
+        """
+        Test that the save_fleet view handles ValueError during fleet creation.
+
+        :return:
+        :rtype:
+        """
+
+        mock_request = MagicMock(method="POST", user=MagicMock())
+        post_data = {
+            "character_id": "12345",
+            "free_move": "on",
+            "name": "Test Fleet",
+            "groups": ["1", "2"],
+        }
+        mock_request.POST = MagicMock()
+        mock_request.POST.get.side_effect = lambda k, default=None: post_data.get(
+            k, default
+        )
+        mock_request.POST.getlist.side_effect = lambda k, default=None: post_data.get(
+            k, default
+        )
+
+        esi_stub = SimpleNamespace(
+            client=SimpleNamespace(Fleets=SimpleNamespace(PutFleetsFleetId=MagicMock()))
+        )
+
+        with (
+            patch("fleetfinder.views.Token.get_token") as mock_get_token,
+            patch("fleetfinder.views._get_and_validate_fleet") as mock_validate_fleet,
+            patch("fleetfinder.views.messages.error") as mock_messages,
+            patch("fleetfinder.views.EveCharacter.objects.get") as mock_eve_get,
+            patch("fleetfinder.views.esi", new=esi_stub),
+        ):
+            mock_get_token.return_value = MagicMock()
+            mock_validate_fleet.side_effect = ValueError("Invalid fleet")
+            mock_eve_get.return_value = MagicMock(
+                character_id=int(post_data["character_id"])
+            )
+            response = save_fleet(mock_request)
+            mock_messages.assert_called_once()
+
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertEqual(response.url, reverse("fleetfinder:dashboard"))
+
+
 class TestFleetEditView(FleetfinderTestViews):
     """
     Test the edit_fleet view in the Fleet Finder application.
@@ -299,55 +833,6 @@ class TestFleetEditView(FleetfinderTestViews):
 
         self.client.force_login(self.user_with_manage_perms)
         url = reverse("fleetfinder:edit_fleet", args=[99999])
-        response = self.client.get(url)
-
-        self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, reverse("fleetfinder:dashboard"))
-
-
-class TestJoinFleetView(FleetfinderTestViews):
-    """
-    Test the join_fleet view in the Fleet Finder application.
-    This view is responsible for allowing users to join a fleet.
-    It should redirect to the fleet details page after joining.
-    If the fleet does not exist, it should return a 404 status code.
-    """
-
-    @patch("fleetfinder.views.Fleet.objects.get")
-    def test_join_fleet_redirects_to_dashboard(self, mock_get_fleet):
-        """
-        Test that the join_fleet view redirects to the dashboard after joining a fleet.
-
-        :param mock_get_fleet:
-        :type mock_get_fleet:
-        :return:
-        :rtype:
-        """
-
-        mock_get_fleet.return_value = Fleet(fleet_id=self.fleet_id)
-
-        self.client.force_login(self.user_with_manage_perms)
-        url = reverse("fleetfinder:join_fleet", args=[self.fleet_id])
-        response = self.client.get(url)
-
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertTemplateUsed(response, "fleetfinder/join-fleet.html")
-
-    @patch("fleetfinder.views.Fleet.objects.get")
-    def test_join_fleet_handles_non_existent_fleet(self, mock_get_fleet):
-        """
-        Test that the join_fleet view handles a non-existent fleet correctly.
-
-        :param mock_get_fleet:
-        :type mock_get_fleet:
-        :return:
-        :rtype:
-        """
-
-        mock_get_fleet.side_effect = Fleet.DoesNotExist
-
-        self.client.force_login(self.user_with_manage_perms)
-        url = reverse("fleetfinder:join_fleet", args=[123456])  # Non-existent fleet ID
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
@@ -534,3 +1019,166 @@ class TestAjaxFleetDetailsView(FleetfinderTestViews):
             response.content,
             {"error": "Error retrieving fleet composition: Unexpected error"},
         )
+
+
+class TestAjaxFleetKickMemberView(FleetfinderTestViews):
+    """
+    Test the ajax_fleet_kick_member view in the Fleet Finder application.
+    This view is responsible for kicking a member from a fleet.
+    It should return a JSON response indicating success or failure.
+    """
+
+    def test_returns_405_if_request_method_is_not_post(self):
+        """
+        Test that the ajax_fleet_kick_member view returns a 405 status code if the request method is not POST.
+
+        :return:
+        :rtype:
+        """
+
+        mock_request = MagicMock(method="GET", user=MagicMock())
+        response = ajax_fleet_kick_member(mock_request, fleet_id=1)
+
+        self.assertEqual(response.status_code, HTTPStatus.METHOD_NOT_ALLOWED)
+        self.assertEqual(
+            json.loads(response.content),
+            {"success": False, "error": "Method not allowed"},
+        )
+
+    def test_returns_404_if_fleet_does_not_exist(self):
+        """
+        Test that the ajax_fleet_kick_member view returns a 404 status code if the fleet does not exist.
+
+        :return:
+        :rtype:
+        """
+
+        mock_request = MagicMock(method="POST", body=json.dumps({"memberId": 123}))
+
+        with patch(
+            "fleetfinder.views.Fleet.objects.get", side_effect=Fleet.DoesNotExist
+        ):
+            response = ajax_fleet_kick_member(mock_request, fleet_id=1)
+
+        self.assertEqual(response.status_code, HTTPStatus.NOT_FOUND)
+        self.assertEqual(
+            json.loads(response.content), {"success": False, "error": "Fleet not found"}
+        )
+
+    def test_returns_400_if_member_id_is_missing(self):
+        """
+        Test that the ajax_fleet_kick_member view returns a 400 status code if the member ID is missing.
+
+        :return:
+        :rtype:
+        """
+
+        mock_request = MagicMock(method="POST", body=json.dumps({}))
+
+        with patch("fleetfinder.views.Fleet.objects.get") as mock_get:
+            mock_get.return_value = MagicMock()
+            response = ajax_fleet_kick_member(mock_request, fleet_id=1)
+
+        self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)
+        self.assertEqual(
+            json.loads(response.content),
+            {"success": False, "error": "Member ID required"},
+        )
+
+    def test_returns_400_if_request_body_is_invalid(self):
+        """
+        Test that the ajax_fleet_kick_member view returns a 400 status code if the request body is invalid.
+
+        :return:
+        :rtype:
+        """
+
+        mock_request = MagicMock(method="POST", body="invalid_json")
+
+        with patch("fleetfinder.views.Fleet.objects.get") as mock_get:
+            mock_get.return_value = MagicMock()
+            response = ajax_fleet_kick_member(mock_request, fleet_id=1)
+
+        self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)
+        self.assertEqual(
+            json.loads(response.content),
+            {"success": False, "error": "Invalid request data"},
+        )
+
+    def test_returns_404_if_member_not_found_in_fleet(self):
+        """
+        Test that the ajax_fleet_kick_member view returns a 404 status code if the member is not found in the fleet.
+
+        :return:
+        :rtype:
+        """
+
+        mock_request = MagicMock(method="POST", body=json.dumps({"memberId": 123}))
+        esi_stub = SimpleNamespace(
+            client=SimpleNamespace(
+                Fleets=SimpleNamespace(
+                    DeleteFleetsFleetIdMembersMemberId=MagicMock(
+                        side_effect=HTTPClientError(404, {}, {})
+                    )
+                )
+            )
+        )
+
+        with (
+            patch("fleetfinder.views.Fleet.objects.get") as mock_get,
+            patch("fleetfinder.views.esi", new=esi_stub),
+        ):
+            mock_get.return_value = MagicMock(fleet_commander=MagicMock(character_id=1))
+            response = ajax_fleet_kick_member(mock_request, fleet_id=1)
+
+        self.assertEqual(response.status_code, HTTPStatus.NOT_FOUND)
+        self.assertEqual(
+            json.loads(response.content),
+            {"success": False, "error": "Member not found in fleet"},
+        )
+
+    def test_returns_esi_error_when_unexpected_http_error_occurs(self):
+        mock_request = MagicMock(method="POST", body=json.dumps({"memberId": 123}))
+        esi_stub = SimpleNamespace(
+            client=SimpleNamespace(
+                Fleets=SimpleNamespace(
+                    DeleteFleetsFleetIdMembersMemberId=MagicMock(
+                        side_effect=HTTPClientError(500, {}, {})
+                    )
+                )
+            )
+        )
+        with (
+            patch("fleetfinder.views.Fleet.objects.get") as mock_get,
+            patch("fleetfinder.views.esi", new=esi_stub),
+        ):
+            mock_get.return_value = MagicMock(fleet_commander=MagicMock(character_id=1))
+            response = ajax_fleet_kick_member(mock_request, fleet_id=1)
+        self.assertEqual(response.status_code, 500)
+        self.assertEqual(
+            json.loads(response.content),
+            {
+                "success": False,
+                "error": "An ESI error occurred: <HTTPClientError 500 {} {}>",
+            },
+        )
+
+    def test_successfully_kicks_member_from_fleet(self):
+        mock_request = MagicMock(method="POST", body=json.dumps({"memberId": 123}))
+        esi_stub = SimpleNamespace(
+            client=SimpleNamespace(
+                Fleets=SimpleNamespace(
+                    DeleteFleetsFleetIdMembersMemberId=MagicMock(
+                        return_value=MagicMock()
+                    )
+                )
+            )
+        )
+        with (
+            patch("fleetfinder.views.Fleet.objects.get") as mock_get,
+            patch("fleetfinder.views.esi", new=esi_stub),
+        ):
+            mock_get.return_value = MagicMock(fleet_commander=MagicMock(character_id=1))
+            response = ajax_fleet_kick_member(mock_request, fleet_id=1)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertEqual(json.loads(response.content), {"success": True})

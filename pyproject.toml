@@ -40,11 +40,12 @@ dynamic = [
 dependencies = [
     "allianceauth>=4.9,<5",
     "allianceauth-app-utils>=1.14.2",
-    "django-esi>=7.0.1",
+    "django-esi>=8.0.0b1",
 ]
 optional-dependencies.tests-allianceauth-latest = [
     "coverage",
     "django-webtest",
+    "requests-mock",
 ]
 urls.Changelog = "https://github.com/ppfeufer/aa-fleetfinder/blob/master/CHANGELOG.md"
 urls.Documentation = "https://github.com/ppfeufer/aa-fleetfinder/blob/master/README.md"

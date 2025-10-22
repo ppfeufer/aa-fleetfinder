@@ -2,14 +2,12 @@
 Test the apps' template tags
 """
 
-# Django
-from django.test import TestCase
-
 # AA Fleet Finder
 from fleetfinder.templatetags.fleetfinder import get_item
+from fleetfinder.tests import BaseTestCase
 
 
-class TestGetItem(TestCase):
+class TestGetItem(BaseTestCase):
     """
     Test the `get_item` template tag
     """
