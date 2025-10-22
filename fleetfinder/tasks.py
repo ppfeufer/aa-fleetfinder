@@ -3,11 +3,12 @@ Tasks
 """
 
 # Standard Library
+from collections.abc import Iterable
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import timedelta
 
 # Third Party
-from bravado.exception import HTTPNotFound
+from aiopenapi3 import ContentTypeError
 from celery import shared_task
 
 # Django
@@ -16,6 +17,7 @@ from django.utils import timezone
 # Alliance Auth
 from allianceauth.services.hooks import get_extension_logger
 from allianceauth.services.tasks import QueueOnce
+from esi.exceptions import HTTPClientError, HTTPNotModified
 from esi.models import Token
 
 # Alliance Auth (External Libs)
@@ -88,7 +90,7 @@ def _send_invitation(
     # Send the invitation using the ESI API
     esi.client.Fleets.PostFleetsFleetIdMembers(
         fleet_id=fleet_id, token=fleet_commander_token, body=invitation
-    ).result()
+    ).result(force_refresh=True)
 
 
 def _close_esi_fleet(fleet: Fleet, reason: str) -> None:
@@ -143,6 +145,7 @@ def _esi_fleet_error_handling(fleet: Fleet, error_key: str) -> None:
         and fleet.esi_error_count >= ESI_MAX_ERROR_COUNT
     ):
         _close_esi_fleet(fleet=fleet, reason=error_key.label)
+
         return
 
     # Increment the error count or reset it if the error is new or outside the grace period
@@ -232,9 +235,28 @@ def _check_for_esi_fleet(fleet: Fleet) -> dict | bool:
         ).result()
 
         return {"fleet": fleet_from_esi, "token": esi_token}
-    except HTTPNotFound:
+    except HTTPNotModified:
+        logger.debug(
+            f'No changes for fleet "{fleet.name}" of {fleet.fleet_commander} '
+            f"(ESI ID: {fleet.fleet_id}), nothing to do."
+        )
+
+        return False
+    except ContentTypeError:
+        logger.debug(
+            f'ESI returned gibberish for fleet "{fleet.name}" of {fleet.fleet_commander} '
+            f"(ESI ID: {fleet.fleet_id}), skipping update."
+        )
+
+        return False
+    except HTTPClientError as ex:
         # Handle the case where the fleet is not found
-        _esi_fleet_error_handling(error_key=Fleet.EsiError.NOT_IN_FLEET, fleet=fleet)
+        if ex.status_code == 404:
+            _esi_fleet_error_handling(
+                error_key=Fleet.EsiError.NOT_IN_FLEET, fleet=fleet
+            )
+        else:  # 400, 401, 402, 403 ?
+            _esi_fleet_error_handling(error_key=Fleet.EsiError.NO_FLEET, fleet=fleet)
     except Exception:  # pylint: disable=broad-exception-caught
         # Handle any other errors that occur
         _esi_fleet_error_handling(error_key=Fleet.EsiError.NO_FLEET, fleet=fleet)
@@ -280,7 +302,7 @@ def _process_fleet(fleet: Fleet) -> None:
     try:
         _ = esi.client.Fleets.GetFleetsFleetIdMembers(
             fleet_id=fleet.fleet_id, token=esi_fleet["token"]
-        ).result()
+        ).result(force_refresh=True)
     except Exception:  # pylint: disable=broad-exception-caught
         # Handle the case where the user is not the fleet boss
         _esi_fleet_error_handling(fleet=fleet, error_key=Fleet.EsiError.NOT_FLEETBOSS)
@@ -378,8 +400,11 @@ def _fetch_chunk(ids: list) -> list:
     :return: A list of results containing the names corresponding to the provided IDs.
     :rtype: list
     """
+
     try:
-        result = esi.client.Universe.PostUniverseNames(body=ids).result()
+        result = esi.client.Universe.PostUniverseNames(body=ids).result(
+            force_refresh=True
+        )
 
         logger.debug(f"Fetched {len(result)} names for {len(ids)} IDs.")
         logger.debug(f"Result: {result}")
@@ -394,6 +419,41 @@ def _fetch_chunk(ids: list) -> list:
         mid = len(ids) // 2
 
         return _fetch_chunk(ids[:mid]) + _fetch_chunk(ids[mid:])
+
+
+def _make_name_lookup(ids_to_name: Iterable) -> dict:
+    """
+    Create a lookup dictionary mapping IDs to names.
+
+    Build a mapping of id -> name from a sequence that may contain either
+    dicts like {'id': ..., 'name': ...} or objects with .id and .name attributes.
+
+    :param ids_to_name:
+    :type ids_to_name:
+    :return:
+    :rtype:
+    """
+
+    lookup = {}
+
+    if not ids_to_name:
+        return lookup
+
+    for item in ids_to_name:
+        if item is None:
+            continue
+
+        if isinstance(item, dict):
+            id_ = item.get("id")
+            name = item.get("name")
+        else:
+            id_ = getattr(item, "id", None)
+            name = getattr(item, "name", None)
+
+        if id_ is not None and name is not None:
+            lookup[id_] = name
+
+    return lookup
 
 
 @shared_task
@@ -435,7 +495,7 @@ def get_fleet_composition(fleet_id: int) -> FleetViewAggregate | None:
         # Fetch fleet member information from the ESI API
         fleet_infos = esi.client.Fleets.GetFleetsFleetIdMembers(
             fleet_id=fleet_id, token=token
-        ).result()
+        ).result(force_refresh=True)
 
         logger.debug(f"Fleet infos: {fleet_infos}")
 
@@ -467,7 +527,7 @@ def get_fleet_composition(fleet_id: int) -> FleetViewAggregate | None:
         logger.debug(f"Fetched names for {len(ids_to_name)} IDs.")
 
         # Create a lookup dictionary for resolving names
-        name_lookup = {item.id: item.name for item in ids_to_name}
+        name_lookup = _make_name_lookup(ids_to_name)
 
         logger.debug(f"Name lookup: {name_lookup}")
 
