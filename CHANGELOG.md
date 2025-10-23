@@ -36,6 +36,10 @@ Section Order:
 
 <!-- Your changes go here -->
 
+### Fixed
+
+- Use translated name as menu item
+
 ## [3.0.0-beta.1] - 2025-10-23
 
 > [!CAUTION]
