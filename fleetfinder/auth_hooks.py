@@ -7,7 +7,7 @@ from allianceauth import hooks
 from allianceauth.services.hooks import MenuItemHook, UrlHook
 
 # AA Fleet Finder
-from fleetfinder import __title__, urls
+from fleetfinder import __title_translated__, urls
 
 
 class FleetFinderMenuItem(MenuItemHook):  # pylint: disable=too-few-public-methods
@@ -19,7 +19,7 @@ class FleetFinderMenuItem(MenuItemHook):  # pylint: disable=too-few-public-metho
         # Setup menu entry for sidebar
         MenuItemHook.__init__(
             self,
-            text=__title__,
+            text=__title_translated__,
             classes="fa-solid fa-users",
             url_name="fleetfinder:dashboard",
             navactive=["fleetfinder:"],
