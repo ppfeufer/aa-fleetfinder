@@ -547,10 +547,8 @@ def get_fleet_composition(fleet_id: int) -> FleetViewAggregate | None:
             aggregate=_get_fleet_aggregate(fleet_infos=member_in_fleet),
         )
 
-    except Exception as e:  # pylint: disable=broad-exception-caught
+    except Exception as exc:  # pylint: disable=broad-exception-caught
         # Log and raise an error if fleet composition retrieval fails
-        logger.error(f"Failed to get fleet composition for fleet {fleet_id}: {e}")
+        logger.error(f"Failed to get fleet composition for fleet {fleet_id}: {exc}")
 
-        raise RuntimeError(
-            f"Failed to get fleet composition for fleet {fleet_id} : {str(e)}"
-        ) from e
+        raise RuntimeError(exc) from exc
