@@ -8,7 +8,7 @@ from django.urls import include, path
 # AA Fleet Finder
 from fleetfinder import views
 
-app_name: str = "fleetfinder"
+app_name: str = "fleetfinder"  # pylint: disable=invalid-name
 
 urlpatterns = [
     path(route="", view=views.dashboard, name="dashboard"),
