@@ -36,6 +36,22 @@ Section Order:
 
 <!-- Your changes go here -->
 
+## [3.0.0] - 2025-11-12
+
+### Fixed
+
+- Django `makemessages` doesn't seem to recognise f-strings anymore
+- Use translated name as menu item
+- Dependency to `django-esi` set to `>=8.0.0,<9`
+
+### Changed
+
+- Switched to OpenAPI3 specification for ESI endpoints
+  - Set compatibility date to 2025-11-06 (November 6th, 2025)
+- Set the maximum required Python version to 3.13
+- Better way of re-raising an exception in the `get_fleet_composition` task
+- Translations updated
+
 ## [3.0.0-beta.2] - 2025-11-04
 
 > [!CAUTION]
@@ -638,9 +654,10 @@ App forked from [Dreadbomb/aa-fleet]
 [2.7.0]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.6.1...v2.7.0 "v2.7.0"
 [2.7.1]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.7.0...v2.7.1 "v2.7.1"
 [2.7.2]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.7.1...v2.7.2 "v2.7.2"
+[3.0.0]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.7.2...v3.0.0 "v3.0.0"
 [3.0.0-beta.1]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.7.2...v3.0.0-beta.1 "v3.0.0-beta.1"
 [3.0.0-beta.2]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.7.2...v3.0.0-beta.2 "v3.0.0-beta.2"
 [dreadbomb/aa-fleet]: https://github.com/Dreadbomb/aa-fleet "Dreadbomb/aa-fleet"
-[in development]: https://github.com/ppfeufer/aa-fleetfinder/compare/v2.7.2...HEAD "In Development"
+[in development]: https://github.com/ppfeufer/aa-fleetfinder/compare/v3.0.0...HEAD "In Development"
 [keep a changelog]: http://keepachangelog.com/ "Keep a Changelog"
 [semantic versioning]: http://semver.org/ "Semantic Versioning"
