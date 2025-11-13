@@ -17,7 +17,7 @@ from django.utils import timezone
 # Alliance Auth
 from allianceauth.services.hooks import get_extension_logger
 from allianceauth.services.tasks import QueueOnce
-from esi.exceptions import HTTPClientError
+from esi.exceptions import HTTPClientError, HTTPNotModified
 from esi.models import Token
 
 # Alliance Auth (External Libs)
@@ -225,16 +225,28 @@ def _check_for_esi_fleet(fleet: Fleet) -> dict | bool:
 
     required_scopes = ["esi-fleets.read_fleet.v1"]
 
+    fleet_commander_id = fleet.fleet_commander.character_id
+    esi_token = Token.get_token(fleet_commander_id, required_scopes)
+
+    operation = esi.client.Fleets.GetCharactersCharacterIdFleet(
+        character_id=fleet_commander_id, token=esi_token
+    )
+
     # Check if there is a fleet
     try:
-        fleet_commander_id = fleet.fleet_commander.character_id
-        esi_token = Token.get_token(fleet_commander_id, required_scopes)
+        result = operation.result()
 
-        fleet_from_esi = esi.client.Fleets.GetCharactersCharacterIdFleet(
-            character_id=fleet_commander_id, token=esi_token
-        ).result(force_refresh=True)
+        return {"fleet": result, "token": esi_token}
+    except HTTPNotModified:
+        logger.debug(
+            f'Fleet "{fleet.name}" of {fleet.fleet_commander} '
+            f"(ESI ID: {fleet.fleet_id}) not modified since last check. Retrieving from cache."
+        )
 
-        return {"fleet": fleet_from_esi, "token": esi_token}
+        # Not modified means the fleet exists and nothing has changed
+        result = operation.result(use_etag=False)
+
+        return {"fleet": result, "token": esi_token}
     except ContentTypeError:
         logger.debug(
             f'ESI returned gibberish for fleet "{fleet.name}" of {fleet.fleet_commander} '
@@ -243,6 +255,11 @@ def _check_for_esi_fleet(fleet: Fleet) -> dict | bool:
 
         return False
     except HTTPClientError as ex:
+        logger.debug(
+            f'HTTPClientError while checking fleet "{fleet.name}" of {fleet.fleet_commander} '
+            f"(ESI ID: {fleet.fleet_id}): {ex}"
+        )
+
         # Handle the case where the fleet is not found
         if ex.status_code == 404:
             _esi_fleet_error_handling(
@@ -251,6 +268,12 @@ def _check_for_esi_fleet(fleet: Fleet) -> dict | bool:
         else:  # 400, 401, 402, 403 ?
             _esi_fleet_error_handling(error_key=Fleet.EsiError.NO_FLEET, fleet=fleet)
     except Exception:  # pylint: disable=broad-exception-caught
+        logger.debug(
+            f'Unexpected error while checking fleet "{fleet.name}" of {fleet.fleet_commander} '
+            f"(ESI ID: {fleet.fleet_id})",
+            exc_info=True,
+        )
+
         # Handle any other errors that occur
         _esi_fleet_error_handling(error_key=Fleet.EsiError.NO_FLEET, fleet=fleet)
 
@@ -282,13 +305,24 @@ def _process_fleet(fleet: Fleet) -> None:
 
     # Exit if the fleet does not exist
     if not esi_fleet:
+        logger.debug(
+            f'No ESI fleet data found for fleet "{fleet.name}" of {fleet.fleet_commander} '
+            f"(ESI ID: {fleet.fleet_id}), skipping further processing."
+        )
+
         return
 
     # Handle the case where fleet IDs do not match, indicating the fleet commander changed fleets
     if fleet.fleet_id != esi_fleet["fleet"].fleet_id:
+        logger.debug(
+            f'Fleet ID mismatch for fleet "{fleet.name}" of {fleet.fleet_commander} '
+            f"(ESI ID: {fleet.fleet_id}): ESI fleet ID is {esi_fleet['fleet'].fleet_id}."
+        )
+
         _esi_fleet_error_handling(
             fleet=fleet, error_key=Fleet.EsiError.FC_CHANGED_FLEET
         )
+
         return
 
     # Verify if the current user is the fleet boss
@@ -369,6 +403,7 @@ def check_fleet_adverts() -> None:
     # Check if there are any fleets to process
     if not fleets.exists():
         logger.info("No registered fleets found. Nothing to do...")
+
         return
 
     # Log the number of fleets to be processed
@@ -394,12 +429,22 @@ def _fetch_chunk(ids: list) -> list:
     :rtype: list
     """
 
+    operation = esi.client.Universe.PostUniverseNames(body=ids)
+
     try:
-        result = esi.client.Universe.PostUniverseNames(body=ids).result(
-            force_refresh=True
-        )
+        result = operation.result()
 
         logger.debug(f"Fetched {len(result)} names for {len(ids)} IDs.")
+        logger.debug(f"Result: {result}")
+
+        return result
+    except HTTPNotModified:
+        logger.debug("ESI returned HTTP 304 Not Modified, retrieving from cache.")
+
+        # Not modified means the data exists and nothing has changed
+        result = operation.result(use_etag=False)
+
+        logger.debug(f"Fetched {len(result)} names for {len(ids)} IDs from cache.")
         logger.debug(f"Result: {result}")
 
         return result
@@ -479,76 +524,83 @@ def get_fleet_composition(fleet_id: int) -> FleetViewAggregate | None:
         f"of {fleet.fleet_commander.character_name} (ESI ID: {fleet_id})"
     )
 
+    # Retrieve the fleet commander's token for authentication
+    token = Token.get_token(
+        character_id=fleet.fleet_commander.character_id,
+        scopes=["esi-fleets.read_fleet.v1"],
+    )
+    operation = esi.client.Fleets.GetFleetsFleetIdMembers(
+        fleet_id=fleet_id, token=token
+    )
+
     try:
-        # Retrieve the fleet commander's token for authentication
-        token = Token.get_token(
-            character_id=fleet.fleet_commander.character_id,
-            scopes=["esi-fleets.read_fleet.v1"],
-        )
-
         # Fetch fleet member information from the ESI API
-        fleet_infos = esi.client.Fleets.GetFleetsFleetIdMembers(
-            fleet_id=fleet_id, token=token
-        ).result(force_refresh=True)
-
-        logger.debug(f"Fleet infos: {fleet_infos}")
-
-        # Extract all unique IDs (character, solar system, and ship type) for name resolution
-        all_ids = {
-            item_id
-            for member in fleet_infos
-            for item_id in [
-                member.character_id,
-                member.solar_system_id,
-                member.ship_type_id,
-            ]
-        }
-
+        fleet_infos = operation.result()
+    except HTTPNotModified:
         logger.debug(
-            f"Found {len(all_ids)} unique IDs to fetch names for in fleet {fleet_id}"
+            f'Fleet "{fleet.name}" of {fleet.fleet_commander} '
+            f"(ESI ID: {fleet.fleet_id}) not modified since last check. Retrieving from cache."
         )
 
-        # Process IDs in chunks to avoid exceeding ESI limits
-        chunk_size = 1000
-        all_ids_list = list(all_ids)
-        ids_to_name = []
-
-        for start in range(0, len(all_ids_list), chunk_size):
-            chunk = all_ids_list[start : start + chunk_size]
-            results = _fetch_chunk(chunk)
-            ids_to_name.extend(results)
-
-        logger.debug(f"Fetched names for {len(ids_to_name)} IDs.")
-
-        # Create a lookup dictionary for resolving names
-        name_lookup = _make_name_lookup(ids_to_name)
-
-        logger.debug(f"Name lookup: {name_lookup}")
-
-        # Add detailed information to each fleet member
-        member_in_fleet = [
-            {
-                **member.dict(),
-                "takes_fleet_warp": member.takes_fleet_warp,
-                "character_name": name_lookup[member.character_id],
-                "solar_system_name": name_lookup[member.solar_system_id],
-                "ship_type_name": name_lookup[member.ship_type_id],
-                "is_fleet_boss": member.character_id
-                == fleet.fleet_commander.character_id,
-            }
-            for member in fleet_infos
-        ]
-
-        logger.debug(f"Member in fleet after processing: {member_in_fleet}")
-
-        # Return the fleet composition and aggregate data
-        return FleetViewAggregate(
-            fleet=member_in_fleet,
-            aggregate=_get_fleet_aggregate(fleet_infos=member_in_fleet),
-        )
-
+        # Not modified means the fleet exists and nothing has changed
+        fleet_infos = operation.result(use_etag=False)
     except Exception as exc:  # pylint: disable=broad-exception-caught
         # Log and raise an error if fleet composition retrieval fails
         logger.error(f"Failed to get fleet composition for fleet {fleet_id}: {exc}")
 
         raise RuntimeError(exc) from exc
+
+    logger.debug(f"Fleet infos: {fleet_infos}")
+
+    # Extract all unique IDs (character, solar system, and ship type) for name resolution
+    all_ids = {
+        item_id
+        for member in fleet_infos
+        for item_id in [
+            member.character_id,
+            member.solar_system_id,
+            member.ship_type_id,
+        ]
+    }
+
+    logger.debug(
+        f"Found {len(all_ids)} unique IDs to fetch names for in fleet {fleet_id}"
+    )
+
+    # Process IDs in chunks to avoid exceeding ESI limits
+    chunk_size = 1000
+    all_ids_list = list(all_ids)
+    ids_to_name = []
+
+    for start in range(0, len(all_ids_list), chunk_size):
+        chunk = all_ids_list[start : start + chunk_size]
+        results = _fetch_chunk(chunk)
+        ids_to_name.extend(results)
+
+    logger.debug(f"Fetched names for {len(ids_to_name)} IDs.")
+
+    # Create a lookup dictionary for resolving names
+    name_lookup = _make_name_lookup(ids_to_name)
+
+    logger.debug(f"Name lookup: {name_lookup}")
+
+    # Add detailed information to each fleet member
+    member_in_fleet = [
+        {
+            **member.dict(),
+            "takes_fleet_warp": member.takes_fleet_warp,
+            "character_name": name_lookup[member.character_id],
+            "solar_system_name": name_lookup[member.solar_system_id],
+            "ship_type_name": name_lookup[member.ship_type_id],
+            "is_fleet_boss": member.character_id == fleet.fleet_commander.character_id,
+        }
+        for member in fleet_infos
+    ]
+
+    logger.debug(f"Member in fleet after processing: {member_in_fleet}")
+
+    # Return the fleet composition and aggregate data
+    return FleetViewAggregate(
+        fleet=member_in_fleet,
+        aggregate=_get_fleet_aggregate(fleet_infos=member_in_fleet),
+    )
