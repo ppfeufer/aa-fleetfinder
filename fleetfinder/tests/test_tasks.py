@@ -4,6 +4,7 @@ Tests for the fleetfinder.tasks module.
 
 # Standard Library
 from datetime import timedelta
+from http import HTTPStatus
 from unittest.mock import MagicMock, Mock, patch
 
 # Third Party
@@ -13,7 +14,7 @@ from aiopenapi3 import ContentTypeError
 from django.utils import timezone
 
 # Alliance Auth
-from esi.exceptions import HTTPClientError
+from esi.exceptions import HTTPClientError, HTTPNotModified
 
 # AA Fleet Finder
 from fleetfinder.models import Fleet
@@ -342,36 +343,58 @@ class TestHelperCheckForEsiFleet(BaseTestCase):
     Tests for the _check_for_esi_fleet helper function.
     """
 
-    def test_returns_fleet_data_when_fleet_exists(self):
+    @patch("fleetfinder.tasks.Token.get_token")
+    def test_retrieves_fleet_data_when_fleet_exists(self, mock_get_token):
         """
-        Test that _check_for_esi_fleet returns fleet data when fleet exists.
+        Test that _check_for_esi_fleet retrieves fleet data when the fleet exists.
 
+        :param mock_get_token:
+        :type mock_get_token:
         :return:
         :rtype:
         """
 
-        mock_fleet = MagicMock()
-        mock_token = MagicMock()
-        mock_esi_fleet = {"fleet_id": 12345}
+        mock_get_token.return_value = MagicMock()
+        mock_esi_client = MagicMock()
+        mock_esi_client.Fleets.GetCharactersCharacterIdFleet.return_value.result.return_value = {
+            "fleet_id": 12345
+        }
 
-        # create a mock response object whose .result() returns the dict
+        fleet = Mock(
+            fleet_commander=Mock(character_id=67890), name="Test Fleet", fleet_id=12345
+        )
+
+        with patch("fleetfinder.tasks.esi", Mock(client=mock_esi_client)):
+            result = _check_for_esi_fleet(fleet)
+
+        self.assertEqual(result["fleet"], {"fleet_id": 12345})
+        self.assertEqual(result["token"], mock_get_token.return_value)
+        mock_esi_client.Fleets.GetCharactersCharacterIdFleet.return_value.result.assert_called_once()
+
+    @patch("fleetfinder.tasks.Token.get_token")
+    def test_retrieves_fleet_from_cache_when_not_modified(self, mock_get_token):
+        mock_get_token.return_value = MagicMock()
+        mock_esi_client = MagicMock()
+
         mock_response = MagicMock()
-        mock_response.result.return_value = mock_esi_fleet
+        mock_response.result.side_effect = [
+            HTTPNotModified(HTTPStatus.NOT_MODIFIED, {}),
+            {"fleet_id": 12345},
+        ]
+        mock_esi_client.Fleets.GetCharactersCharacterIdFleet.return_value = (
+            mock_response
+        )
 
-        # ensure the client call returns the mock response
-        mock_get = MagicMock(return_value=mock_response)
-        mock_client = MagicMock()
-        mock_client.Fleets.GetCharactersCharacterIdFleet = mock_get
+        fleet = Mock(
+            fleet_commander=Mock(character_id=67890), name="Test Fleet", fleet_id=12345
+        )
 
-        with patch("fleetfinder.tasks.Token.get_token", return_value=mock_token):
-            with patch("fleetfinder.tasks.esi", Mock(client=mock_client)):
-                result = _check_for_esi_fleet(fleet=mock_fleet)
+        with patch("fleetfinder.tasks.esi", Mock(client=mock_esi_client)):
+            result = _check_for_esi_fleet(fleet)
 
-        self.assertIsInstance(result, dict)
-        self.assertIn("fleet", result)
-        self.assertIn("token", result)
-        self.assertEqual(result["fleet"], mock_esi_fleet)
-        self.assertEqual(result["token"], mock_token)
+        self.assertEqual(result["fleet"], {"fleet_id": 12345})
+        self.assertEqual(result["token"], mock_get_token.return_value)
+        mock_response.result.assert_called_with(use_etag=False)
 
     def test_returns_false_when_content_type_error_occurs(self):
         """
@@ -469,7 +492,14 @@ class TestHelperCheckForEsiFleet(BaseTestCase):
             error_key=Fleet.EsiError.NO_FLEET, fleet=mock_fleet
         )
 
-    def handles_generic_exception(self):
+    def test_handles_generic_exception(self):
+        """
+        Test that _check_for_esi_fleet handles a generic exception.
+
+        :return:
+        :rtype:
+        """
+
         mock_fleet = MagicMock()
 
         mock_esi_client = MagicMock()
@@ -698,41 +728,88 @@ class TestCheckFleetAdverts(BaseTestCase):
     Tests for the check_fleet_adverts function.
     """
 
-    @patch("fleetfinder.models.Fleet.objects.all")
-    def test_processes_registered_fleets_when_available(self, mock_fleet_objects):
+    @patch("fleetfinder.tasks.Fleet.objects.all")
+    @patch("fleetfinder.tasks.logger.info")
+    def test_logs_message_when_no_fleets_to_process(self, mock_logger, mock_fleets):
         """
-        Test that check_fleet_adverts processes registered fleets when ESI is available.
+        Test that check_fleet_adverts logs a message when there are no fleets to process.
 
-        :param mock_fleet_objects:
-        :type mock_fleet_objects:
+        :param mock_logger:
+        :type mock_logger:
+        :param mock_fleets:
+        :type mock_fleets:
         :return:
         :rtype:
         """
 
-        mock_fleet_objects.return_value.exists.return_value = True
-        mock_fleet_objects.return_value.count.return_value = 2
-        mock_fleet_objects.return_value.__iter__.return_value = iter([Mock(), Mock()])
+        mock_fleets.return_value.exists.return_value = False
 
         check_fleet_adverts()
 
-        mock_fleet_objects.return_value.__iter__.assert_called_once()
+        mock_logger.assert_called_once_with(
+            "No registered fleets found. Nothing to do..."
+        )
 
-    @patch("fleetfinder.models.Fleet.objects.all")
-    def test_logs_no_registered_fleets_when_none_exist(self, mock_fleet_objects):
+    @patch("fleetfinder.tasks.Fleet.objects.all")
+    @patch("fleetfinder.tasks.logger.info")
+    @patch("fleetfinder.tasks._process_fleet")
+    def test_processes_all_fleets_when_fleets_exist(
+        self, mock_process_fleet, mock_logger, mock_fleets
+    ):
         """
-        Test that check_fleet_adverts logs a message when no registered fleets exist.
+        Test that check_fleet_adverts processes all fleets when fleets exist.
 
-        :param mock_fleet_objects:
-        :type mock_fleet_objects:
+        :param mock_process_fleet:
+        :type mock_process_fleet:
+        :param mock_logger:
+        :type mock_logger:
+        :param mock_fleets:
+        :type mock_fleets:
         :return:
         :rtype:
         """
 
-        mock_fleet_objects.return_value.exists.return_value = False
+        mock_fleet_1 = Mock()
+        mock_fleet_2 = Mock()
+        mock_fleets.return_value.exists.return_value = True
+        mock_fleets.return_value.count.return_value = 2
+        mock_fleets.return_value.__iter__.return_value = iter(
+            [mock_fleet_1, mock_fleet_2]
+        )
 
         check_fleet_adverts()
 
-        mock_fleet_objects.return_value.exists.assert_called_once()
+        mock_logger.assert_any_call("Processing 2 registered fleets...")
+        mock_process_fleet.assert_any_call(fleet=mock_fleet_1)
+        mock_process_fleet.assert_any_call(fleet=mock_fleet_2)
+
+    @patch("fleetfinder.tasks.Fleet.objects.all")
+    @patch("fleetfinder.tasks.logger.info")
+    @patch("fleetfinder.tasks._process_fleet")
+    def test_handles_empty_fleet_queryset_gracefully(
+        self, mock_process_fleet, mock_logger, mock_fleets
+    ):
+        """
+        Test that check_fleet_adverts handles an empty fleet queryset gracefully.
+
+        :param mock_process_fleet:
+        :type mock_process_fleet:
+        :param mock_logger:
+        :type mock_logger:
+        :param mock_fleets:
+        :type mock_fleets:
+        :return:
+        :rtype:
+        """
+
+        mock_fleets.return_value.exists.return_value = True
+        mock_fleets.return_value.count.return_value = 0
+        mock_fleets.return_value.__iter__.return_value = iter([])
+
+        check_fleet_adverts()
+
+        mock_logger.assert_called_once_with("Processing 0 registered fleets...")
+        mock_process_fleet.assert_not_called()
 
 
 class TestHelperMakeNameLookup(BaseTestCase):
@@ -1071,22 +1148,50 @@ class TestGetFleetComposition(BaseTestCase):
             with self.assertRaises(Fleet.DoesNotExist):
                 get_fleet_composition(fleet_id=67890)
 
-    def test_raises_runtime_error_on_esi_failure(self):
+    def test_raises_runtime_error_on_unexpected_exception(self):
         """
-        Test that get_fleet_composition raises a RuntimeError on ESI failure.
+        Test that get_fleet_composition raises RuntimeError on unexpected exception.
 
         :return:
         :rtype:
         """
 
-        mock_fleet = MagicMock()
-        mock_fleet.fleet_commander.character_id = 12345
-        mock_fleet.fleet_id = 67890
+        # Prepare an ESI operation whose .result() raises an unexpected exception
+        mock_operation = MagicMock()
+        mock_operation.result.side_effect = Exception("unexpected error")
+        mock_esi_client = MagicMock()
+        mock_esi_client.Fleets.GetFleetsFleetIdMembers.return_value = mock_operation
 
-        with patch("fleetfinder.tasks.Fleet.objects.get", return_value=mock_fleet):
-            with patch("fleetfinder.tasks.Token.get_token", side_effect=Exception):
-                with self.assertRaises(RuntimeError):
-                    get_fleet_composition(fleet_id=67890)
+        # Minimal fleet object returned by Fleet.objects.get(...)
+        fleet = Mock(
+            fleet_id=42,
+            name="Test Fleet",
+            fleet_commander=Mock(character_id=1, character_name="Commander"),
+        )
+
+        with (
+            patch("fleetfinder.tasks.Fleet.objects.get", return_value=fleet),
+            patch("fleetfinder.tasks.esi", Mock(client=mock_esi_client)),
+            patch("fleetfinder.tasks.Token.get_token", return_value=MagicMock()),
+            patch("fleetfinder.tasks.logger") as mock_logger,
+        ):
+            # RuntimeError should be raised when the ESI call fails unexpectedly
+            with self.assertRaises(RuntimeError):
+                get_fleet_composition(42)
+
+            # Ensure an error was logged with the expected content
+            expected = "Failed to get fleet composition for fleet 42"
+            found = False
+
+            for call in mock_logger.method_calls:
+                name, args, kwargs = call
+
+                if name == "error" and args and expected in str(args[0]):
+                    found = True
+
+                    break
+
+            self.assertTrue(found, "Expected error log message not found")
 
     def test_handles_handles_empty_fleet_info_gracefully(self):
         """
