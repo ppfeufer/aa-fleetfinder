@@ -28,4 +28,27 @@
 
     /* END Slim Select
     --------------------------------------------------------------------------------- */
+
+    /* DataTables
+    --------------------------------------------------------------------------------- */
+
+    .dt-container .dt-info {
+        margin-top: 0.85rem;
+    }
+
+    /* DataTables ColumnControl
+    --------------------------------------------------------------------------------- */
+
+    table.dataTable span.dtcc div.dtcc-search>div select {
+        background-color: var(--bs-body-bg);
+        color: var(--bs-body-color);
+        padding: 0.375rem;
+    }
+
+    table.dataTable .dt-column-header div.dtcc-search-title {
+        display: none;
+    }
+
+    /* END DataTables ColumnControl
+    --------------------------------------------------------------------------------- */
 }

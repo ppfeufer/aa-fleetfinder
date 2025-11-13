@@ -38,6 +38,7 @@ Section Order:
 
 ### Changed
 
+- Switched to DataTables 2
 - ESI handling improved. This should save a bunch of ESI calls when processing fleets.
 
 ## [3.0.1] - 2025-11-12

@@ -1,4 +1,4 @@
-/* global objectDeepMerge, aaFleetFinderSettings, aaFleetFinderSettingsOverride, fetchGet, fetchPost, fleetfinderBootstrapTooltip */
+/* global objectDeepMerge, aaFleetFinderSettings, aaFleetFinderSettingsOverride, fetchGet, fetchPost, fleetfinderBootstrapTooltip, _removeSearchFromColumnControl, DataTable */
 
 $(document).ready(() => {
     'use strict';
@@ -20,7 +20,10 @@ $(document).ready(() => {
             url: fleetFinderSettings.dataTables.languageUrl
         },
         paging: false,
-        destroy: true
+        destroy: true,
+        dom: fleetFinderSettings.dataTables.dom,
+        ordering: fleetFinderSettings.dataTables.ordering,
+        columnControl: fleetFinderSettings.dataTables.columnControl,
     };
 
     const populateDatatables = () => {
@@ -36,7 +39,7 @@ $(document).ready(() => {
 
                 elements.warning.addClass('d-none');
 
-                elements.tableFleetMembers.DataTable({
+                const dtFleetMembers = new DataTable(elements.tableFleetMembers, { // eslint-disable-line no-unused-vars
                     ...dataTableConfig,
                     data: data.fleet_member,
                     columns: [
@@ -50,24 +53,33 @@ $(document).ready(() => {
                         {data: 'ship_type_name'},
                         {data: 'solar_system_name'},
                         {
-                            render: (data, type, row) => {
-                                const fwIcon = '<i class="fa-solid fa-user-minus"></i>';
-                                const dataAttributes = Object.entries({
-                                    'data-character-id': row.character_id,
-                                    'data-character-name': row.character_name,
-                                    'data-bs-toggle': 'modal',
-                                    'data-bs-target': '#kick-fleet-member',
-                                    'data-bs-tooltip': 'aa-fleetfinder'
-                                }).map(([key, value]) => {
-                                    return `${key}="${value}"`;
-                                }).join(' ');
+                            data: {
+                                display: (data) => {
+                                    const fwIcon = '<i class="fa-solid fa-user-minus"></i>';
+                                    const dataAttributes = Object.entries({
+                                        'data-character-id': data.character_id,
+                                        'data-character-name': data.character_name,
+                                        'data-bs-toggle': 'modal',
+                                        'data-bs-target': '#kick-fleet-member',
+                                        'data-bs-tooltip': 'aa-fleetfinder'
+                                    }).map(([key, value]) => {
+                                        return `${key}="${value}"`;
+                                    }).join(' ');
 
-                                return row.is_fleet_boss ? '' : `<button type="button" class="btn btn-sm btn-danger" ${dataAttributes} title="${fleetFinderSettings.l10n.kickMemberFromFleet}">${fwIcon}</button>`;
+                                    return data.is_fleet_boss ? '' : `<button type="button" class="btn btn-sm btn-danger" ${dataAttributes} title="${fleetFinderSettings.l10n.kickMemberFromFleet}">${fwIcon}</button>`;
+                                }
                             },
-                            orderable: false,
-                            searchable: false,
-                            width: '50px',
-                            className: 'text-end'
+                            width: 50,
+                            className: 'text-end',
+                        }
+                    ],
+                    columnDefs: [
+                        {
+                            target: 3,
+                            columnControl: [
+                                {target: 0, content: []},
+                                {target: 1, content: []}
+                            ]
                         }
                     ],
                     createdRow: (row, data, rowIndex) => {
@@ -75,8 +87,16 @@ $(document).ready(() => {
                         $(row).attr('data-character-id', data.character_id);
                     },
                     initComplete: () => {
+                        // Get DataTable instance
+                        const dt = elements.tableFleetMembers.DataTable();
+
                         // Initialize Bootstrap tooltips
                         fleetfinderBootstrapTooltip({selector: '#table-fleet-members'});
+
+                        // Re-initialize tooltips on each draw
+                        dt.on('draw', () => {
+                            fleetfinderBootstrapTooltip({selector: '#table-fleet-members'});
+                        });
                     }
                 });
 
@@ -86,6 +106,12 @@ $(document).ready(() => {
                     columns: [
                         {data: 'ship_type_name'},
                         {data: 'number', className: 'text-right', width: '100px'}
+                    ],
+                    columnDefs: [
+                        {
+                            target: 1,
+                            columnControl: _removeSearchFromColumnControl(fleetFinderSettings.dataTables.columnControl, 1)
+                        }
                     ],
                     order: [[1, 'desc']]
                 });
