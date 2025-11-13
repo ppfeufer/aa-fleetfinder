@@ -58,7 +58,10 @@ $(document).ready(() => {
                     },
                     {
                         target: 3,
-                        columnControl: []
+                        columnControl: [
+                            {target: 0, content: []},
+                            {target: 1, content: []}
+                        ]
                     },
                 ],
                 order: [[0, 'asc']],
