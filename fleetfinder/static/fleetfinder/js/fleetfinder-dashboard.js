@@ -1,4 +1,4 @@
-/* global aaFleetFinderSettings, aaFleetFinderSettingsOverride, objectDeepMerge, fetchGet, fleetfinderBootstrapTooltip, DataTable */
+/* global aaFleetFinderSettings, aaFleetFinderSettingsOverride, objectDeepMerge, fetchGet, fleetfinderBootstrapTooltip, DataTable, _removeSearchFromColumnControl */
 
 $(document).ready(() => {
     'use strict';
@@ -21,11 +21,14 @@ $(document).ready(() => {
             dataTable.clear().rows.add(data).draw();
         } else {
             // Initialize new table
-            dataTable = table_fleet_overview.DataTable({
+            dataTable =  new DataTable(table_fleet_overview, {
                 language: {
                     url: fleetFinderSettings.dataTables.languageUrl
                 },
                 data: data,
+                dom: fleetFinderSettings.dataTables.dom,
+                ordering: fleetFinderSettings.dataTables.ordering,
+                columnControl: fleetFinderSettings.dataTables.columnControl,
                 columns: [
                     {
                         data: 'fleet_commander',
@@ -47,21 +50,30 @@ $(document).ready(() => {
                 ],
                 columnDefs: [
                     {
-                        targets: 2,
+                        target: 2,
                         render: DataTable.render.date(
                             fleetFinderSettings.dataTables.datetimeFormat
-                        )
+                        ),
+                        columnControl: _removeSearchFromColumnControl(fleetFinderSettings.dataTables.columnControl, 1)
                     },
                     {
-                        orderable: false,
-                        targets: [3]
+                        target: 3,
+                        columnControl: []
                     },
                 ],
                 order: [[0, 'asc']],
                 paging: false,
                 initComplete: () => {
+                    // Get DataTable instance
+                    const dt = table_fleet_overview.DataTable();
+
                     // Initialize Bootstrap tooltips
                     fleetfinderBootstrapTooltip({selector: '#table_available-fleets'});
+
+                    // Re-initialize tooltips on each draw
+                    dt.on('draw', () => {
+                        fleetfinderBootstrapTooltip({selector: '#table_available-fleets'});
+                    });
                 }
             });
         }

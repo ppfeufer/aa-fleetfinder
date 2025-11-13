@@ -30,6 +30,34 @@
                     dataTables: {
                         languageUrl: "{{ DT_LANG_PATH }}",
                         datetimeFormat: 'YYYY-MM-DD, HH:mm',
+                        ordering: {
+                            indicators: false,
+                            handler: false
+                        },
+                        dom: 'lrtip', // Removing the search bar (Default is 'lfrtip')
+                        columnControl: [
+                            {
+                                target: 0,
+                                content: [
+                                    'order',
+                                    // [
+                                    //     'orderAsc',
+                                    //     'orderDesc',
+                                    //     'spacer',
+                                    //     'orderAddAsc',
+                                    //     'orderAddDesc',
+                                    //     'spacer',
+                                    //     'orderRemove'
+                                    // ]
+                                ]
+                            },
+                            {
+                                target: 1,
+                                content: [
+                                    'search'
+                                ]
+                            }
+                        ]
                     }
                 }
             </script>
