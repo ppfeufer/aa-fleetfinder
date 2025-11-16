@@ -34,7 +34,12 @@
                             indicators: false,
                             handler: false
                         },
-                        dom: 'lrtip', // Removing the search bar (Default is 'lfrtip')
+                        layout: {
+                            topStart: 'pageLength',
+                            topEnd: null, // Removing the default search bar (Default is 'search', see https://datatables.net/reference/option/layout#Default)
+                            bottomStart: 'info',
+                            bottomEnd: 'paging'
+                        },
                         columnControl: [
                             {
                                 target: 0,

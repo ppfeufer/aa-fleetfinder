@@ -26,7 +26,7 @@ $(document).ready(() => {
                     url: fleetFinderSettings.dataTables.languageUrl
                 },
                 data: data,
-                dom: fleetFinderSettings.dataTables.dom,
+                layout: fleetFinderSettings.dataTables.layout,
                 ordering: fleetFinderSettings.dataTables.ordering,
                 columnControl: fleetFinderSettings.dataTables.columnControl,
                 columns: [
