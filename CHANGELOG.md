@@ -36,6 +36,10 @@ Section Order:
 
 <!-- Your changes go here -->
 
+### Fixed
+
+- Usage of deprecated DataTables options
+
 ### Changed
 
 - Switched to DataTables 2

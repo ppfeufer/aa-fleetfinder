@@ -21,7 +21,7 @@ $(document).ready(() => {
         },
         paging: false,
         destroy: true,
-        dom: fleetFinderSettings.dataTables.dom,
+        layout: fleetFinderSettings.dataTables.layout,
         ordering: fleetFinderSettings.dataTables.ordering,
         columnControl: fleetFinderSettings.dataTables.columnControl,
     };
