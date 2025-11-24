@@ -30,17 +30,14 @@ from esi.exceptions import HTTPClientError
 from esi.models import Token
 from esi.openapi_clients import EsiOperation
 
-# Alliance Auth (External Libs)
-from app_utils.logging import LoggerAddTag
-
 # AA Fleet Finder
 from fleetfinder import __title__
 from fleetfinder.handler import esi_handler
 from fleetfinder.models import Fleet
-from fleetfinder.providers import esi
+from fleetfinder.providers import AppLogger, esi
 from fleetfinder.tasks import get_fleet_composition, send_fleet_invitation
 
-logger = LoggerAddTag(my_logger=get_extension_logger(name=__name__), prefix=__title__)
+logger = AppLogger(my_logger=get_extension_logger(name=__name__), prefix=__title__)
 
 
 @login_required()
