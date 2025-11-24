@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: AA Fleet Finder 3.0.0\n"
+"Project-Id-Version: AA Fleet Finder 3.0.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2025-11-12 02:43+0100\n"
+"POT-Creation-Date: 2025-11-24 14:45+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -161,7 +161,7 @@ msgstr ""
 msgid "An unknown error occurred."
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/join-fleet.html:6 fleetfinder/views.py:195
+#: fleetfinder/templates/fleetfinder/join-fleet.html:6 fleetfinder/views.py:197
 msgid "Join fleet"
 msgstr ""
 
@@ -239,65 +239,65 @@ msgstr ""
 msgid "Available fleets"
 msgstr ""
 
-#: fleetfinder/views.py:206
+#: fleetfinder/views.py:208
 msgid "View fleet details"
 msgstr ""
 
-#: fleetfinder/views.py:212
+#: fleetfinder/views.py:214
 msgid "Edit fleet advert"
 msgstr ""
 
-#: fleetfinder/views.py:257
+#: fleetfinder/views.py:259
 #, python-brace-format
 msgid ""
 "<h4>Error!</h4><p>There was an error creating the fleet: {error_detail}</p>"
 msgstr ""
 
-#: fleetfinder/views.py:297 fleetfinder/views.py:493
+#: fleetfinder/views.py:299 fleetfinder/views.py:496
 msgid "<h4>Error!</h4><p>Fleet does not exist or is no longer available.</p>"
 msgstr ""
 
-#: fleetfinder/views.py:454
+#: fleetfinder/views.py:457
 #, python-brace-format
 msgid "<h4>Error!</h4><p>ESI returned the following error: {esi_error}</p>"
 msgstr ""
 
-#: fleetfinder/views.py:465
+#: fleetfinder/views.py:468
 #, python-brace-format
 msgid "<h4>Error!</h4><p>There was an error creating the fleet: {ex}</p>"
 msgstr ""
 
-#: fleetfinder/views.py:530
+#: fleetfinder/views.py:533
 #, python-brace-format
 msgid "Fleet with ID {fleet_id} does not exist."
 msgstr ""
 
-#: fleetfinder/views.py:541
+#: fleetfinder/views.py:544
 #, python-brace-format
 msgid "Error retrieving fleet composition: {ex}"
 msgstr ""
 
-#: fleetfinder/views.py:577
+#: fleetfinder/views.py:580
 msgid "Method not allowed"
 msgstr ""
 
-#: fleetfinder/views.py:588
+#: fleetfinder/views.py:591
 msgid "Member ID required"
 msgstr ""
 
-#: fleetfinder/views.py:608
+#: fleetfinder/views.py:612
 msgid "Fleet not found"
 msgstr ""
 
-#: fleetfinder/views.py:613
+#: fleetfinder/views.py:617
 msgid "Invalid request data"
 msgstr ""
 
-#: fleetfinder/views.py:619
+#: fleetfinder/views.py:623
 msgid "Member not found in fleet"
 msgstr ""
 
-#: fleetfinder/views.py:628
+#: fleetfinder/views.py:632
 #, python-brace-format
 msgid "An ESI error occurred: {ex}"
 msgstr ""

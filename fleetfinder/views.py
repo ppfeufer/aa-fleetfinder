@@ -35,6 +35,7 @@ from app_utils.logging import LoggerAddTag
 
 # AA Fleet Finder
 from fleetfinder import __title__
+from fleetfinder.handler import esi_handler
 from fleetfinder.models import Fleet
 from fleetfinder.providers import esi
 from fleetfinder.tasks import get_fleet_composition, send_fleet_invitation
@@ -57,10 +58,11 @@ def _get_and_validate_fleet(token: Token, character_id: int) -> EsiOperation:
     """
 
     try:
-        fleet_result = esi.client.Fleets.GetCharactersCharacterIdFleet(
+        operation = esi.client.Fleets.GetCharactersCharacterIdFleet(
             character_id=token.character_id,
             token=token,
-        ).result(force_refresh=True)
+        )
+        fleet_result = esi_handler.result(operation, use_etag=False)
     except HTTPClientError as ex:
         logger.debug(f"ESI fleet cannot be retrieved: {str(ex)}", exc_info=True)
 
@@ -419,12 +421,13 @@ def save_fleet(request):
 
         fleet.groups.set(groups)
 
-        esi.client.Fleets.PutFleetsFleetId(
+        operation = esi.client.Fleets.PutFleetsFleetId(
             fleet_id=fleet_id,
             token=token,
             # body={"is_free_move": free_move, "motd": motd},
             body={"is_free_move": free_move},
-        ).result(force_refresh=True)
+        )
+        esi_handler.result(operation, use_etag=False)
 
     if request.method != "POST":
         return redirect("fleetfinder:dashboard")
@@ -596,11 +599,12 @@ def ajax_fleet_kick_member(  # pylint: disable=too-many-return-statements
             scopes=["esi-fleets.write_fleet.v1"],
         )
 
-        esi.client.Fleets.DeleteFleetsFleetIdMembersMemberId(
+        operation = esi.client.Fleets.DeleteFleetsFleetIdMembersMemberId(
             fleet_id=fleet_id,
             member_id=member_id,
             token=token,
-        ).result(force_refresh=True)
+        )
+        esi_handler.result(operation, use_etag=False)
 
         return JsonResponse(data={"success": True}, status=HTTPStatus.OK)
     except Fleet.DoesNotExist:
