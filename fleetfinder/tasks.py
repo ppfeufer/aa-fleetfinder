@@ -8,7 +8,6 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import timedelta
 
 # Third Party
-from aiopenapi3 import ContentTypeError
 from celery import shared_task
 
 # Django
@@ -17,7 +16,7 @@ from django.utils import timezone
 # Alliance Auth
 from allianceauth.services.hooks import get_extension_logger
 from allianceauth.services.tasks import QueueOnce
-from esi.exceptions import HTTPClientError, HTTPNotModified
+from esi.exceptions import HTTPClientError
 from esi.models import Token
 
 # Alliance Auth (External Libs)
@@ -25,6 +24,7 @@ from app_utils.logging import LoggerAddTag
 
 # AA Fleet Finder
 from fleetfinder import __title__
+from fleetfinder.handler import esi_handler
 from fleetfinder.models import Fleet
 from fleetfinder.providers import esi
 
@@ -88,9 +88,10 @@ def _send_invitation(
     invitation = {"character_id": character_id, "role": "squad_member"}
 
     # Send the invitation using the ESI API
-    esi.client.Fleets.PostFleetsFleetIdMembers(
+    operation = esi.client.Fleets.PostFleetsFleetIdMembers(
         fleet_id=fleet_id, token=fleet_commander_token, body=invitation
-    ).result(force_refresh=True)
+    )
+    esi_handler.result(operation, use_etag=False)
 
 
 def _close_esi_fleet(fleet: Fleet, reason: str) -> None:
@@ -234,26 +235,9 @@ def _check_for_esi_fleet(fleet: Fleet) -> dict | bool:
 
     # Check if there is a fleet
     try:
-        result = operation.result()
+        result = esi_handler.result(operation, use_etag=False)
 
         return {"fleet": result, "token": esi_token}
-    except HTTPNotModified:
-        logger.debug(
-            f'Fleet "{fleet.name}" of {fleet.fleet_commander} '
-            f"(ESI ID: {fleet.fleet_id}) not modified since last check. Retrieving from cache."
-        )
-
-        # Not modified means the fleet exists and nothing has changed
-        result = operation.result(use_etag=False)
-
-        return {"fleet": result, "token": esi_token}
-    except ContentTypeError:
-        logger.debug(
-            f'ESI returned gibberish for fleet "{fleet.name}" of {fleet.fleet_commander} '
-            f"(ESI ID: {fleet.fleet_id}), skipping update."
-        )
-
-        return False
     except HTTPClientError as ex:
         logger.debug(
             f'HTTPClientError while checking fleet "{fleet.name}" of {fleet.fleet_commander} '
@@ -326,10 +310,11 @@ def _process_fleet(fleet: Fleet) -> None:
         return
 
     # Verify if the current user is the fleet boss
+    operation = esi.client.Fleets.GetFleetsFleetIdMembers(
+        fleet_id=fleet.fleet_id, token=esi_fleet["token"]
+    )
     try:
-        _ = esi.client.Fleets.GetFleetsFleetIdMembers(
-            fleet_id=fleet.fleet_id, token=esi_fleet["token"]
-        ).result(force_refresh=True)
+        _ = esi_handler.result(operation, use_etag=False)
     except Exception:  # pylint: disable=broad-exception-caught
         # Handle the case where the user is not the fleet boss
         _esi_fleet_error_handling(fleet=fleet, error_key=Fleet.EsiError.NOT_FLEETBOSS)
@@ -432,19 +417,9 @@ def _fetch_chunk(ids: list) -> list:
     operation = esi.client.Universe.PostUniverseNames(body=ids)
 
     try:
-        result = operation.result()
+        result = esi_handler.result(operation, use_etag=False)
 
         logger.debug(f"Fetched {len(result)} names for {len(ids)} IDs.")
-        logger.debug(f"Result: {result}")
-
-        return result
-    except HTTPNotModified:
-        logger.debug("ESI returned HTTP 304 Not Modified, retrieving from cache.")
-
-        # Not modified means the data exists and nothing has changed
-        result = operation.result(use_etag=False)
-
-        logger.debug(f"Fetched {len(result)} names for {len(ids)} IDs from cache.")
         logger.debug(f"Result: {result}")
 
         return result
@@ -535,15 +510,7 @@ def get_fleet_composition(fleet_id: int) -> FleetViewAggregate | None:
 
     try:
         # Fetch fleet member information from the ESI API
-        fleet_infos = operation.result()
-    except HTTPNotModified:
-        logger.debug(
-            f'Fleet "{fleet.name}" of {fleet.fleet_commander} '
-            f"(ESI ID: {fleet.fleet_id}) not modified since last check. Retrieving from cache."
-        )
-
-        # Not modified means the fleet exists and nothing has changed
-        fleet_infos = operation.result(use_etag=False)
+        fleet_infos = esi_handler.result(operation, use_etag=False)
     except Exception as exc:  # pylint: disable=broad-exception-caught
         # Log and raise an error if fleet composition retrieval fails
         logger.error(f"Failed to get fleet composition for fleet {fleet_id}: {exc}")

@@ -4,17 +4,13 @@ Tests for the fleetfinder.tasks module.
 
 # Standard Library
 from datetime import timedelta
-from http import HTTPStatus
 from unittest.mock import MagicMock, Mock, patch
-
-# Third Party
-from aiopenapi3 import ContentTypeError
 
 # Django
 from django.utils import timezone
 
 # Alliance Auth
-from esi.exceptions import HTTPClientError, HTTPNotModified
+from esi.exceptions import HTTPClientError
 
 # AA Fleet Finder
 from fleetfinder.models import Fleet
@@ -370,65 +366,6 @@ class TestHelperCheckForEsiFleet(BaseTestCase):
         self.assertEqual(result["fleet"], {"fleet_id": 12345})
         self.assertEqual(result["token"], mock_get_token.return_value)
         mock_esi_client.Fleets.GetCharactersCharacterIdFleet.return_value.result.assert_called_once()
-
-    @patch("fleetfinder.tasks.Token.get_token")
-    def test_retrieves_fleet_from_cache_when_not_modified(self, mock_get_token):
-        mock_get_token.return_value = MagicMock()
-        mock_esi_client = MagicMock()
-
-        mock_response = MagicMock()
-        mock_response.result.side_effect = [
-            HTTPNotModified(HTTPStatus.NOT_MODIFIED, {}),
-            {"fleet_id": 12345},
-        ]
-        mock_esi_client.Fleets.GetCharactersCharacterIdFleet.return_value = (
-            mock_response
-        )
-
-        fleet = Mock(
-            fleet_commander=Mock(character_id=67890), name="Test Fleet", fleet_id=12345
-        )
-
-        with patch("fleetfinder.tasks.esi", Mock(client=mock_esi_client)):
-            result = _check_for_esi_fleet(fleet)
-
-        self.assertEqual(result["fleet"], {"fleet_id": 12345})
-        self.assertEqual(result["token"], mock_get_token.return_value)
-        mock_response.result.assert_called_with(use_etag=False)
-
-    def test_returns_false_when_content_type_error_occurs(self):
-        """
-        Test that _check_for_esi_fleet returns False when a ContentTypeError occurs.
-
-        :return:
-        :rtype:
-        """
-
-        mock_fleet = MagicMock()
-        mock_token = MagicMock()
-
-        # .result() raises a properly constructed ContentTypeError instance
-        mock_response = MagicMock()
-        mock_response.result.side_effect = ContentTypeError(
-            operation="GetCharactersCharacterIdFleet",
-            content_type="application/json",
-            message="Unexpected content type",
-            response=Mock(),
-        )
-
-        mock_client = MagicMock()
-        mock_client.Fleets.GetCharactersCharacterIdFleet.return_value = mock_response
-
-        with patch(
-            "fleetfinder.tasks.Token.get_token", return_value=mock_token
-        ) as mock_get_token:
-            with patch("fleetfinder.tasks.esi", Mock(client=mock_client)):
-                result = _check_for_esi_fleet(fleet=mock_fleet)
-
-        self.assertIs(result, False)
-        mock_client.Fleets.GetCharactersCharacterIdFleet.assert_called_once()
-        mock_response.result.assert_called_once()
-        mock_get_token.assert_called_once()
 
     def test_handles_http_client_error_for_fleet_not_found(self):
         """
