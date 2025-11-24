@@ -14,13 +14,11 @@ from allianceauth.services.hooks import get_extension_logger
 from esi.exceptions import HTTPClientError, HTTPNotModified
 from esi.openapi_clients import EsiOperation
 
-# Alliance Auth (External Libs)
-from app_utils.logging import LoggerAddTag
-
 # AA Fleet Finder
 from fleetfinder import __title__
+from fleetfinder.providers import AppLogger
 
-logger = LoggerAddTag(my_logger=get_extension_logger(__name__), prefix=__title__)
+logger = AppLogger(my_logger=get_extension_logger(__name__), prefix=__title__)
 
 
 def result(  # pylint: disable=too-many-arguments too-many-positional-arguments

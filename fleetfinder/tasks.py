@@ -19,16 +19,13 @@ from allianceauth.services.tasks import QueueOnce
 from esi.exceptions import HTTPClientError
 from esi.models import Token
 
-# Alliance Auth (External Libs)
-from app_utils.logging import LoggerAddTag
-
 # AA Fleet Finder
 from fleetfinder import __title__
 from fleetfinder.handler import esi_handler
 from fleetfinder.models import Fleet
-from fleetfinder.providers import esi
+from fleetfinder.providers import AppLogger, esi
 
-logger = LoggerAddTag(my_logger=get_extension_logger(name=__name__), prefix=__title__)
+logger = AppLogger(my_logger=get_extension_logger(name=__name__), prefix=__title__)
 
 
 ESI_ERROR_LIMIT = 50

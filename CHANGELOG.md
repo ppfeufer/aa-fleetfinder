@@ -45,6 +45,10 @@ Section Order:
 - Switched to DataTables 2
 - ESI handling improved. This should save a bunch of ESI calls when processing fleets.
 
+### Removed
+
+- `allianceauth-app-utils` as dependency
+
 ## [3.0.1] - 2025-11-12
 
 ### Changed

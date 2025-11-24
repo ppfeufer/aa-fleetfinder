@@ -39,7 +39,6 @@ dynamic = [
 ]
 dependencies = [
     "allianceauth>=4.9,<5",
-    "allianceauth-app-utils>=1.14.2",
     "django-esi>=8,<9",
 ]
 optional-dependencies.tests-allianceauth-latest = [

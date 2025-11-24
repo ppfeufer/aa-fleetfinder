@@ -18,12 +18,10 @@ from django.utils.timezone import now
 from allianceauth.groupmanagement.models import AuthGroup
 from esi.exceptions import HTTPClientError
 
-# Alliance Auth (External Libs)
-from app_utils.testing import create_fake_user
-
 # AA Fleet Finder
 from fleetfinder.models import Fleet
 from fleetfinder.tests import BaseTestCase
+from fleetfinder.tests.utils import create_fake_user
 from fleetfinder.views import (
     _get_and_validate_fleet,
     ajax_fleet_kick_member,
