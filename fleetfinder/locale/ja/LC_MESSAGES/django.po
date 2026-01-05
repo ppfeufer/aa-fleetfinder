@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2025-12-02 03:57+0100\n"
-"PO-Revision-Date: 2025-11-24 13:51+0000\n"
+"POT-Creation-Date: 2026-01-05 20:14+0100\n"
+"PO-Revision-Date: 2025-12-03 08:17+0000\n"
 "Last-Translator: Dexsar <dexsar.paf@gmail.com>\n"
 "Language-Team: Japanese <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/ja/>\n"
 "Language: ja\n"
@@ -53,7 +53,7 @@ msgstr "FCは別のフリートに切り替えました。"
 #: fleetfinder/models.py:51 fleetfinder/templates/fleetfinder/dashboard.html:20
 #: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:10
 msgid "Fleet name"
-msgstr "艦隊名"
+msgstr "フリート名"
 
 #: fleetfinder/models.py:59 fleetfinder/templates/fleetfinder/dashboard.html:19
 msgid "Fleet commander"
@@ -146,18 +146,16 @@ msgstr "システム（星系）"
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:57
 msgid "Action"
-msgstr ""
+msgstr "実行"
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:80
-#, fuzzy
-#| msgid "Fleet name"
 msgid "Fleet boss"
-msgstr "艦隊名"
+msgstr "フリートボス"
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:81
 #: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:10
 msgid "Kick member from fleet"
-msgstr ""
+msgstr "メンバーをフリートからキックする"
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:82
 msgid "An unknown error occurred."
@@ -281,10 +279,8 @@ msgid "Member ID required"
 msgstr "メンバーIDが必要です"
 
 #: fleetfinder/views.py:609
-#, fuzzy
-#| msgid "Fleet composition"
 msgid "Fleet not found"
-msgstr "フリートの構成"
+msgstr "フリートが見つからない"
 
 #: fleetfinder/views.py:614
 msgid "Invalid request data"
