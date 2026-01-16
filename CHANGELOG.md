@@ -36,6 +36,11 @@ Section Order:
 
 <!-- Your changes go here -->
 
+### Changed
+
+- Enabled global search in the datatables
+- Allow clicking on table headers to change the sorting order
+
 ## [3.1.1] - 2026-01-05
 
 ### Changed
