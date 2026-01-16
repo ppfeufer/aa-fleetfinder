@@ -45,7 +45,7 @@ $(document).ready(() => {
                     },
                     {
                         data: 'actions',
-                        className: 'text-end',
+                        className: 'text-end'
                     },
                 ],
                 columnDefs: [
@@ -61,7 +61,9 @@ $(document).ready(() => {
                         columnControl: [
                             {target: 0, content: []},
                             {target: 1, content: []}
-                        ]
+                        ],
+                        orderable: false,
+                        width: 135,
                     },
                 ],
                 order: [[0, 'asc']],

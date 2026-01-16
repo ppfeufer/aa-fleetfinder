@@ -69,7 +69,6 @@ $(document).ready(() => {
                                     return data.is_fleet_boss ? '' : `<button type="button" class="btn btn-sm btn-danger" ${dataAttributes} title="${fleetFinderSettings.l10n.kickMemberFromFleet}">${fwIcon}</button>`;
                                 }
                             },
-                            width: 50,
                             className: 'text-end',
                         }
                     ],
@@ -79,7 +78,9 @@ $(document).ready(() => {
                             columnControl: [
                                 {target: 0, content: []},
                                 {target: 1, content: []}
-                            ]
+                            ],
+                            orderable: false,
+                            width: 50
                         }
                     ],
                     createdRow: (row, data, rowIndex) => {
