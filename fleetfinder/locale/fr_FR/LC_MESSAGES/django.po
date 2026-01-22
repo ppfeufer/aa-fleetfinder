@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # erka Ekanon <M6musicT@hotmail.fr>, 2024.
 # Peter Pfeufer <info@ppfeufer.de>, 2024, 2025.
-# Matthias P <randomusernetcom@gmail.com>, 2024, 2025.
+# Matthias P <randomusernetcom@gmail.com>, 2024, 2025, 2026.
 # Hexo <ghostcig@free.fr>, 2024.
 # Houbi_Houba <paul.lacape@live.fr>, 2024.
 # balbozorre <loic.petiot2002@gmail.com>, 2024, 2025.
@@ -11,16 +11,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2026-01-05 20:14+0100\n"
-"PO-Revision-Date: 2025-10-25 13:38+0000\n"
-"Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
+"POT-Creation-Date: 2026-01-22 18:36+0100\n"
+"PO-Revision-Date: 2026-01-09 17:17+0000\n"
+"Last-Translator: Matthias P <randomusernetcom@gmail.com>\n"
 "Language-Team: French <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/fr/>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.14\n"
+"X-Generator: Weblate 5.15.1\n"
 
 #: fleetfinder/__init__.py:10 fleetfinder/models.py:24
 #: fleetfinder/templates/fleetfinder/base.html:7
@@ -151,18 +151,18 @@ msgstr "Système"
 msgid "Action"
 msgstr "Action"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:80
+#: fleetfinder/templates/fleetfinder/fleet-details.html:82
 #, fuzzy
 #| msgid "Fleet details"
 msgid "Fleet boss"
 msgstr "Details de la flotte"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:81
+#: fleetfinder/templates/fleetfinder/fleet-details.html:83
 #: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:10
 msgid "Kick member from fleet"
 msgstr "Exclure le membre de la flotte"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:82
+#: fleetfinder/templates/fleetfinder/fleet-details.html:84
 msgid "An unknown error occurred."
 msgstr "Une erreur inconnue s'est produite."
 
@@ -198,7 +198,7 @@ msgstr "Envoyer les invitations de flotte"
 
 #: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:13
 msgid "Close"
-msgstr "Clôturé"
+msgstr "Fermer"
 
 #: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:18
 msgid "Are you sure you want to kick this member from the fleet?"

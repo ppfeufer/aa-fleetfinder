@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2026-01-05 20:14+0100\n"
+"POT-Creation-Date: 2026-01-22 18:36+0100\n"
 "PO-Revision-Date: 2025-07-29 20:18+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: Spanish <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/es/>\n"
@@ -148,18 +148,18 @@ msgstr "Sistema"
 msgid "Action"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:80
+#: fleetfinder/templates/fleetfinder/fleet-details.html:82
 #, fuzzy
 #| msgid "Fleet members"
 msgid "Fleet boss"
 msgstr "Miembros de la Flota"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:81
+#: fleetfinder/templates/fleetfinder/fleet-details.html:83
 #: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:10
 msgid "Kick member from fleet"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:82
+#: fleetfinder/templates/fleetfinder/fleet-details.html:84
 msgid "An unknown error occurred."
 msgstr ""
 

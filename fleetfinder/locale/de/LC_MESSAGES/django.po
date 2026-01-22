@@ -1,13 +1,13 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# "H. Peter Pfeufer" <info@ppfeufer.de>, 2023, 2024, 2025.
+# "H. Peter Pfeufer" <info@ppfeufer.de>, 2023, 2024, 2025, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2026-01-05 20:14+0100\n"
-"PO-Revision-Date: 2025-10-25 12:28+0000\n"
+"POT-Creation-Date: 2026-01-22 18:36+0100\n"
+"PO-Revision-Date: 2026-01-12 12:17+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: German <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/de/>\n"
 "Language: de\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.14\n"
+"X-Generator: Weblate 5.15.1\n"
 
 #: fleetfinder/__init__.py:10 fleetfinder/models.py:24
 #: fleetfinder/templates/fleetfinder/base.html:7
@@ -145,16 +145,16 @@ msgstr "System"
 msgid "Action"
 msgstr "Aktion"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:80
+#: fleetfinder/templates/fleetfinder/fleet-details.html:82
 msgid "Fleet boss"
 msgstr "Flottenchef"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:81
+#: fleetfinder/templates/fleetfinder/fleet-details.html:83
 #: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:10
 msgid "Kick member from fleet"
 msgstr "Mitglied aus der Flotte werfen"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:82
+#: fleetfinder/templates/fleetfinder/fleet-details.html:84
 msgid "An unknown error occurred."
 msgstr "Ein unbekannter Fehler ist aufgetreten."
 
@@ -220,7 +220,7 @@ msgstr "Absenden"
 
 #: fleetfinder/templates/fleetfinder/partials/footer/app-translation-footer.html:5
 msgid "Do you want to help translate this app into your language or improve the existing translation?"
-msgstr "Du möchtest helfen diese App in Deine Sprache zu übersetzen oder die bestehende Übersetzung verbessern?"
+msgstr "Du möchtest helfen diese App in Deine Sprache zu übersetzen oder die bestehende Übersetzung zu verbessern?"
 
 #: fleetfinder/templates/fleetfinder/partials/footer/app-translation-footer.html:8
 msgid "Join our team of translators!"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2026-01-05 20:14+0100\n"
+"POT-Creation-Date: 2026-01-22 18:36+0100\n"
 "PO-Revision-Date: 2025-12-03 08:17+0000\n"
 "Last-Translator: Dexsar <dexsar.paf@gmail.com>\n"
 "Language-Team: Japanese <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/ja/>\n"
@@ -148,16 +148,16 @@ msgstr "システム（星系）"
 msgid "Action"
 msgstr "実行"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:80
+#: fleetfinder/templates/fleetfinder/fleet-details.html:82
 msgid "Fleet boss"
 msgstr "フリートボス"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:81
+#: fleetfinder/templates/fleetfinder/fleet-details.html:83
 #: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:10
 msgid "Kick member from fleet"
 msgstr "メンバーをフリートからキックする"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:82
+#: fleetfinder/templates/fleetfinder/fleet-details.html:84
 msgid "An unknown error occurred."
 msgstr "不明なエラーが発生しました。"
 
