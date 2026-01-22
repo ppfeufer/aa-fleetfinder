@@ -31,12 +31,14 @@
 {% endblock %}
 
 {% block extra_css %}
-    {% include "fleetfinder/bundles/css/datatables-2-css.html" with extColumnControl=True %}
+    {% include "bundles/datatables-2-css-bs5.html" %}
+    {% include "bundles/datatables-2-columncontrol-css-bs5.html" %}
     {% include "fleetfinder/bundles/css/fleetfinder-css.html" %}
 {% endblock %}
 
 {% block extra_javascript %}
-    {% include "fleetfinder/bundles/js/datatables-2-js.html" with extColumnControl=True %}
+    {% include "bundles/datatables-2-js-bs5.html" %}
+    {% include "bundles/datatables-2-columncontrol-js-bs5.html" %}
     {% include "bundles/moment-js.html" with locale=True %}
 
     <script>
