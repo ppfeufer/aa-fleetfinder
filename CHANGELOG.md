@@ -47,7 +47,7 @@ Section Order:
 ### Changed
 
 - Switched to DataTables 2 provided by Alliance Auth, instead of bundling it ourselves
-- Enabled global search in the datatables
+- Enabled global search in the DataTables
 - Allow clicking on table headers to change the sorting order
 - Minimum requirements:
   - Alliance Auth >= 4.12.0
@@ -622,9 +622,9 @@ Section Order:
 
 ### Changed
 
-- Datatables in fleet details view set up properly
+- DataTables in fleet details view set up properly
 - UI in fleet details view re-done
-- Fleet details are now refreshed every 15 seconds via Datatables reload
+- Fleet details are now refreshed every 15 seconds via DataTables reload
 
 ## [0.1.0-alpha.1] - 2020-12-30
 
