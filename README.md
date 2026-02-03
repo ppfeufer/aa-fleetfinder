@@ -37,12 +37,18 @@ ______________________________________________________________________
 
 ## Installation<a name="installation"></a>
 
+> [!IMPORTANT]
+>
+> This app is utilising features that are only available in Alliance Auth >= 4.12.0.
+> Please make sure to update your Alliance Auth instance before installing this app,
+> otherwise, an update to Alliance Auth will be pulled in unsupervised.
+
 ### Step 1: Install the Package<a name="step-1-install-the-package"></a>
 
 Make sure you're in the virtual environment (venv) of your Alliance Auth installation Then install the latest release directly from PyPi.
 
 ```shell
-pip install aa-fleetfinder==3.2.0
+pip install aa-fleetfinder==3.2.1
 ```
 
 ### Step 2: Configure Alliance Auth<a name="step-2-configure-alliance-auth"></a>
