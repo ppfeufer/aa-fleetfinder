@@ -55,10 +55,8 @@ urls.GitHub = "https://github.com/ppfeufer/aa-fleetfinder"
 urls.Tracker = "https://github.com/ppfeufer/aa-fleetfinder/issues"
 urls.Translation = "https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/"
 
-[tool.hatch.build]
-include = [
+[tool.hatch]
+build.include = [
     "/fleetfinder",
 ]
-
-[tool.hatch.version]
-path = "fleetfinder/__init__.py"
+version.path = "fleetfinder/__init__.py"
