@@ -3,6 +3,7 @@ Test the views for the Fleet Finder application.
 """
 
 # Standard Library
+import datetime
 import json
 from http import HTTPStatus
 from types import SimpleNamespace
@@ -11,7 +12,6 @@ from unittest.mock import MagicMock, Mock, patch
 # Django
 from django.contrib.auth.models import Group
 from django.urls import reverse
-from django.utils.datetime_safe import datetime
 from django.utils.timezone import now
 
 # Alliance Auth
@@ -31,7 +31,7 @@ from fleetfinder.views import (
 )
 
 
-def _dt_to_iso(dt: datetime) -> str:
+def _dt_to_iso(dt: datetime.datetime) -> str:
     """
     Helper :: Convert a datetime object to ISO 8601 format.
 
