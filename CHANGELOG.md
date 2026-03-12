@@ -36,6 +36,10 @@ Section Order:
 
 <!-- Your changes go here -->
 
+### Removed
+
+- Deprecated templatetag
+
 ## [3.2.3] - 2026-03-11
 
 ### Changed
