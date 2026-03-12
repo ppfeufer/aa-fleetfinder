@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2026-03-11 13:05+0100\n"
+"POT-Creation-Date: 2026-03-12 11:24+0100\n"
 "PO-Revision-Date: 2025-07-29 20:18+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: Spanish <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/es/>\n"
@@ -155,7 +155,7 @@ msgid "Fleet boss"
 msgstr "Miembros de la Flota"
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:83
-#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:10
+#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:9
 msgid "Kick member from fleet"
 msgstr ""
 
@@ -195,23 +195,23 @@ msgstr "Selecciona los personajes a invitar"
 msgid "Send fleet invites"
 msgstr "Enviar invitaciones de Flota"
 
-#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:13
+#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:12
 msgid "Close"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:18
+#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:17
 msgid "Are you sure you want to kick this member from the fleet?"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:27
+#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:26
 msgid "Error"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:36
+#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:35
 msgid "Cancel"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:41
+#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:40
 msgid "Confirm"
 msgstr ""
 
