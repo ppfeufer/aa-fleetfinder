@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2026-03-11 13:05+0100\n"
+"POT-Creation-Date: 2026-04-07 16:49+0200\n"
 "PO-Revision-Date: 2025-12-08 06:58+0000\n"
 "Last-Translator: s0k0l -_- <salarysalo@gmail.com>\n"
 "Language-Team: Ukrainian <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/uk/>\n"
@@ -154,7 +154,7 @@ msgid "Fleet boss"
 msgstr "Командир флоту"
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:83
-#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:10
+#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:9
 msgid "Kick member from fleet"
 msgstr "Кікнути пілота з флоту"
 
@@ -190,23 +190,23 @@ msgstr "Будь ласка, оберіть персонажів, яких хо�
 msgid "Send fleet invites"
 msgstr "Надіслати запрошення до флоту"
 
-#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:13
+#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:12
 msgid "Close"
 msgstr "Закрити"
 
-#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:18
+#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:17
 msgid "Are you sure you want to kick this member from the fleet?"
 msgstr "Ви дійсно хочете кікнути цього пілота з флоту?"
 
-#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:27
+#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:26
 msgid "Error"
 msgstr "Помилочка"
 
-#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:36
+#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:35
 msgid "Cancel"
 msgstr "Скасувати"
 
-#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:41
+#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:40
 msgid "Confirm"
 msgstr "Підтвердити"
 
