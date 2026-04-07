@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2026-03-11 13:05+0100\n"
+"POT-Creation-Date: 2026-04-07 16:49+0200\n"
 "PO-Revision-Date: 2026-02-12 06:23+0000\n"
 "Last-Translator: shkno <l13244536339@163.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/zh_Hans/>\n"
@@ -157,7 +157,7 @@ msgid "Fleet boss"
 msgstr "舰队成员"
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:83
-#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:10
+#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:9
 msgid "Kick member from fleet"
 msgstr "踢除舰队成员"
 
@@ -197,23 +197,23 @@ msgstr "选择要邀请的角色"
 msgid "Send fleet invites"
 msgstr "发送舰队邀请"
 
-#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:13
+#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:12
 msgid "Close"
 msgstr "关闭"
 
-#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:18
+#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:17
 msgid "Are you sure you want to kick this member from the fleet?"
 msgstr "你确定要把他踢出舰队吗？"
 
-#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:27
+#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:26
 msgid "Error"
 msgstr "错误"
 
-#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:36
+#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:35
 msgid "Cancel"
 msgstr "取消"
 
-#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:41
+#: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:40
 msgid "Confirm"
 msgstr "确认"
 
