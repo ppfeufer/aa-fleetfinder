@@ -32,9 +32,20 @@ Section Order:
 ### Deprecated
 ### Removed
 ### Security
+### Miscellaneous
 -->
 
 <!-- Your changes go here -->
+
+## [3.2.5] - 2026-05-05
+
+### Changed
+
+- Translations updated
+
+### Miscellaneous
+
+- Ready for Alliance Auth v5
 
 ## [3.2.4] - 2026-04-07
 
@@ -737,7 +748,8 @@ App forked from [Dreadbomb/aa-fleet]
 [3.2.2]: https://github.com/ppfeufer/aa-fleetfinder/compare/v3.2.1...v3.2.2 "v3.2.2"
 [3.2.3]: https://github.com/ppfeufer/aa-fleetfinder/compare/v3.2.2...v3.2.3 "v3.2.3"
 [3.2.4]: https://github.com/ppfeufer/aa-fleetfinder/compare/v3.2.3...v3.2.4 "v3.2.4"
+[3.2.5]: https://github.com/ppfeufer/aa-fleetfinder/compare/v3.2.4...v3.2.5 "v3.2.5"
 [dreadbomb/aa-fleet]: https://github.com/Dreadbomb/aa-fleet "Dreadbomb/aa-fleet"
-[in development]: https://github.com/ppfeufer/aa-fleetfinder/compare/v3.2.4...HEAD "In Development"
+[in development]: https://github.com/ppfeufer/aa-fleetfinder/compare/v3.2.5...HEAD "In Development"
 [keep a changelog]: http://keepachangelog.com/ "Keep a Changelog"
 [semantic versioning]: http://semver.org/ "Semantic Versioning"
