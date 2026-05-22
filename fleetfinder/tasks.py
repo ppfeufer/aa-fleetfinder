@@ -20,12 +20,12 @@ from esi.exceptions import HTTPClientError
 from esi.models import Token
 
 # AA Fleet Finder
-from fleetfinder import __title__
-from fleetfinder.handler import esi_handler
 from fleetfinder.models import Fleet
-from fleetfinder.providers import AppLogger, esi
+from fleetfinder.providers.applogger import AppLogger
+from fleetfinder.providers.esi_client import esi
+from fleetfinder.providers.esi_handler import ESIHandler
 
-logger = AppLogger(my_logger=get_extension_logger(name=__name__), prefix=__title__)
+logger = AppLogger(my_logger=get_extension_logger(name=__name__))
 
 
 ESI_ERROR_LIMIT = 50
@@ -88,7 +88,7 @@ def _send_invitation(
     operation = esi.client.Fleets.PostFleetsFleetIdMembers(
         fleet_id=fleet_id, token=fleet_commander_token, body=invitation
     )
-    esi_handler.result(operation, use_etag=False)
+    ESIHandler.result(operation, use_etag=False)
 
 
 def _close_esi_fleet(fleet: Fleet, reason: str) -> None:
@@ -232,7 +232,7 @@ def _check_for_esi_fleet(fleet: Fleet) -> dict | bool:
 
     # Check if there is a fleet
     try:
-        result = esi_handler.result(operation, use_etag=False)
+        result = ESIHandler.result(operation, use_etag=False)
 
         return {"fleet": result, "token": esi_token}
     except HTTPClientError as ex:
@@ -311,7 +311,7 @@ def _process_fleet(fleet: Fleet) -> None:
         fleet_id=fleet.fleet_id, token=esi_fleet["token"]
     )
     try:
-        _ = esi_handler.result(operation, use_etag=False)
+        _ = ESIHandler.result(operation, use_etag=False)
     except Exception:  # pylint: disable=broad-exception-caught
         # Handle the case where the user is not the fleet boss
         _esi_fleet_error_handling(fleet=fleet, error_key=Fleet.EsiError.NOT_FLEETBOSS)
@@ -414,7 +414,7 @@ def _fetch_chunk(ids: list) -> list:
     operation = esi.client.Universe.PostUniverseNames(body=ids)
 
     try:
-        result = esi_handler.result(operation, use_etag=False)
+        result = ESIHandler.result(operation, use_etag=False)
 
         logger.debug(f"Fetched {len(result)} names for {len(ids)} IDs.")
         logger.debug(f"Result: {result}")
@@ -507,7 +507,7 @@ def get_fleet_composition(fleet_id: int) -> FleetViewAggregate | None:
 
     try:
         # Fetch fleet member information from the ESI API
-        fleet_infos = esi_handler.result(operation, use_etag=False)
+        fleet_infos = ESIHandler.result(operation, use_etag=False)
     except Exception as exc:  # pylint: disable=broad-exception-caught
         # Log and raise an error if fleet composition retrieval fails
         logger.error(f"Failed to get fleet composition for fleet {fleet_id}: {exc}")

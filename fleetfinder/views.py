@@ -31,13 +31,13 @@ from esi.models import Token
 from esi.openapi_clients import EsiOperation
 
 # AA Fleet Finder
-from fleetfinder import __title__
-from fleetfinder.handler import esi_handler
 from fleetfinder.models import Fleet
-from fleetfinder.providers import AppLogger, esi
+from fleetfinder.providers.applogger import AppLogger
+from fleetfinder.providers.esi_client import esi
+from fleetfinder.providers.esi_handler import ESIHandler
 from fleetfinder.tasks import get_fleet_composition, send_fleet_invitation
 
-logger = AppLogger(my_logger=get_extension_logger(name=__name__), prefix=__title__)
+logger = AppLogger(my_logger=get_extension_logger(name=__name__))
 
 
 @login_required()
@@ -59,7 +59,7 @@ def _get_and_validate_fleet(token: Token, character_id: int) -> EsiOperation:
             character_id=token.character_id,
             token=token,
         )
-        fleet_result = esi_handler.result(operation, use_etag=False)
+        fleet_result = ESIHandler.result(operation, use_etag=False)
     except HTTPClientError as ex:
         logger.debug(f"ESI fleet cannot be retrieved: {str(ex)}", exc_info=True)
 
@@ -424,7 +424,7 @@ def save_fleet(request):
             # body={"is_free_move": free_move, "motd": motd},
             body={"is_free_move": free_move},
         )
-        esi_handler.result(operation, use_etag=False)
+        ESIHandler.result(operation, use_etag=False)
 
     if request.method != "POST":
         return redirect("fleetfinder:dashboard")
@@ -601,7 +601,7 @@ def ajax_fleet_kick_member(  # pylint: disable=too-many-return-statements
             member_id=member_id,
             token=token,
         )
-        esi_handler.result(operation, use_etag=False)
+        ESIHandler.result(operation, use_etag=False)
 
         return JsonResponse(data={"success": True}, status=HTTPStatus.OK)
     except Fleet.DoesNotExist:

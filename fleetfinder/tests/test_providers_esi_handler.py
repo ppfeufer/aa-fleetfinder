@@ -13,7 +13,7 @@ from aiopenapi3 import ContentTypeError
 from esi.exceptions import HTTPClientError, HTTPNotModified
 
 # AA Fleet Finder
-from fleetfinder.handler.esi_handler import result
+from fleetfinder.providers.esi_handler import ESIHandler
 from fleetfinder.tests import BaseTestCase
 
 
@@ -33,7 +33,7 @@ class TestHandlerEsi(BaseTestCase):
         mock_operation = MagicMock()
         mock_operation.result.return_value = "success"
 
-        response = result(mock_operation)
+        response = ESIHandler.result(mock_operation)
 
         self.assertEqual(response, "success")
         mock_operation.result.assert_called_once()
@@ -51,7 +51,7 @@ class TestHandlerEsi(BaseTestCase):
             status_code=HTTPStatus.NOT_MODIFIED, headers={}
         )
 
-        response = result(mock_operation)
+        response = ESIHandler.result(mock_operation)
 
         self.assertIsNone(response)
         mock_operation.result.assert_called_once()
@@ -73,7 +73,7 @@ class TestHandlerEsi(BaseTestCase):
             response=mock_response,
         )
 
-        response = result(mock_operation)
+        response = ESIHandler.result(mock_operation)
 
         self.assertIsNone(response)
         mock_operation.result.assert_called_once()
@@ -92,7 +92,7 @@ class TestHandlerEsi(BaseTestCase):
         )
 
         with self.assertRaises(HTTPClientError):
-            result(mock_operation)
+            ESIHandler.result(mock_operation)
 
         mock_operation.result.assert_called_once()
 
@@ -107,7 +107,9 @@ class TestHandlerEsi(BaseTestCase):
         mock_operation = MagicMock()
         mock_operation.result.return_value = "success"
 
-        response = result(mock_operation, use_etag=False, extra_param="value")
+        response = ESIHandler.result(
+            mock_operation, use_etag=False, extra_param="value"
+        )
 
         self.assertEqual(response, "success")
         mock_operation.result.assert_called_once_with(
