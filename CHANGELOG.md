@@ -37,6 +37,8 @@ Section Order:
 
 <!-- Your changes go here -->
 
+## [3.3.0] - 2026-06-02
+
 ### Changed
 
 - Modular providers
@@ -121,7 +123,7 @@ Section Order:
 
 ### Changed
 
-- Dependency to `django-esi` set to `>=8.0.0,<9` (for real this time …)
+- Dependency to `django-esi` set to `>=8.0.0,<9` (for real this time…)
 
 ## [3.0.0] - 2025-11-12
 
@@ -753,7 +755,8 @@ App forked from [Dreadbomb/aa-fleet]
 [3.2.3]: https://github.com/ppfeufer/aa-fleetfinder/compare/v3.2.2...v3.2.3 "v3.2.3"
 [3.2.4]: https://github.com/ppfeufer/aa-fleetfinder/compare/v3.2.3...v3.2.4 "v3.2.4"
 [3.2.5]: https://github.com/ppfeufer/aa-fleetfinder/compare/v3.2.4...v3.2.5 "v3.2.5"
+[3.3.0]: https://github.com/ppfeufer/aa-fleetfinder/compare/v3.2.5...v3.3.0 "v3.3.0"
 [dreadbomb/aa-fleet]: https://github.com/Dreadbomb/aa-fleet "Dreadbomb/aa-fleet"
-[in development]: https://github.com/ppfeufer/aa-fleetfinder/compare/v3.2.5...HEAD "In Development"
+[in development]: https://github.com/ppfeufer/aa-fleetfinder/compare/v3.3.0...HEAD "In Development"
 [keep a changelog]: http://keepachangelog.com/ "Keep a Changelog"
 [semantic versioning]: http://semver.org/ "Semantic Versioning"
