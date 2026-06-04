@@ -28,7 +28,9 @@
             <script>
                 const aaFleetFinderSettings = {
                     dataTables: {
-                        languageUrl: "{{ DT_LANG_PATH }}",
+                        language: {
+                            url: "{{ DT_LANG_PATH }}"
+                        },
                         datetimeFormat: 'YYYY-MM-DD, HH:mm',
                         layout: { // see https://datatables.net/reference/option/layout
                             topStart: 'pageLength',
@@ -40,6 +42,7 @@
                             handler: true, // Enable ordering by clicking on column headers
                             indicators: false, // Disable ordering indicators on column headers so ColumnControl can manage them
                         },
+                        responsive: true,
                         columnControl: [
                             {
                                 target: 0,

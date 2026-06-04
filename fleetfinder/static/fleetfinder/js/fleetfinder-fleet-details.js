@@ -16,19 +16,14 @@ $(document).ready(() => {
         warning: $('#fleetfinder-fleet-details-warning')
     };
     const dataTableConfig = {
-        language: {
-            url: fleetFinderSettings.dataTables.languageUrl
-        },
+        ... fleetFinderSettings.dataTables,
         paging: false,
         destroy: true,
-        layout: fleetFinderSettings.dataTables.layout,
-        ordering: fleetFinderSettings.dataTables.ordering,
-        columnControl: fleetFinderSettings.dataTables.columnControl,
     };
 
     const populateDatatables = () => {
         fetchGet({
-            url: fleetFinderSettings.dataTables.url.fleetDetails,
+            url: fleetFinderSettings.callbackUrl.fleetDetails,
         })
             .then((data) => {
                 if (data.error) {
@@ -44,14 +39,22 @@ $(document).ready(() => {
                     data: data.fleet_member,
                     columns: [
                         {
-                            render: (data, type, row) => {
-                                const fwIcon = '<i class="fa-solid fa-star"></i>';
+                            data: {
+                                display: (data) => {
+                                    const fwIcon = '<i class="fa-solid fa-star"></i>';
 
-                                return row.is_fleet_boss ? `${row.character_name} <sup data-bs-tooltip="aa-fleetfinder" title="${fleetFinderSettings.l10n.fleetBoss}"><small>${fwIcon}</small></sup>` : row.character_name;
+                                    return data.is_fleet_boss ? `${data.character_name} <sup data-bs-tooltip="aa-fleetfinder" title="${fleetFinderSettings.l10n.fleetBoss}"><small>${fwIcon}</small></sup>` : data.character_name;
+                                },
+                                filter: (data) => data.character_name,
+                                sort: (data) => data.character_name
                             }
                         },
-                        {data: 'ship_type_name'},
-                        {data: 'solar_system_name'},
+                        {
+                            data: 'ship_type_name'
+                        },
+                        {
+                            data: 'solar_system_name'
+                        },
                         {
                             data: {
                                 display: (data) => {
@@ -101,12 +104,18 @@ $(document).ready(() => {
                     }
                 });
 
-                elements.tableFleetComposition.DataTable({
+                const dtFleetComposition = new DataTable(elements.tableFleetComposition, { // eslint-disable-line no-unused-vars
                     ...dataTableConfig,
                     data: data.fleet_composition,
                     columns: [
-                        {data: 'ship_type_name'},
-                        {data: 'number', className: 'text-right', width: '100px'}
+                        {
+                            data: 'ship_type_name'
+                        },
+                        {
+                            data: 'number',
+                            className: 'text-right',
+                            width: '100px'
+                        }
                     ],
                     columnDefs: [
                         {
@@ -134,7 +143,7 @@ $(document).ready(() => {
             const button = $(event.relatedTarget);
             const characterId = button.data('character-id');
             const characterName = button.data('character-name');
-            const link = fleetFinderSettings.dataTables.url.kickFleetMember;
+            const link = fleetFinderSettings.callbackUrl.kickFleetMember;
 
             // Populate the modal content
             $('#kick-fleet-member-character-name').text(characterName);

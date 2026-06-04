@@ -33,12 +33,14 @@
 {% block extra_css %}
     {% include "bundles/datatables-2-css-bs5.html" %}
     {% include "bundles/datatables-2-columncontrol-css-bs5.html" %}
+    {% include "bundles/datatables-2-responsive-css.html" %}
     {% include "fleetfinder/bundles/css/fleetfinder-css.html" %}
 {% endblock %}
 
 {% block extra_javascript %}
     {% include "bundles/datatables-2-js-bs5.html" %}
     {% include "bundles/datatables-2-columncontrol-js-bs5.html" %}
+    {% include "bundles/datatables-2-responsive-js.html" %}
     {% include "bundles/moment-js.html" with locale=True %}
 
     <script>
