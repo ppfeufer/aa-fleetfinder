@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2026-05-05 14:27+0200\n"
+"POT-Creation-Date: 2026-06-07 11:44+0200\n"
 "PO-Revision-Date: 2026-02-12 06:23+0000\n"
 "Last-Translator: shkno <l13244536339@163.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/zh_Hans/>\n"
@@ -150,18 +150,18 @@ msgstr "星系"
 msgid "Action"
 msgstr "行动"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:82
+#: fleetfinder/templates/fleetfinder/fleet-details.html:84
 #, fuzzy
 #| msgid "Fleet members"
 msgid "Fleet boss"
 msgstr "舰队成员"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:83
+#: fleetfinder/templates/fleetfinder/fleet-details.html:85
 #: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:9
 msgid "Kick member from fleet"
 msgstr "踢除舰队成员"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:84
+#: fleetfinder/templates/fleetfinder/fleet-details.html:86
 msgid "An unknown error occurred."
 msgstr "有未知错误."
 

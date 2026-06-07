@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2026-05-05 14:27+0200\n"
+"POT-Creation-Date: 2026-06-07 11:44+0200\n"
 "PO-Revision-Date: 2025-12-08 06:58+0000\n"
 "Last-Translator: s0k0l -_- <salarysalo@gmail.com>\n"
 "Language-Team: Ukrainian <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/uk/>\n"
@@ -149,16 +149,16 @@ msgstr "Система"
 msgid "Action"
 msgstr "Дія"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:82
+#: fleetfinder/templates/fleetfinder/fleet-details.html:84
 msgid "Fleet boss"
 msgstr "Командир флоту"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:83
+#: fleetfinder/templates/fleetfinder/fleet-details.html:85
 #: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:9
 msgid "Kick member from fleet"
 msgstr "Кікнути пілота з флоту"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:84
+#: fleetfinder/templates/fleetfinder/fleet-details.html:86
 msgid "An unknown error occurred."
 msgstr "Невідома помилка."
 
