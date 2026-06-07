@@ -22,13 +22,8 @@ $(document).ready(() => {
         } else {
             // Initialize new table
             dataTable =  new DataTable(table_fleet_overview, {
-                language: {
-                    url: fleetFinderSettings.dataTables.languageUrl
-                },
+                ...fleetFinderSettings.dataTables,
                 data: data,
-                layout: fleetFinderSettings.dataTables.layout,
-                ordering: fleetFinderSettings.dataTables.ordering,
-                columnControl: fleetFinderSettings.dataTables.columnControl,
                 columns: [
                     {
                         data: 'fleet_commander',

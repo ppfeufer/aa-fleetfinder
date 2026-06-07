@@ -72,12 +72,14 @@
 {% block extra_css %}
     {% include "bundles/datatables-2-css-bs5.html" %}
     {% include "bundles/datatables-2-columncontrol-css-bs5.html" %}
+    {% include "bundles/datatables-2-responsive-css.html" %}
     {% include "fleetfinder/bundles/css/fleetfinder-css.html" %}
 {% endblock %}
 
 {% block extra_javascript %}
     {% include "bundles/datatables-2-js-bs5.html" %}
     {% include "bundles/datatables-2-columncontrol-js-bs5.html" %}
+    {% include "bundles/datatables-2-responsive-js.html" %}
 
     {% translate "Fleet boss" as l10nFleetBoss %}
     {% translate "Kick member from fleet" as l10nKickMemberFromFleet %}
@@ -85,11 +87,9 @@
 
     <script>
         const aaFleetFinderSettingsOverride = {
-            dataTables: {
-                url: {
-                    fleetDetails: '{% url "fleetfinder:ajax_fleet_details" fleet.fleet_id %}',
-                    kickFleetMember: '{% url "fleetfinder:ajax_fleet_kick_member" fleet.fleet_id %}'
-                }
+            callbackUrl: {
+                fleetDetails: '{% url "fleetfinder:ajax_fleet_details" fleet.fleet_id %}',
+                kickFleetMember: '{% url "fleetfinder:ajax_fleet_kick_member" fleet.fleet_id %}'
             },
             l10n: {
                 fleetBoss: '{{ l10nFleetBoss|escapejs }}',
