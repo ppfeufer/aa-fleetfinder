@@ -37,6 +37,8 @@ Section Order:
 
 <!-- Your changes go here -->
 
+## [4.0.0] - 2026-06-07
+
 > [!IMPORTANT]
 >
 > **This version needs Alliance Auth v5!**
@@ -771,7 +773,8 @@ App forked from [Dreadbomb/aa-fleet]
 [3.2.4]: https://github.com/ppfeufer/aa-fleetfinder/compare/v3.2.3...v3.2.4 "v3.2.4"
 [3.2.5]: https://github.com/ppfeufer/aa-fleetfinder/compare/v3.2.4...v3.2.5 "v3.2.5"
 [3.3.0]: https://github.com/ppfeufer/aa-fleetfinder/compare/v3.2.5...v3.3.0 "v3.3.0"
+[4.0.0]: https://github.com/ppfeufer/aa-fleetfinder/compare/v3.3.0...v4.0.0 "v4.0.0"
 [dreadbomb/aa-fleet]: https://github.com/Dreadbomb/aa-fleet "Dreadbomb/aa-fleet"
-[in development]: https://github.com/ppfeufer/aa-fleetfinder/compare/v3.3.0...HEAD "In Development"
+[in development]: https://github.com/ppfeufer/aa-fleetfinder/compare/v4.0.0...HEAD "In Development"
 [keep a changelog]: http://keepachangelog.com/ "Keep a Changelog"
 [semantic versioning]: http://semver.org/ "Semantic Versioning"
