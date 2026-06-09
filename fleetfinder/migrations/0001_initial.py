@@ -9,8 +9,8 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ("eveonline", "0017_alliance_and_corp_names_are_not_unique"),
-        ("groupmanagement", "0019_adding_restricted_to_groups"),
+        ("eveonline", "0019_v5squash"),
+        ("groupmanagement", "0020_v5squash"),
     ]
 
     operations = [
