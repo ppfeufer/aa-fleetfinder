@@ -7,8 +7,8 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("groupmanagement", "0019_adding_restricted_to_groups"),
-        ("eveonline", "0017_alliance_and_corp_names_are_not_unique"),
+        ("groupmanagement", "0020_v5squash"),
+        ("eveonline", "0019_v5squash"),
         ("fleetfinder", "0001_initial"),
     ]
 
