@@ -37,9 +37,16 @@ Section Order:
 
 <!-- Your changes go here -->
 
+## [4.0.1] - 2026-07-06
+
+### Added
+
+- Support for Python 3.14
+
 ### Changed
 
-- Migration dependency updates to squashed migrations in Alliance Auth v5
+- Migration dependency updated to squashed migrations in Alliance Auth v5
+- Translations updated
 
 ## [4.0.0] - 2026-06-07
 
@@ -778,7 +785,8 @@ App forked from [Dreadbomb/aa-fleet]
 [3.2.5]: https://github.com/ppfeufer/aa-fleetfinder/compare/v3.2.4...v3.2.5 "v3.2.5"
 [3.3.0]: https://github.com/ppfeufer/aa-fleetfinder/compare/v3.2.5...v3.3.0 "v3.3.0"
 [4.0.0]: https://github.com/ppfeufer/aa-fleetfinder/compare/v3.3.0...v4.0.0 "v4.0.0"
+[4.0.1]: https://github.com/ppfeufer/aa-fleetfinder/compare/v4.0.0...v4.0.1 "v4.0.1"
 [dreadbomb/aa-fleet]: https://github.com/Dreadbomb/aa-fleet "Dreadbomb/aa-fleet"
-[in development]: https://github.com/ppfeufer/aa-fleetfinder/compare/v4.0.0...HEAD "In Development"
+[in development]: https://github.com/ppfeufer/aa-fleetfinder/compare/v4.0.1...HEAD "In Development"
 [keep a changelog]: http://keepachangelog.com/ "Keep a Changelog"
 [semantic versioning]: http://semver.org/ "Semantic Versioning"
