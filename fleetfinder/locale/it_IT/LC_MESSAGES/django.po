@@ -2,13 +2,14 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # "Dr. Mattia Zago" <dev@zagomattia.it>, 2024.
-# Peter Pfeufer <info@ppfeufer.de>, 2024.
+# Peter Pfeufer <info@ppfeufer.de>, 2024, 2026.
+# Alexander <alex301298@live.it>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2026-06-07 11:44+0200\n"
-"PO-Revision-Date: 2024-12-22 21:15+0000\n"
+"POT-Creation-Date: 2026-07-06 21:49+0200\n"
+"PO-Revision-Date: 2026-07-06 19:59+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: Italian <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/it/>\n"
 "Language: it_IT\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.9.2\n"
+"X-Generator: Weblate 2026.7\n"
 
 #: fleetfinder/__init__.py:10 fleetfinder/models.py:24
 #: fleetfinder/templates/fleetfinder/base.html:7
@@ -115,20 +116,20 @@ msgstr ""
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:7
 msgid "Fleet details"
-msgstr ""
+msgstr "Dettagli flotta"
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:20
 msgid "Fleet composition"
-msgstr ""
+msgstr "Composizione flotta"
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:29
 #: fleetfinder/templates/fleetfinder/fleet-details.html:55
 msgid "Ship class"
-msgstr ""
+msgstr "Classe della nave"
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:30
 msgid "Count"
-msgstr ""
+msgstr "Conteggio"
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:45
 msgid "Fleet members"
@@ -140,7 +141,7 @@ msgstr ""
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:56
 msgid "System"
-msgstr ""
+msgstr "Sistema"
 
 #: fleetfinder/templates/fleetfinder/fleet-details.html:57
 msgid "Action"
@@ -217,15 +218,15 @@ msgstr ""
 
 #: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:49
 msgid "Submit"
-msgstr ""
+msgstr "Invia"
 
 #: fleetfinder/templates/fleetfinder/partials/footer/app-translation-footer.html:5
 msgid "Do you want to help translate this app into your language or improve the existing translation?"
-msgstr ""
+msgstr "Vuoi contribuire alla traduzione di questa app nella tua lingua o migliorare la traduzione esistente?"
 
 #: fleetfinder/templates/fleetfinder/partials/footer/app-translation-footer.html:8
 msgid "Join our team of translators!"
-msgstr ""
+msgstr "Unisciti al nostro team di traduttori!"
 
 #: fleetfinder/templates/fleetfinder/partials/header/header-nav-left.html:6
 msgid "Available fleets"
