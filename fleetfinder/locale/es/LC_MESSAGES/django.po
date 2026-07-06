@@ -1,22 +1,22 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Zigor Fernandez Moreno <sietehierros@gmail.com>, 2023, 2024.
-# Peter Pfeufer <info@ppfeufer.de>, 2023, 2024, 2025.
+# Zigor Fernandez Moreno <sietehierros@gmail.com>, 2023, 2024, 2026.
+# Peter Pfeufer <info@ppfeufer.de>, 2023, 2024, 2025, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2026-06-07 11:44+0200\n"
-"PO-Revision-Date: 2025-07-29 20:18+0000\n"
-"Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
+"POT-Creation-Date: 2026-07-06 21:49+0200\n"
+"PO-Revision-Date: 2026-07-06 19:59+0000\n"
+"Last-Translator: Zigor Fernandez Moreno <sietehierros@gmail.com>\n"
 "Language-Team: Spanish <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 2026.7\n"
 
 #: fleetfinder/__init__.py:10 fleetfinder/models.py:24
 #: fleetfinder/templates/fleetfinder/base.html:7
@@ -176,20 +176,16 @@ msgid "Please ensure you don't have any CSPA charges set on your characters, as 
 msgstr ""
 
 #: fleetfinder/templates/fleetfinder/join-fleet.html:24
-#, fuzzy
-#| msgid "Select the characters to invite"
 msgid "You can select multiple characters to invite them all at once."
-msgstr "Selecciona los personajes a invitar"
+msgstr ""
 
 #: fleetfinder/templates/fleetfinder/join-fleet.html:28
 msgid "The selected characters will receive a fleet invite in-game, which they can accept to join the fleet."
 msgstr ""
 
 #: fleetfinder/templates/fleetfinder/join-fleet.html:35
-#, fuzzy
-#| msgid "Select the characters to invite"
 msgid "Please select the characters you want to invite:"
-msgstr "Selecciona los personajes a invitar"
+msgstr "Selecciona los personajes a invitar:"
 
 #: fleetfinder/templates/fleetfinder/join-fleet.html:45
 msgid "Send fleet invites"
@@ -248,20 +244,18 @@ msgid "Edit fleet advert"
 msgstr "Editar Anuncio de la Flota"
 
 #: fleetfinder/views.py:256
-#, fuzzy, python-brace-format
-#| msgid "<h4>Error!</h4><p>ESI returned the following error: {esi_error_message}</p>"
+#, python-brace-format
 msgid "<h4>Error!</h4><p>There was an error creating the fleet: {error_detail}</p>"
-msgstr "<h4>Error!</h4><p>El ESI devolvió el siguiente error: {esi_error_message}</p>"
+msgstr ""
 
 #: fleetfinder/views.py:296 fleetfinder/views.py:493
 msgid "<h4>Error!</h4><p>Fleet does not exist or is no longer available.</p>"
 msgstr ""
 
 #: fleetfinder/views.py:454
-#, fuzzy, python-brace-format
-#| msgid "<h4>Error!</h4><p>ESI returned the following error: {esi_error_message}</p>"
+#, python-brace-format
 msgid "<h4>Error!</h4><p>ESI returned the following error: {esi_error}</p>"
-msgstr "<h4>Error!</h4><p>El ESI devolvió el siguiente error: {esi_error_message}</p>"
+msgstr "<h4>Error!</h4><p>El ESI devolvió el siguiente error: {esi_error}</p>"
 
 #: fleetfinder/views.py:465
 #, python-brace-format
