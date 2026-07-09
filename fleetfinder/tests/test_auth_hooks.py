@@ -10,7 +10,7 @@ from django.urls import reverse
 
 # AA Fleet Finder
 from fleetfinder.tests import BaseTestCase
-from fleetfinder.tests.utils import create_fake_user
+from fleetfinder.tests.utils import create_fake_user, random_id
 
 
 class TestHooks(BaseTestCase):
@@ -28,12 +28,12 @@ class TestHooks(BaseTestCase):
 
         # User cannot access
         cls.user_1001 = create_fake_user(
-            character_id=1001, character_name="Peter Parker"
+            character_id=random_id(), character_name="Peter Parker"
         )
 
         # User can access
         cls.user_1002 = create_fake_user(
-            character_id=1002,
+            character_id=random_id(),
             character_name="Bruce Wayne",
             permissions=["fleetfinder.access_fleetfinder"],
         )
