@@ -10,18 +10,17 @@ from types import SimpleNamespace
 from unittest.mock import MagicMock, Mock, patch
 
 # Django
-from django.contrib.auth.models import Group
 from django.urls import reverse
 from django.utils.timezone import now
 
 # Alliance Auth
-from allianceauth.groupmanagement.models import AuthGroup
+from allianceauth.groupmanagement.models import AuthGroup, Group
 from esi.exceptions import HTTPClientError
 
 # AA Fleet Finder
 from fleetfinder.models import Fleet
 from fleetfinder.tests import BaseTestCase
-from fleetfinder.tests.utils import create_fake_user
+from fleetfinder.tests.utils import create_fake_user, random_id
 from fleetfinder.views import (
     _get_and_validate_fleet,
     ajax_fleet_kick_member,
@@ -72,13 +71,16 @@ class FleetfinderTestViews(BaseTestCase):
         :rtype:
         """
 
+        cls.id_character_with_manage_perms = random_id()
+        cls.id_character_with_basic_acces_perms = random_id()
+
         cls.user_with_manage_perms = create_fake_user(
-            character_id=1000,
+            character_id=cls.id_character_with_manage_perms,
             character_name="Jean Luc Picard",
             permissions=["fleetfinder.access_fleetfinder", "fleetfinder.manage_fleets"],
         )
         cls.user_with_basic_acces_perms = create_fake_user(
-            character_id=1001,
+            character_id=cls.id_character_with_basic_acces_perms,
             character_name="William Riker",
             permissions=["fleetfinder.access_fleetfinder"],
         )
@@ -275,7 +277,7 @@ class TestAjaxDashboardView(FleetfinderTestViews):
         expected_response = [
             {
                 "fleet_commander": {
-                    "html": '<img class="rounded eve-character-portrait" src="https://images.evetech.net/characters/1000/portrait?size=32" alt="Jean Luc Picard" loading="lazy">Jean Luc Picard',
+                    "html": f'<img class="rounded eve-character-portrait" src="https://images.evetech.net/characters/{self.id_character_with_manage_perms}/portrait?size=32" alt="Jean Luc Picard" loading="lazy">Jean Luc Picard',
                     "sort": "Jean Luc Picard",
                 },
                 "fleet_name": "Starfleet",
@@ -320,7 +322,7 @@ class TestAjaxDashboardView(FleetfinderTestViews):
         expected_response = [
             {
                 "fleet_commander": {
-                    "html": '<img class="rounded eve-character-portrait" src="https://images.evetech.net/characters/1000/portrait?size=32" alt="Jean Luc Picard" loading="lazy">Jean Luc Picard',
+                    "html": f'<img class="rounded eve-character-portrait" src="https://images.evetech.net/characters/{self.id_character_with_manage_perms}/portrait?size=32" alt="Jean Luc Picard" loading="lazy">Jean Luc Picard',
                     "sort": "Jean Luc Picard",
                 },
                 "fleet_name": "Starfleet",
@@ -813,7 +815,9 @@ class TestFleetEditView(FleetfinderTestViews):
 
         self.assertTemplateUsed(response, "fleetfinder/edit-fleet.html")
         self.assertEqual(response.context["fleet"].name, "Starfleet")
-        self.assertEqual(response.context["character_id"], 1000)
+        self.assertEqual(
+            response.context["character_id"], self.id_character_with_manage_perms
+        )
         self.assertEqual(len(response.context["auth_groups"]), 2)
 
     @patch("fleetfinder.views.Fleet.objects.get")

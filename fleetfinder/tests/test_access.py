@@ -6,12 +6,14 @@ Test checks for access to fleetfinder
 from http import HTTPStatus
 
 # Django
-from django.contrib.auth.models import Group
 from django.urls import reverse
+
+# Alliance Auth
+from allianceauth.groupmanagement.models import Group
 
 # AA Fleet Finder
 from fleetfinder.tests import BaseTestCase
-from fleetfinder.tests.utils import create_fake_user
+from fleetfinder.tests.utils import create_fake_user, random_id
 
 
 class TestAccess(BaseTestCase):
@@ -31,12 +33,12 @@ class TestAccess(BaseTestCase):
 
         # User cannot access fleetfinder
         cls.user_1001 = create_fake_user(
-            character_id=1001, character_name="Peter Parker"
+            character_id=random_id(), character_name="Peter Parker"
         )
 
         # User can access fleetfinder
         cls.user_1002 = create_fake_user(
-            character_id=1002,
+            character_id=random_id(),
             character_name="Bruce Wayne",
             permissions=["fleetfinder.access_fleetfinder"],
         )
