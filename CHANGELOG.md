@@ -37,6 +37,10 @@ Section Order:
 
 <!-- Your changes go here -->
 
+### Changed
+
+- CSS modernized
+
 > [!IMPORTANT]
 >
 > **This version needs Alliance Auth v5.2.0 or newer!**
