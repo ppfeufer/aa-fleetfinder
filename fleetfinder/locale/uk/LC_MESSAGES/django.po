@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2026-07-06 21:49+0200\n"
+"POT-Creation-Date: 2026-08-03 21:41+0200\n"
 "PO-Revision-Date: 2026-07-06 20:00+0000\n"
 "Last-Translator: \"Andrii M.\" <elfleg0las88@gmail.com>\n"
 "Language-Team: Ukrainian <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/uk/>\n"
@@ -296,16 +296,3 @@ msgstr "Пілот не знайдений у флоті"
 #, python-brace-format
 msgid "An ESI error occurred: {ex}"
 msgstr "Помилка ESI: {ex}"
-
-#, python-brace-format
-#~ msgid "Fleet Finder v{__version__}"
-#~ msgstr "Пошук флоту v{__version__}"
-
-#~ msgid "Details"
-#~ msgstr "Деталі"
-
-#~ msgid "Edit"
-#~ msgstr "Редагувати"
-
-#~ msgid "Toggle navigation"
-#~ msgstr "Перемкнути навігацію"
