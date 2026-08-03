@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder 2.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-fleetfinder/issues\n"
-"POT-Creation-Date: 2026-07-06 21:49+0200\n"
+"POT-Creation-Date: 2026-08-03 21:41+0200\n"
 "PO-Revision-Date: 2026-07-06 20:00+0000\n"
 "Last-Translator: Karl Yin <yinxiangbo@me.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/zh_Hans/>\n"
@@ -298,16 +298,3 @@ msgstr ""
 #, python-brace-format
 msgid "An ESI error occurred: {ex}"
 msgstr ""
-
-#, python-brace-format
-#~ msgid "Fleet Finder v{__version__}"
-#~ msgstr "舰队搜寻器v{__version__}"
-
-#~ msgid "Details"
-#~ msgstr "细节"
-
-#~ msgid "Edit"
-#~ msgstr "编辑"
-
-#~ msgid "Toggle navigation"
-#~ msgstr "切换导航"
