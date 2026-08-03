@@ -37,9 +37,7 @@ Section Order:
 
 <!-- Your changes go here -->
 
-### Changed
-
-- CSS modernized
+## [4.1.0] - 2026-08-03
 
 > [!IMPORTANT]
 >
@@ -51,6 +49,8 @@ Section Order:
 ### Changed
 
 - Migrated to Alliance Auth proxy models for `Permission`, `User` and `Group`
+- CSS modernized (If you have an older browser that can't handle the new CSS, update your browser…)
+- Translations updated
 
 ## [4.0.1] - 2026-07-06
 
@@ -801,7 +801,8 @@ App forked from [Dreadbomb/aa-fleet]
 [3.3.0]: https://github.com/ppfeufer/aa-fleetfinder/compare/v3.2.5...v3.3.0 "v3.3.0"
 [4.0.0]: https://github.com/ppfeufer/aa-fleetfinder/compare/v3.3.0...v4.0.0 "v4.0.0"
 [4.0.1]: https://github.com/ppfeufer/aa-fleetfinder/compare/v4.0.0...v4.0.1 "v4.0.1"
+[4.1.0]: https://github.com/ppfeufer/aa-fleetfinder/compare/v4.0.1...v4.1.0 "v4.1.0"
 [dreadbomb/aa-fleet]: https://github.com/Dreadbomb/aa-fleet "Dreadbomb/aa-fleet"
-[in development]: https://github.com/ppfeufer/aa-fleetfinder/compare/v4.0.1...HEAD "In Development"
+[in development]: https://github.com/ppfeufer/aa-fleetfinder/compare/v4.1.0...HEAD "In Development"
 [keep a changelog]: http://keepachangelog.com/ "Keep a Changelog"
 [semantic versioning]: http://semver.org/ "Semantic Versioning"
