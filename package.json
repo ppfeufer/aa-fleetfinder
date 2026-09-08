@@ -1,5 +1,6 @@
 {
-    "name": "aa-fleetfinder",
+    "name": "@ppfeufer/aa-fleetfinder",
+    "version": "4.1.0",
     "type": "module",
     "devDependencies": {
         "@eslint/js": "^10.0.1",
