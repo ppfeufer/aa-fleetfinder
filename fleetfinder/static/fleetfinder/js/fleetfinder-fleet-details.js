@@ -16,14 +16,14 @@ $(document).ready(() => {
         warning: $('#fleetfinder-fleet-details-warning')
     };
     const dataTableConfig = {
-        ... fleetFinderSettings.dataTables,
+        ...fleetFinderSettings.dataTables,
         paging: false,
-        destroy: true,
+        destroy: true
     };
 
     const populateDatatables = () => {
         fetchGet({
-            url: fleetFinderSettings.callbackUrl.fleetDetails,
+            url: fleetFinderSettings.callbackUrl.fleetDetails
         })
             .then((data) => {
                 if (data.error) {
@@ -72,7 +72,7 @@ $(document).ready(() => {
                                     return data.is_fleet_boss ? '' : `<button type="button" class="btn btn-sm btn-danger" ${dataAttributes} title="${fleetFinderSettings.l10n.kickMemberFromFleet}">${fwIcon}</button>`;
                                 }
                             },
-                            className: 'text-end',
+                            className: 'text-end'
                         }
                     ],
                     columnDefs: [

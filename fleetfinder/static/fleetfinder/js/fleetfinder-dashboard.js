@@ -21,7 +21,7 @@ $(document).ready(() => {
             dataTable.clear().rows.add(data).draw();
         } else {
             // Initialize new table
-            dataTable =  new DataTable(table_fleet_overview, {
+            dataTable = new DataTable(table_fleet_overview, {
                 ...fleetFinderSettings.dataTables,
                 data: data,
                 columns: [
@@ -36,12 +36,12 @@ $(document).ready(() => {
                         data: 'fleet_name'
                     },
                     {
-                        data: 'created_at',
+                        data: 'created_at'
                     },
                     {
                         data: 'actions',
                         className: 'text-end'
-                    },
+                    }
                 ],
                 columnDefs: [
                     {
@@ -58,8 +58,8 @@ $(document).ready(() => {
                             {target: 1, content: []}
                         ],
                         orderable: false,
-                        width: 135,
-                    },
+                        width: 135
+                    }
                 ],
                 order: [[0, 'asc']],
                 paging: false,
