@@ -37,6 +37,10 @@ Section Order:
 
 <!-- Your changes go here -->
 
+### Changed
+
+- Switch to `httpx2`
+
 ## [4.1.0] - 2026-08-03
 
 > [!IMPORTANT]
