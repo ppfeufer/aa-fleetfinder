@@ -1,7 +1,6 @@
 {% extends "fleetfinder/base.html" %}
 
-{% load aa_i18n %}
-{% load i18n %}
+{% load aa_i18n i18n %}
 
 {% block aa_fleetfinder_body %}
     <div class="card card-default border-0">
@@ -28,14 +27,14 @@
             </div>
         </div>
     </div>
-{% endblock %}
+{% endblock aa_fleetfinder_body %}
 
 {% block extra_css %}
     {% include "bundles/datatables-2-css-bs5.html" %}
     {% include "bundles/datatables-2-columncontrol-css-bs5.html" %}
     {% include "bundles/datatables-2-responsive-css.html" %}
     {% include "fleetfinder/bundles/css/fleetfinder-css.html" %}
-{% endblock %}
+{% endblock extra_css %}
 
 {% block extra_javascript %}
     {% include "bundles/datatables-2-js-bs5.html" %}
@@ -54,4 +53,4 @@
     </script>
 
     {% include "fleetfinder/bundles/js/fleetfinder-js.html" with view="dashboard" %}
-{% endblock %}
+{% endblock extra_javascript %}

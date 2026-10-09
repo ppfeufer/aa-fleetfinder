@@ -5,7 +5,7 @@
 {% block page_title %}
     {% translate "Create fleet" as page_title %}
     {{ page_title|title }} » {% translate "Fleet Finder" %}
-{% endblock %}
+{% endblock page_title %}
 
 {% block aa_fleetfinder_body %}
     <div class="card card-primary border-0">
@@ -23,12 +23,12 @@
             </div>
         </div>
     </div>
-{% endblock %}
+{% endblock aa_fleetfinder_body %}
 
 {% block extra_css %}
     {% include "fleetfinder/bundles/css/slim-select-css.html" %}
     {% include "fleetfinder/bundles/css/fleetfinder-css.html" %}
-{% endblock %}
+{% endblock extra_css %}
 
 {% block extra_javascript %}
     {% include "fleetfinder/bundles/js/slim-select-js.html" %}
@@ -39,4 +39,4 @@
             hideSelectedOption: true
         });
     </script>
-{% endblock %}
+{% endblock extra_javascript %}
