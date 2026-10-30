@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder\n"
 "Report-Msgid-Bugs-To: https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/\n"
-"POT-Creation-Date: 2026-10-04 09:28+0200\n"
+"POT-Creation-Date: 2026-10-09 12:15+0200\n"
 "PO-Revision-Date: 2026-07-06 20:00+0000\n"
 "Last-Translator: Karl Yin <yinxiangbo@me.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/zh_Hans/>\n"
@@ -23,11 +23,11 @@ msgstr ""
 "X-Generator: Weblate 2026.7\n"
 
 #: fleetfinder/__init__.py:10 fleetfinder/models.py:24
-#: fleetfinder/templates/fleetfinder/base.html:7
-#: fleetfinder/templates/fleetfinder/base.html:11
+#: fleetfinder/templates/fleetfinder/base.html:6
+#: fleetfinder/templates/fleetfinder/base.html:10
 #: fleetfinder/templates/fleetfinder/create-fleet.html:7
 #: fleetfinder/templates/fleetfinder/edit-fleet.html:7
-#: fleetfinder/templates/fleetfinder/fleet-details.html:7
+#: fleetfinder/templates/fleetfinder/fleet-details.html:6
 #: fleetfinder/templates/fleetfinder/join-fleet.html:7
 msgid "Fleet Finder"
 msgstr "舰队搜寻器"
@@ -52,12 +52,12 @@ msgstr "舰队指挥官不再是舰队统帅。"
 msgid "FC switched to another fleet."
 msgstr "舰队指挥官转到了另一个舰队。"
 
-#: fleetfinder/models.py:51 fleetfinder/templates/fleetfinder/dashboard.html:20
+#: fleetfinder/models.py:51 fleetfinder/templates/fleetfinder/dashboard.html:19
 #: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:10
 msgid "Fleet name"
 msgstr "舰队名字"
 
-#: fleetfinder/models.py:59 fleetfinder/templates/fleetfinder/dashboard.html:19
+#: fleetfinder/models.py:59 fleetfinder/templates/fleetfinder/dashboard.html:18
 msgid "Fleet commander"
 msgstr "舰队指挥官"
 
@@ -100,15 +100,15 @@ msgstr "ESI错误计数"
 msgid "Create fleet"
 msgstr "创建舰队"
 
-#: fleetfinder/templates/fleetfinder/dashboard.html:10
+#: fleetfinder/templates/fleetfinder/dashboard.html:9
 msgid "Fleets available to you"
 msgstr "您有权访问的舰队"
 
-#: fleetfinder/templates/fleetfinder/dashboard.html:21
+#: fleetfinder/templates/fleetfinder/dashboard.html:20
 msgid "Created at"
 msgstr "创建于"
 
-#: fleetfinder/templates/fleetfinder/dashboard.html:22
+#: fleetfinder/templates/fleetfinder/dashboard.html:21
 msgid "Join"
 msgstr "加入"
 
@@ -117,51 +117,51 @@ msgstr "加入"
 msgid "Edit fleet"
 msgstr "编辑舰队"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:7
+#: fleetfinder/templates/fleetfinder/fleet-details.html:6
 msgid "Fleet details"
 msgstr "舰队细节"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:20
+#: fleetfinder/templates/fleetfinder/fleet-details.html:19
 msgid "Fleet composition"
 msgstr "舰队组成"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:29
-#: fleetfinder/templates/fleetfinder/fleet-details.html:55
+#: fleetfinder/templates/fleetfinder/fleet-details.html:28
+#: fleetfinder/templates/fleetfinder/fleet-details.html:54
 msgid "Ship class"
 msgstr "舰船等级"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:30
+#: fleetfinder/templates/fleetfinder/fleet-details.html:29
 msgid "Count"
 msgstr "计数"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:45
+#: fleetfinder/templates/fleetfinder/fleet-details.html:44
 msgid "Fleet members"
 msgstr "舰队成员"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:54
+#: fleetfinder/templates/fleetfinder/fleet-details.html:53
 msgid "Name"
 msgstr "名字"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:56
+#: fleetfinder/templates/fleetfinder/fleet-details.html:55
 msgid "System"
 msgstr "星系"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:57
+#: fleetfinder/templates/fleetfinder/fleet-details.html:56
 msgid "Action"
 msgstr "行动"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:84
+#: fleetfinder/templates/fleetfinder/fleet-details.html:83
 #, fuzzy
 #| msgid "Fleet members"
 msgid "Fleet boss"
 msgstr "舰队成员"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:85
+#: fleetfinder/templates/fleetfinder/fleet-details.html:84
 #: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:9
 msgid "Kick member from fleet"
 msgstr "踢除舰队成员"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:86
+#: fleetfinder/templates/fleetfinder/fleet-details.html:85
 msgid "An unknown error occurred."
 msgstr "有未知错误."
 
@@ -217,11 +217,11 @@ msgstr "确认"
 msgid "Select groups"
 msgstr "选择群组"
 
-#: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:46
+#: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:38
 msgid "Enable free move"
 msgstr "允许自由行动"
 
-#: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:49
+#: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:41
 msgid "Submit"
 msgstr "提交"
 
@@ -233,7 +233,7 @@ msgstr "您想帮助将此应用程序翻译成您的母语或改进现有的翻
 msgid "Join our team of translators!"
 msgstr "加入我们的翻译团队吧！"
 
-#: fleetfinder/templates/fleetfinder/partials/header/header-nav-left.html:6
+#: fleetfinder/templates/fleetfinder/partials/header/header-nav-left.html:5
 msgid "Available fleets"
 msgstr "可用的舰队"
 
