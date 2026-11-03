@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder\n"
 "Report-Msgid-Bugs-To: https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/\n"
-"POT-Creation-Date: 2026-10-04 09:28+0200\n"
+"POT-Creation-Date: 2026-10-09 12:15+0200\n"
 "PO-Revision-Date: 2026-07-06 20:00+0000\n"
 "Last-Translator: \"Andrii M.\" <elfleg0las88@gmail.com>\n"
 "Language-Team: Ukrainian <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/uk/>\n"
@@ -23,11 +23,11 @@ msgstr ""
 "X-Generator: Weblate 2026.7\n"
 
 #: fleetfinder/__init__.py:10 fleetfinder/models.py:24
-#: fleetfinder/templates/fleetfinder/base.html:7
-#: fleetfinder/templates/fleetfinder/base.html:11
+#: fleetfinder/templates/fleetfinder/base.html:6
+#: fleetfinder/templates/fleetfinder/base.html:10
 #: fleetfinder/templates/fleetfinder/create-fleet.html:7
 #: fleetfinder/templates/fleetfinder/edit-fleet.html:7
-#: fleetfinder/templates/fleetfinder/fleet-details.html:7
+#: fleetfinder/templates/fleetfinder/fleet-details.html:6
 #: fleetfinder/templates/fleetfinder/join-fleet.html:7
 msgid "Fleet Finder"
 msgstr "Пошук флоту"
@@ -52,12 +52,12 @@ msgstr "ФлітКом більше не бос флоту."
 msgid "FC switched to another fleet."
 msgstr "ФлітКом перейшов до іншого флоту."
 
-#: fleetfinder/models.py:51 fleetfinder/templates/fleetfinder/dashboard.html:20
+#: fleetfinder/models.py:51 fleetfinder/templates/fleetfinder/dashboard.html:19
 #: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:10
 msgid "Fleet name"
 msgstr "Назва флоту"
 
-#: fleetfinder/models.py:59 fleetfinder/templates/fleetfinder/dashboard.html:19
+#: fleetfinder/models.py:59 fleetfinder/templates/fleetfinder/dashboard.html:18
 msgid "Fleet commander"
 msgstr "Командувач флотом"
 
@@ -100,15 +100,15 @@ msgstr "Кількість помилок ESI"
 msgid "Create fleet"
 msgstr "Створити флот"
 
-#: fleetfinder/templates/fleetfinder/dashboard.html:10
+#: fleetfinder/templates/fleetfinder/dashboard.html:9
 msgid "Fleets available to you"
 msgstr "Флоти що доступні Вам"
 
-#: fleetfinder/templates/fleetfinder/dashboard.html:21
+#: fleetfinder/templates/fleetfinder/dashboard.html:20
 msgid "Created at"
 msgstr "Створено"
 
-#: fleetfinder/templates/fleetfinder/dashboard.html:22
+#: fleetfinder/templates/fleetfinder/dashboard.html:21
 msgid "Join"
 msgstr "Приєднатися"
 
@@ -117,49 +117,49 @@ msgstr "Приєднатися"
 msgid "Edit fleet"
 msgstr "Редагувати флот"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:7
+#: fleetfinder/templates/fleetfinder/fleet-details.html:6
 msgid "Fleet details"
 msgstr "Деталі флоту"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:20
+#: fleetfinder/templates/fleetfinder/fleet-details.html:19
 msgid "Fleet composition"
 msgstr "Композиція флоту"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:29
-#: fleetfinder/templates/fleetfinder/fleet-details.html:55
+#: fleetfinder/templates/fleetfinder/fleet-details.html:28
+#: fleetfinder/templates/fleetfinder/fleet-details.html:54
 msgid "Ship class"
 msgstr "Клас корабля"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:30
+#: fleetfinder/templates/fleetfinder/fleet-details.html:29
 msgid "Count"
 msgstr "Кількість"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:45
+#: fleetfinder/templates/fleetfinder/fleet-details.html:44
 msgid "Fleet members"
 msgstr "Члени флоту"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:54
+#: fleetfinder/templates/fleetfinder/fleet-details.html:53
 msgid "Name"
 msgstr "Назва"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:56
+#: fleetfinder/templates/fleetfinder/fleet-details.html:55
 msgid "System"
 msgstr "Система"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:57
+#: fleetfinder/templates/fleetfinder/fleet-details.html:56
 msgid "Action"
 msgstr "Дія"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:84
+#: fleetfinder/templates/fleetfinder/fleet-details.html:83
 msgid "Fleet boss"
 msgstr "Командир флоту"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:85
+#: fleetfinder/templates/fleetfinder/fleet-details.html:84
 #: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:9
 msgid "Kick member from fleet"
 msgstr "Кікнути пілота з флоту"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:86
+#: fleetfinder/templates/fleetfinder/fleet-details.html:85
 msgid "An unknown error occurred."
 msgstr "Невідома помилка."
 
@@ -215,11 +215,11 @@ msgstr "Підтвердити"
 msgid "Select groups"
 msgstr "Вибрати групи"
 
-#: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:46
+#: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:38
 msgid "Enable free move"
 msgstr "Дозволити вільне переміщення"
 
-#: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:49
+#: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:41
 msgid "Submit"
 msgstr "Відправити"
 
@@ -231,7 +231,7 @@ msgstr "Хочете допомогти перекласти цю програм
 msgid "Join our team of translators!"
 msgstr "Приєднуйтесь до нашої команди перекладачів!"
 
-#: fleetfinder/templates/fleetfinder/partials/header/header-nav-left.html:6
+#: fleetfinder/templates/fleetfinder/partials/header/header-nav-left.html:5
 msgid "Available fleets"
 msgstr "Доступні флоти"
 
