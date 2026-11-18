@@ -20,6 +20,16 @@ $(document).ready(() => {
         paging: false,
         destroy: true
     };
+    const dtFleetMembersColumn = {
+        characterName: 0,
+        shipType: 1,
+        solarSystem: 2,
+        actions: 3
+    };
+    const dtFleetCompositionColumn = {
+        shipType: 0,
+        number: 1
+    };
 
     const populateDatatables = () => {
         fetchGet({
@@ -77,7 +87,7 @@ $(document).ready(() => {
                     ],
                     columnDefs: [
                         {
-                            target: 3,
+                            target: dtFleetMembersColumn.actions,
                             columnControl: [
                                 {target: 0, content: []},
                                 {target: 1, content: []}
@@ -119,11 +129,11 @@ $(document).ready(() => {
                     ],
                     columnDefs: [
                         {
-                            target: 1,
+                            target: dtFleetCompositionColumn.number,
                             columnControl: _removeSearchFromColumnControl(fleetFinderSettings.dataTables.columnControl, 1)
                         }
                     ],
-                    order: [[1, 'desc']]
+                    order: [[dtFleetCompositionColumn.number, 'desc']]
                 });
             })
             .catch((error) => {
