@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Fleet Finder\n"
 "Report-Msgid-Bugs-To: https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/\n"
-"POT-Creation-Date: 2026-10-04 09:28+0200\n"
+"POT-Creation-Date: 2026-10-09 12:15+0200\n"
 "PO-Revision-Date: 2026-07-06 19:59+0000\n"
 "Last-Translator: Zigor Fernandez Moreno <sietehierros@gmail.com>\n"
 "Language-Team: Spanish <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-fleetfinder/es/>\n"
@@ -19,11 +19,11 @@ msgstr ""
 "X-Generator: Weblate 2026.7\n"
 
 #: fleetfinder/__init__.py:10 fleetfinder/models.py:24
-#: fleetfinder/templates/fleetfinder/base.html:7
-#: fleetfinder/templates/fleetfinder/base.html:11
+#: fleetfinder/templates/fleetfinder/base.html:6
+#: fleetfinder/templates/fleetfinder/base.html:10
 #: fleetfinder/templates/fleetfinder/create-fleet.html:7
 #: fleetfinder/templates/fleetfinder/edit-fleet.html:7
-#: fleetfinder/templates/fleetfinder/fleet-details.html:7
+#: fleetfinder/templates/fleetfinder/fleet-details.html:6
 #: fleetfinder/templates/fleetfinder/join-fleet.html:7
 msgid "Fleet Finder"
 msgstr "Buscador de Flotas"
@@ -48,12 +48,12 @@ msgstr "El FC ya no es el jefe de flota."
 msgid "FC switched to another fleet."
 msgstr "El FC se cambió a otra flota."
 
-#: fleetfinder/models.py:51 fleetfinder/templates/fleetfinder/dashboard.html:20
+#: fleetfinder/models.py:51 fleetfinder/templates/fleetfinder/dashboard.html:19
 #: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:10
 msgid "Fleet name"
 msgstr "Nombre de la flota"
 
-#: fleetfinder/models.py:59 fleetfinder/templates/fleetfinder/dashboard.html:19
+#: fleetfinder/models.py:59 fleetfinder/templates/fleetfinder/dashboard.html:18
 msgid "Fleet commander"
 msgstr "Comandante de Flota"
 
@@ -96,15 +96,15 @@ msgstr "Recuento de errores del ESI"
 msgid "Create fleet"
 msgstr "Crear Flota"
 
-#: fleetfinder/templates/fleetfinder/dashboard.html:10
+#: fleetfinder/templates/fleetfinder/dashboard.html:9
 msgid "Fleets available to you"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/dashboard.html:21
+#: fleetfinder/templates/fleetfinder/dashboard.html:20
 msgid "Created at"
 msgstr "Creado En"
 
-#: fleetfinder/templates/fleetfinder/dashboard.html:22
+#: fleetfinder/templates/fleetfinder/dashboard.html:21
 msgid "Join"
 msgstr "Unirse"
 
@@ -113,53 +113,53 @@ msgstr "Unirse"
 msgid "Edit fleet"
 msgstr "Editar la Flota"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:7
+#: fleetfinder/templates/fleetfinder/fleet-details.html:6
 msgid "Fleet details"
 msgstr "Detalles de la Flota"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:20
+#: fleetfinder/templates/fleetfinder/fleet-details.html:19
 msgid "Fleet composition"
 msgstr "Composición de Flota"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:29
-#: fleetfinder/templates/fleetfinder/fleet-details.html:55
+#: fleetfinder/templates/fleetfinder/fleet-details.html:28
+#: fleetfinder/templates/fleetfinder/fleet-details.html:54
 #, fuzzy
 #| msgid "Ship Name"
 msgid "Ship class"
 msgstr "Nombre de la Nave"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:30
+#: fleetfinder/templates/fleetfinder/fleet-details.html:29
 msgid "Count"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:45
+#: fleetfinder/templates/fleetfinder/fleet-details.html:44
 msgid "Fleet members"
 msgstr "Miembros de la Flota"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:54
+#: fleetfinder/templates/fleetfinder/fleet-details.html:53
 msgid "Name"
 msgstr "Nombre"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:56
+#: fleetfinder/templates/fleetfinder/fleet-details.html:55
 msgid "System"
 msgstr "Sistema"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:57
+#: fleetfinder/templates/fleetfinder/fleet-details.html:56
 msgid "Action"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:84
+#: fleetfinder/templates/fleetfinder/fleet-details.html:83
 #, fuzzy
 #| msgid "Fleet members"
 msgid "Fleet boss"
 msgstr "Miembros de la Flota"
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:85
+#: fleetfinder/templates/fleetfinder/fleet-details.html:84
 #: fleetfinder/templates/fleetfinder/modals/kick-fleet-member.html:9
 msgid "Kick member from fleet"
 msgstr ""
 
-#: fleetfinder/templates/fleetfinder/fleet-details.html:86
+#: fleetfinder/templates/fleetfinder/fleet-details.html:85
 msgid "An unknown error occurred."
 msgstr ""
 
@@ -215,11 +215,11 @@ msgstr ""
 msgid "Select groups"
 msgstr "Grupos Seleccionados"
 
-#: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:46
+#: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:38
 msgid "Enable free move"
 msgstr "Habilitar Movimiento Libre"
 
-#: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:49
+#: fleetfinder/templates/fleetfinder/partials/body/form-fleet-details.html:41
 msgid "Submit"
 msgstr "Enviar"
 
@@ -231,7 +231,7 @@ msgstr "¿Quieres ayudar a traducir esta aplicación a tu idioma o mejorar la tr
 msgid "Join our team of translators!"
 msgstr "¡Únete a nuestro equipo de traductores!"
 
-#: fleetfinder/templates/fleetfinder/partials/header/header-nav-left.html:6
+#: fleetfinder/templates/fleetfinder/partials/header/header-nav-left.html:5
 msgid "Available fleets"
 msgstr "Flotas Disponibles"
 
