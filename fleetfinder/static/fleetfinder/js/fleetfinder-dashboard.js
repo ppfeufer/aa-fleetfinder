@@ -8,6 +8,13 @@ $(document).ready(() => {
     const table_fleet_overview = $('#table_available-fleets');
     let dataTable = null;
 
+    const dtColumn = {
+        fleet_commander: 0,
+        fleet_name: 1,
+        created_at: 2,
+        actions: 3
+    };
+
     /**
      * Initialize or update the datatable.
      * If the table already exists, it will be updated with new data.
@@ -45,14 +52,14 @@ $(document).ready(() => {
                 ],
                 columnDefs: [
                     {
-                        target: 2,
+                        target: dtColumn.created_at,
                         render: DataTable.render.date(
                             fleetFinderSettings.dataTables.datetimeFormat
                         ),
                         columnControl: _removeSearchFromColumnControl(fleetFinderSettings.dataTables.columnControl, 1)
                     },
                     {
-                        target: 3,
+                        target: dtColumn.actions,
                         columnControl: [
                             {target: 0, content: []},
                             {target: 1, content: []}
@@ -61,7 +68,7 @@ $(document).ready(() => {
                         width: 135
                     }
                 ],
-                order: [[0, 'asc']],
+                order: [[dtColumn.fleet_commander, 'asc']],
                 paging: false,
                 initComplete: () => {
                     // Get DataTable instance
